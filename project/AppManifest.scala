@@ -18,8 +18,7 @@ object AppManifest {
       // TODO: REPLACE ME, use only the minimum required permissions
       override val permissions = Set[Permission](
         API.Storage,
-        API.Notifications,
-        API.Alarms
+        API.Notifications
       )
 
       override val defaultLocale: Option[String] = Some("en")

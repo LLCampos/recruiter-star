@@ -1,7 +1,6 @@
 package com.lcampos.chrome.background
 
 import com.lcampos.chrome.Config
-import com.lcampos.chrome.background.alarms.AlarmRunner
 import com.lcampos.chrome.background.models.{Command, Event}
 import com.lcampos.chrome.background.services.browser.BrowserNotificationService
 import com.lcampos.chrome.background.services.storage.StorageService
@@ -13,14 +12,10 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 import scala.util.control.NonFatal
 
-class Runner(
-    commandProcessor: CommandProcessor,
-    alarmRunner: AlarmRunner
-)(implicit ec: ExecutionContext) {
+class Runner(commandProcessor: CommandProcessor)(implicit ec: ExecutionContext) {
 
   def run(): Unit = {
     log("This was run by the background script")
-    alarmRunner.register()
     processExternalMessages()
   }
 
@@ -66,14 +61,8 @@ object Runner {
     val storage = new StorageService
     val messages = new I18NMessages
     val browserNotificationService = new BrowserNotificationService(messages)
-    val commandProcessor =
-      new CommandProcessor(storage, browserNotificationService)
+    val commandProcessor = new CommandProcessor(storage, browserNotificationService)
 
-    val productUpdaterAlarm = new AlarmRunner(
-      config.alarmRunnerConfig,
-      messages,
-      browserNotificationService
-    )
-    new Runner(commandProcessor, productUpdaterAlarm)
+    new Runner(commandProcessor)
   }
 }
