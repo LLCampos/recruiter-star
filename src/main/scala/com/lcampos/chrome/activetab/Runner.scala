@@ -14,6 +14,16 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   def run(): Unit = {
     log("This was run by the active tab")
+    chrome.runtime.Runtime.onMessage.listen { msg =>
+      msg.value match {
+        case Some(v : String) if v == "page was reloaded" => openAlert()
+        case _ => ()
+      }
+    }
+    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the tab!!")
+  }
+
+  private def openAlert(): Unit = {
     SweetAlert(new SweetAlert.Options {
       title = messages.appName
       text = "Do you like this template?"
@@ -22,8 +32,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     }).toFuture.onComplete { t =>
       log(s"SweetAlert result: $t")
     }
-
-    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the tab!!")
   }
 
   private def log(msg: String): Unit = {

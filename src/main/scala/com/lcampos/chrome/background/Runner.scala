@@ -1,5 +1,7 @@
 package com.lcampos.chrome.background
 
+import chrome.tabs.bindings.Tab.Id
+import chrome.tabs.bindings.{ChangeInfo, Tab}
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.models.{Command, Event}
 import com.lcampos.chrome.background.services.browser.BrowserNotificationService
@@ -17,6 +19,7 @@ class Runner(commandProcessor: CommandProcessor)(implicit ec: ExecutionContext) 
   def run(): Unit = {
     log("This was run by the background script")
     processExternalMessages()
+    notifyOfStatusComplete()
   }
 
   /**
@@ -46,6 +49,16 @@ class Runner(commandProcessor: CommandProcessor)(implicit ec: ExecutionContext) 
          * in case of failures even if that case was already handled with the CommandRejected event.
          */
         message.response(response, "Impossible failure")
+      }
+    }
+  }
+
+  private def notifyOfStatusComplete(): Unit = {
+    chrome.tabs.Tabs.onUpdated.listen { case (tabId: Id, changeInfo: ChangeInfo, _: Tab) =>
+      changeInfo.status.toOption match {
+        case Some(status) if status == "complete" =>
+          chrome.tabs.Tabs.sendMessage(tabId, "page was reloaded")
+        case _ => ()
       }
     }
   }
