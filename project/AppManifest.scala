@@ -7,18 +7,19 @@ object AppManifest {
 
   def generate(appName: String, appVersion: String): ExtensionManifest = {
     new ExtensionManifest {
-      override val name = appName
-      override val version = appVersion
+      override val name: String = appName
+      override val version: String = appVersion
 
-      override val description = Some(
+      override val description: Option[String] = Some(
         "TO BE UPDATED" // TODO: REPLACE ME
       )
-      override val icons = Chrome.icons("icons", "app.png", Set(48, 96, 128))
+      override val icons: Map[Int, String] = Chrome.icons("icons", "app.png", Set(48, 96, 128))
 
       // TODO: REPLACE ME, use only the minimum required permissions
-      override val permissions = Set[Permission](
+      override val permissions: Set[Permission] = Set[Permission](
         API.Storage,
-        API.Notifications
+        API.Notifications,
+        API.Tabs
       )
 
       override val defaultLocale: Option[String] = Some("en")
@@ -30,7 +31,7 @@ object AppManifest {
       // scripts used on all modules
       val commonScripts = List("scripts/common.js", "main-bundle.js")
 
-      override val background = Background(
+      override val background: Background = Background(
         scripts = commonScripts ::: List("scripts/background-script.js")
       )
 
