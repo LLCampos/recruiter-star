@@ -8,9 +8,7 @@ import org.scalajs.dom.raw.Element
 
 import scala.concurrent.ExecutionContext
 
-class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I18NMessages)(implicit
-    ec: ExecutionContext
-) {
+class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I18NMessages) {
 
   def run(): Unit = {
     log("This was run by the active tab")
