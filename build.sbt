@@ -76,9 +76,7 @@ lazy val root = (project in file("."))
   .settings(
     chromeManifest := AppManifest.generate(appName, Keys.version.value),
     // js dependencies, adding typescript type definitions gets them a Scala facade
-    Compile / npmDependencies ++= Seq(
-      "sweetalert" -> "2.1.2"
-    ),
+    Compile / npmDependencies ++= Seq(),
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "1.1.0",
       "com.alexitc" %%% "scala-js-chrome" % "0.7.0",
