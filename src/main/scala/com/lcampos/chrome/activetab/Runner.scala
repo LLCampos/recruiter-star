@@ -31,11 +31,11 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val mainColumnDiv: Element = dom.document.getElementById("main").firstElementChild
     val profileDetail: Element = mainColumnDiv.children.item(1)
     val aboutSection: Element = profileDetail.children.item(2)
-    val yearsPerTechSection: Element = generateYearsPerTechElement(aboutSection)
+    val yearsPerTechSection: Element = generateYearsPerTechElement(aboutSection, yearsPerTech)
     profileDetail.insertBefore(yearsPerTechSection, profileDetail.firstElementChild)
   }
 
-  private def generateYearsPerTechElement(elementToClone: Element): Element = {
+  private def generateYearsPerTechElement(elementToClone: Element, yearsPerTech: Map[String, Int]): Element = {
     val yearsPerTechElem: Element = elementToClone.cloneNode(true).asInstanceOf[Element]
 
     yearsPerTechElem.querySelector("h2").innerText = "Years Per Tech"
@@ -50,11 +50,18 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val spanEllipsis = spans.item(spans.length - 1).asInstanceOf[Element]
 
     yearsPerTechElemP.innerHTML = ""
-    spanNormal.innerHTML = "Python -> 1</br>"
-    spanLast.innerHTML = "Java -> 2</br>"
 
-    yearsPerTechElemP.appendChild(spanNormal)
+    val yearsPerTechTexts = yearsPerTech.map { case (tech, years) => s"<b>$tech - </b> $years years</br>" }
+
+    yearsPerTechTexts.init.foreach { text =>
+      val normalSpanClone = spanNormal.cloneNode(true).asInstanceOf[Element]
+      normalSpanClone.innerHTML = text
+      yearsPerTechElemP.appendChild(normalSpanClone)
+    }
+
+    spanLast.innerHTML = yearsPerTechTexts.last
     yearsPerTechElemP.appendChild(spanLast)
+
     yearsPerTechElemP.appendChild(spanEllipsis)
 
     yearsPerTechElem
@@ -62,7 +69,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def getYearsPerTech(experienceSectionElem: Element): Map[String, Int] =
     // TODO
-    Map("Python" -> 1, "Java" -> 2)
+    Map("Python" -> 1, "Java" -> 2, "php" -> 100, "Scala" -> 5, "Perl" -> 8)
 
   private def log(msg: String): Unit = {
     println(s"activeTab: $msg")
