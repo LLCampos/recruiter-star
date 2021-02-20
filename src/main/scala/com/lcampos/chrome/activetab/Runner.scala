@@ -29,7 +29,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   }
 
   private def addBox(): Unit = {
-    val mainColumnDiv: Element = dom.document.getElementById("main").children.item(0)
+    val mainColumnDiv: Element = dom.document.getElementById("main").firstElementChild
     val profileDetail: Element = mainColumnDiv.children.item(1)
     val aboutSection: Element = profileDetail.children.item(2)
     val aboutSectionCopy: Element = aboutSection.cloneNode(true).asInstanceOf[Element]
