@@ -23,6 +23,7 @@ lazy val baseSettings: Project => Project = {
         "-unchecked" // Enable additional warnings where generated code depends on assumptions.
       ),
       scalacOptions += "-Ymacro-annotations",
+      scalacOptions in Test ++= Seq("-Yrangepos"),
       requireJsDomEnv in Test := true
     )
 }
@@ -83,7 +84,8 @@ lazy val root = (project in file("."))
       "com.alexitc" %%% "scala-js-chrome" % "0.7.0",
       "io.circe" %%% "circe-core" % circe,
       "io.circe" %%% "circe-generic" % circe,
-      "io.circe" %%% "circe-parser" % circe
+      "io.circe" %%% "circe-parser" % circe,
+      "org.specs2" %%% "specs2-core" % "4.10.0" % "test"
     )
   )
 
