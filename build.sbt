@@ -34,10 +34,11 @@ lazy val bundlerSettings: Project => Project = {
       // webpack settings.
       scalaJSLinkerConfig := scalaJSLinkerConfig.value.withSourceMap(false),
       version in webpack := "4.8.1",
-      webpackConfigFile := {
-        val file = if (isProductionBuild) "production.webpack.config.js" else "dev.webpack.config.js"
-        Some(baseDirectory.value / file)
-      },
+      // Having this makes test fail for some unknown reason...See https://github.com/AlexITC/chrome-scalajs-template/issues/21
+//      webpackConfigFile := {
+//        val file = if (isProductionBuild) "production.webpack.config.js" else "dev.webpack.config.js"
+//        Some(baseDirectory.value / file)
+//      },
       // scala-js-chrome
       scalaJSLinkerConfig := scalaJSLinkerConfig.value.withRelativizeSourceMapBase(
         Some((Compile / fastOptJS / artifactPath).value.toURI)
