@@ -10,7 +10,7 @@ class LinkedinYearsPerTechTest extends Specification {
     "get" should {
       "correctly parse base example" in {
         val elem = elementFromString(Example1.example)
-        LinkedinYearsPerTech.get(elem) must be equalTo Map(
+        LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
           "Javascript" -> 11,
           "CSS" -> 11,
           "HTML5" -> 11,

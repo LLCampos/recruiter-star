@@ -29,8 +29,7 @@ object ExperienceItem {
 
 
 object LinkedinYearsPerTech {
-  def get(experienceSectionElem: Element): Map[String, Int] = {
-    println(experienceSectionElem.querySelectorAll("li").length)
+  def getFromLinkedinExperienceSection(elem: Element): Map[String, Int] = {
     Map()
   }
 }
