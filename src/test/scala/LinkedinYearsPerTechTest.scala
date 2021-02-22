@@ -2,6 +2,8 @@ import org.scalajs.dom._
 import org.specs2.mutable.Specification
 import test_data.Example1
 
+import scala.concurrent.duration._
+
 class LinkedinYearsPerTechTest extends Specification {
 
   val domParser = new DOMParser()
@@ -39,6 +41,24 @@ class LinkedinYearsPerTechTest extends Specification {
         )
 
         ExperienceItem.fromLinkedinExperienceSectionElem(elem) must be equalTo expected
+      }
+    }
+
+    "duration" should {
+      "return correct duration when duration string only contains number of years" in {
+        ExperienceItem("", "", "4 yrs").duration must be some Duration(4 * 365, DAYS)
+      }
+
+      "return correct duration when duration string contains years and months" in {
+        ExperienceItem("", "", "7 yrs 4 mos").duration must be some Duration(7 * 365 + 4 * 30, DAYS)
+      }
+
+      "return correct duration when duration string contains years and months with more than one digit" in {
+        ExperienceItem("", "", "11 yrs 10 mos").duration must be some Duration(11 * 365 + 10 * 30, DAYS)
+      }
+
+      "return None if duration string doesn't have the expected format" in {
+        ExperienceItem("", "", "11 years 10 mos").duration must beNone
       }
     }
   }

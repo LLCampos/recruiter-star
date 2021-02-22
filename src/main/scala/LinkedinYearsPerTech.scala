@@ -1,12 +1,31 @@
 import org.scalajs.dom.raw._
 
+import scala.concurrent.duration.{DAYS, Duration}
 import scala.scalajs.js.Object.entries
 
 case class ExperienceItem(
   title: String,
   description: String,
-  duration: String
-)
+  durationDescription: String
+) {
+  def duration: Option[Duration] = {
+    val durationDescriptionRegex = raw"(\d+) yrs( (\d+) mos)?".r
+
+    val (yearsOpt, monthsOpt) = durationDescription match {
+      case durationDescriptionRegex(years, _, null) => (Some(years), None)
+      case durationDescriptionRegex(years, _, months) => (Some(years), Some(months))
+      case _ => (None, None)
+    }
+
+    for {
+      yearsStr <- yearsOpt
+      monthsStr = monthsOpt.getOrElse("0")
+      years <- yearsStr.toIntOption
+      months <- monthsStr.toIntOption
+      totalDays = 365 * years.toInt + 30 * months.toInt
+    } yield Duration(totalDays, DAYS)
+  }
+}
 
 object ExperienceItem {
   def fromLinkedinExperienceSectionElem(elem: Element): Seq[ExperienceItem] =
@@ -30,6 +49,7 @@ object ExperienceItem {
 
 object LinkedinYearsPerTech {
   def getFromLinkedinExperienceSection(elem: Element): Map[String, Int] = {
+    val experienceItems = ExperienceItem.fromLinkedinExperienceSectionElem(elem)
     Map()
   }
 }
