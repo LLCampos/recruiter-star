@@ -737,6 +737,7 @@ object TechList {
     "JVM",
     "Salesforce",
     "Amazon Web Services",
+    "Azure",
     "Windows",
     "IPFS",
     "Fuse",
