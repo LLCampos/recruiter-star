@@ -5,7 +5,7 @@ object TechList {
    * - https://github.com/sindresorhus/awesome
    */
 
-  val all: Seq[String] = Seq(
+  val all: Set[String] = Set(
     // ################# Programming languages #################
     "A#",
     ".NET",

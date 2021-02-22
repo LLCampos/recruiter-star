@@ -72,15 +72,19 @@ class LinkedinYearsPerTechTest extends Specification {
       }
 
       "return technologies in description" in {
-        ExperienceItem("Developer", "I did cool stuff using CSS and Javascript!", "").technologies must be equalTo Set("CSS", "Javascript")
+        ExperienceItem("Developer", "I did cool stuff using CSS and JavaScript", "").technologies must be equalTo Set("CSS", "JavaScript")
       }
 
       "return technologies in description and title" in {
-        ExperienceItem("Java Developer", "I did cool stuff using CSS and Javascript!", "").technologies must be equalTo Set("Java", "CSS", "Javascript")
+        ExperienceItem("Java Developer", "I did cool stuff using CSS and JavaScript", "").technologies must be equalTo Set("Java", "CSS", "JavaScript")
+      }
+
+      "return technologies even if followed by a punctuation character" in {
+        ExperienceItem("", "I did cool stuff using JavaScript!", "").technologies must be equalTo Set("JavaScript")
       }
 
       "be case insensitive" in {
-        ExperienceItem("JaVa Developer", "I did cool stuff using css and JavaScript!", "").technologies must be equalTo Set("Java", "CSS", "Javascript")
+        ExperienceItem("JaVa Developer", "I did cool stuff using css and Javascript", "").technologies must be equalTo Set("Java", "CSS", "JavaScript")
       }
     }
   }

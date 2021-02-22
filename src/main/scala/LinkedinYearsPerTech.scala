@@ -26,8 +26,10 @@ case class ExperienceItem(
     } yield Duration(totalDays, DAYS)
   }
 
-  def technologies: Set[String] =
-    ???
+  def technologies: Set[String] = {
+    val tokens = s"$title $description".split("\\s+")
+    TechList.all.filter(tokens.contains)
+  }
 }
 
 object ExperienceItem {
