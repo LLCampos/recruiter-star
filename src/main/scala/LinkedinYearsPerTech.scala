@@ -25,6 +25,9 @@ case class ExperienceItem(
       totalDays = 365 * years.toInt + 30 * months.toInt
     } yield Duration(totalDays, DAYS)
   }
+
+  def technologies: Set[String] =
+    ???
 }
 
 object ExperienceItem {

@@ -61,6 +61,28 @@ class LinkedinYearsPerTechTest extends Specification {
         ExperienceItem("", "", "11 years 10 mos").duration must beNone
       }
     }
+
+    "technologies" should {
+      "return empty if no technology in experience item" in {
+        ExperienceItem("Developer", "I did cool stuff!", "").technologies must be equalTo Set()
+      }
+
+      "return technologies in title" in {
+        ExperienceItem("Java Developer", "I did cool stuff!", "").technologies must be equalTo Set("Java")
+      }
+
+      "return technologies in description" in {
+        ExperienceItem("Developer", "I did cool stuff using CSS and Javascript!", "").technologies must be equalTo Set("CSS", "Javascript")
+      }
+
+      "return technologies in description and title" in {
+        ExperienceItem("Java Developer", "I did cool stuff using CSS and Javascript!", "").technologies must be equalTo Set("Java", "CSS", "Javascript")
+      }
+
+      "be case insensitive" in {
+        ExperienceItem("JaVa Developer", "I did cool stuff using css and JavaScript!", "").technologies must be equalTo Set("Java", "CSS", "Javascript")
+      }
+    }
   }
 
   def elementFromString(s: String): Element =
