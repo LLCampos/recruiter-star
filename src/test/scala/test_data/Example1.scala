@@ -53,7 +53,7 @@ object Example1 {
                           |                                style="line-height:2rem;max-height:16rem;" data-test-inline-show-more-text=""
                           |                                id="ember3829"
                           |                                class="pv-entity__description t-14 t-black t-normal inline-show-more-text inline-show-more-text--is-collapsed ember-view">
-                          |                            Frontend and Backend developer: <br>Javascript, CSS, HTML, Azure.<br>
+                          |                            Frontend and Backend developer: <br>JavaScript, CSS, HTML5, Azure.<br>
                           |
                           |                            <!----></p><!----></div>
                           |                    </div>
@@ -103,7 +103,7 @@ object Example1 {
                           |                                style="line-height:2rem;max-height:8rem;" data-test-inline-show-more-text=""
                           |                                id="ember3837"
                           |                                class="pv-entity__description t-14 t-black t-normal inline-show-more-text inline-show-more-text--is-collapsed ember-view">
-                          |                            Frontend and Backend developer.<br>Worked with Javascript, CSS and HTML.
+                          |                            Frontend and Backend developer.<br>Worked with JavaScript, CSS and HTML5.
                           |
                           |                            <!----></p><!----></div>
                           |                    </div>

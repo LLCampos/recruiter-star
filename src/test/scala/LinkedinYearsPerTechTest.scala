@@ -14,10 +14,10 @@ class LinkedinYearsPerTechTest extends Specification {
       "correctly parse base example" in {
         val elem = elementFromString(Example1.example)
         LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "Javascript" -> "11 yrs and 4 mos",
+          "JavaScript" -> "11 yrs and 4 mos",
           "CSS" -> "11 yrs and 4 mos",
           "HTML5" -> "11 yrs and 4 mos",
-          "Azure" -> "11 yrs and 4 mos",
+          "Azure" -> "7 yrs and 4 mos",
         )
       }
     }
@@ -31,12 +31,12 @@ class LinkedinYearsPerTechTest extends Specification {
         val expected = Seq(
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
-            "Frontend and Backend developer: Javascript, CSS, HTML, Azure.",
+            "Frontend and Backend developer: JavaScript, CSS, HTML5, Azure.",
             "7 yrs 4 mos"
           ),
           ExperienceItem(
             "Analyst/Software Developer",
-            "Frontend and Backend developer.Worked with Javascript, CSS and HTML.",
+            "Frontend and Backend developer.Worked with JavaScript, CSS and HTML5.",
             "4 yrs"
           ),
         )
