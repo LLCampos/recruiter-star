@@ -23,7 +23,7 @@ class LinkedinYearsPerTechTest extends Specification {
     }
   }
 
-  "com.lcampos.ExperienceItem" should {
+  "ExperienceItem" should {
     "fromLinkedinExperienceSectionElem" should {
       "correctly parse example 1" in {
         val elem = elementFromString(Example1.example)
@@ -81,7 +81,7 @@ class LinkedinYearsPerTechTest extends Specification {
       }
 
       "return technologies even if followed by a punctuation character" in {
-        ExperienceItem("", "I did cool stuff using JavaScript!", "").technologies must be equalTo Set("JavaScript")
+        ExperienceItem("", "I did cool stuff using JavaScript! And CSS, Java.", "").technologies must be equalTo Set("JavaScript", "CSS", "Java")
       }
 
       "be case insensitive" in {

@@ -31,7 +31,8 @@ case class ExperienceItem(
   }
 
   def technologies: Set[String] = {
-    val tokens = s"$title $description".split("\\s+")
+    val tokens = s"$title $description"
+      .split("(\\s|,|\\.|!)+")
     TechList.all.filter(tokens.contains)
   }
 }
