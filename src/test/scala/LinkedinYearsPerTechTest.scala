@@ -1,3 +1,4 @@
+import com.lcampos.{ExperienceItem, LinkedinYearsPerTech}
 import org.scalajs.dom._
 import org.specs2.mutable.Specification
 import test_data.Example1
@@ -9,20 +10,20 @@ class LinkedinYearsPerTechTest extends Specification {
   val domParser = new DOMParser()
 
   "LinkedinYearsPerTechTest" should {
-    "get" should {
+    "getFromLinkedinExperienceSection" should {
       "correctly parse base example" in {
         val elem = elementFromString(Example1.example)
         LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "Javascript" -> 11,
-          "CSS" -> 11,
-          "HTML5" -> 11,
-          "Azure" -> 7,
+          "Javascript" -> "11 yrs and 4 mos",
+          "CSS" -> "11 yrs and 4 mos",
+          "HTML5" -> "11 yrs and 4 mos",
+          "Azure" -> "11 yrs and 4 mos",
         )
       }
     }
   }
 
-  "ExperienceItem" should {
+  "com.lcampos.ExperienceItem" should {
     "fromLinkedinExperienceSectionElem" should {
       "correctly parse example 1" in {
         val elem = elementFromString(Example1.example)

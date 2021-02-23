@@ -1,5 +1,6 @@
 package com.lcampos.chrome.activetab
 
+import com.lcampos.LinkedinYearsPerTech
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
@@ -23,11 +24,11 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def addYearsPerTechToPage(): Unit = {
     val experienceSectionElem: Element = dom.document.getElementById("experience-section")
-    val yearsPerTech: Map[String, Int] = getYearsPerTech(experienceSectionElem)
+    val yearsPerTech= LinkedinYearsPerTech.getFromLinkedinExperienceSection(experienceSectionElem)
     addYearsPerTechElem(yearsPerTech)
   }
 
-  private def addYearsPerTechElem(yearsPerTech: Map[String, Int]): Unit = {
+  private def addYearsPerTechElem(yearsPerTech: Map[String, String]): Unit = {
     val mainColumnDiv: Element = dom.document.getElementById("main").firstElementChild
     val profileDetail: Element = mainColumnDiv.children.item(1)
     val aboutSection: Element = profileDetail.children.item(2)
@@ -35,7 +36,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     profileDetail.insertBefore(yearsPerTechSection, profileDetail.firstElementChild)
   }
 
-  private def generateYearsPerTechElement(elementToClone: Element, yearsPerTech: Map[String, Int]): Element = {
+  private def generateYearsPerTechElement(elementToClone: Element, yearsPerTech: Map[String, String]): Element = {
     val yearsPerTechElem: Element = elementToClone.cloneNode(true).asInstanceOf[Element]
 
     yearsPerTechElem.querySelector("h2").innerText = "Years Per Tech"
@@ -66,10 +67,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
     yearsPerTechElem
   }
-
-  private def getYearsPerTech(experienceSectionElem: Element): Map[String, Int] =
-    // TODO
-    Map("Python" -> 1, "Java" -> 2, "php" -> 100, "Scala" -> 5, "Perl" -> 8)
 
   private def log(msg: String): Unit = {
     println(s"activeTab: $msg")

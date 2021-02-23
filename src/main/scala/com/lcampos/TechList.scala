@@ -1,3 +1,5 @@
+package com.lcampos
+
 object TechList {
 
   /**

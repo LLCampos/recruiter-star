@@ -3,7 +3,8 @@ import com.alexitc.ChromeSbtPlugin
 lazy val appName = "linkedin-util-years-per-tech"
 lazy val isProductionBuild = sys.env.getOrElse("PROD", "false") == "true"
 
-val circe = "0.13.0"
+val circeVersion = "0.13.0"
+val catsVersion = "2.3.0"
 
 lazy val baseSettings: Project => Project = {
   _.enablePlugins(ScalaJSPlugin)
@@ -82,9 +83,10 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "1.1.0",
       "com.alexitc" %%% "scala-js-chrome" % "0.7.0",
-      "io.circe" %%% "circe-core" % circe,
-      "io.circe" %%% "circe-generic" % circe,
-      "io.circe" %%% "circe-parser" % circe,
+      "io.circe" %%% "circe-core" % circeVersion,
+      "io.circe" %%% "circe-generic" % circeVersion,
+      "io.circe" %%% "circe-parser" % circeVersion,
+      "org.typelevel" %%% "cats-core" % catsVersion,
       "org.specs2" %%% "specs2-core" % "4.10.0" % "test"
     )
   )

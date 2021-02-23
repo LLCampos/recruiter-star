@@ -1,3 +1,7 @@
+package com.lcampos
+
+import cats.kernel.Semigroup
+import cats.syntax.all._
 import org.scalajs.dom.raw._
 
 import scala.concurrent.duration.{DAYS, Duration}
@@ -53,8 +57,28 @@ object ExperienceItem {
 
 
 object LinkedinYearsPerTech {
-  def getFromLinkedinExperienceSection(elem: Element): Map[String, Int] = {
+
+  private val DaysInYear = 365
+  private val DaysInMonth = 30
+
+  def getFromLinkedinExperienceSection(elem: Element): Map[String, String] = {
     val experienceItems = ExperienceItem.fromLinkedinExperienceSectionElem(elem)
-    Map()
+    experienceItems.map(getYearsPerTech).sequence match {
+      case Some(yearsPerTechSeq) =>
+        yearsPerTechSeq
+          .reduce(Semigroup[Map[String, Duration]].combine)
+          .view.mapValues(formatDuration).toMap
+      case None => Map()
+    }
   }
+
+  private def formatDuration(duration: Duration): String = {
+    val days = duration.toDays
+    val years = days / DaysInYear
+    val months = (days % DaysInYear) / DaysInMonth
+    s"$years yrs and $months mos"
+  }
+
+  protected def getYearsPerTech(experienceItem: ExperienceItem): Option[Map[String, Duration]] =
+    experienceItem.duration.map(d => experienceItem.technologies.map(_ -> d).toMap)
 }
