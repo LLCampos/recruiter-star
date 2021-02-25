@@ -33,7 +33,10 @@ case class ExperienceItem(
   def technologies: Set[String] = {
     val tokens = s"$title $description"
       .split("(\\s|,|\\.|!)+")
-    TechList.all.filter(tokens.contains)
+      .map(_.toLowerCase)
+    TechList.all.keys
+      .filter(tokens.contains)
+      .map(t => TechList.all(t)).toSet
   }
 }
 

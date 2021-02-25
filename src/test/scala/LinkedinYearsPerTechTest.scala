@@ -16,7 +16,7 @@ class LinkedinYearsPerTechTest extends Specification {
         LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
           "JavaScript" -> "11 yrs and 4 mos",
           "CSS" -> "11 yrs and 4 mos",
-          "HTML5" -> "11 yrs and 4 mos",
+          "HTML" -> "11 yrs and 4 mos",
           "Azure" -> "7 yrs and 4 mos",
         )
       }
@@ -86,6 +86,10 @@ class LinkedinYearsPerTechTest extends Specification {
 
       "be case insensitive" in {
         ExperienceItem("JaVa Developer", "I did cool stuff using css and Javascript", "").technologies must be equalTo Set("Java", "CSS", "JavaScript")
+      }
+
+      "extract canon tech name" in {
+        ExperienceItem("Developer", "I did cool stuff using HTML5", "").technologies must be equalTo Set("HTML")
       }
     }
   }
