@@ -1,7 +1,7 @@
 import com.lcampos.{ExperienceItem, LinkedinYearsPerTech}
 import org.scalajs.dom._
 import org.specs2.mutable.Specification
-import test_data.Example1
+import test_data.{Example1, Example2}
 
 import scala.concurrent.duration._
 
@@ -11,13 +11,26 @@ class LinkedinYearsPerTechTest extends Specification {
 
   "LinkedinYearsPerTechTest" should {
     "getFromLinkedinExperienceSection" should {
-      "correctly parse base example" in {
+      "correctly parse example 1" in {
         val elem = elementFromString(Example1.example)
         LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
           "JavaScript" -> "11 yrs and 4 mos",
           "CSS" -> "11 yrs and 4 mos",
           "HTML" -> "11 yrs and 4 mos",
           "Azure" -> "7 yrs and 4 mos",
+        )
+      }
+
+      "correctly parse example 2" in {
+        val elem = elementFromString(Example2.example)
+        LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
+          "Java" -> "3 yrs and 4 mos",
+          "Spring Framework" -> "3 yrs and 4 mos",
+          "MongoDB" -> "3 yrs and 4 mos",
+          "Git" -> "3 yrs and 4 mos",
+          "Docker" -> "3 yrs and 4 mos",
+          "AWS" -> "3 yrs and 4 mos",
+
         )
       }
     }

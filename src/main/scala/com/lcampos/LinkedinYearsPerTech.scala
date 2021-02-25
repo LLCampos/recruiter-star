@@ -72,7 +72,9 @@ object LinkedinYearsPerTech {
         yearsPerTechSeq
           .reduce(Semigroup[Map[String, Duration]].combine)
           .view.mapValues(formatDuration).toMap
-      case None => Map()
+      case None =>
+        println("Couldn't get years per tech for some of the experience items")
+        Map()
     }
   }
 
