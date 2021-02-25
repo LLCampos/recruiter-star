@@ -8,6 +8,8 @@ import org.scalajs.dom
 import org.scalajs.dom.raw.{Element, NodeList}
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
+import scala.scalajs.js.timers._
 
 class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I18NMessages) {
 
@@ -15,7 +17,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     log("This was run by the active tab")
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
-        case Some(v: String) if v == "page was reloaded" => addYearsPerTechToPage()
+        case Some(v: String) if v == "page was reloaded" =>
+          setTimeout(3.seconds) {
+            addYearsPerTechToPage()
+          }
         case _ => ()
       }
     }
@@ -24,7 +29,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def addYearsPerTechToPage(): Unit = {
     val experienceSectionElem: Element = dom.document.getElementById("experience-section")
-    val yearsPerTech= LinkedinYearsPerTech.getFromLinkedinExperienceSection(experienceSectionElem)
+    val yearsPerTech = LinkedinYearsPerTech.getFromLinkedinExperienceSection(experienceSectionElem)
     addYearsPerTechElem(yearsPerTech)
   }
 
