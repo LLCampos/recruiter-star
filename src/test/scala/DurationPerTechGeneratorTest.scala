@@ -1,11 +1,11 @@
-import com.lcampos.{ExperienceItem, LinkedinYearsPerTech}
+import com.lcampos.{ExperienceItem, DurationPerTechGenerator}
 import org.scalajs.dom._
 import org.specs2.mutable.Specification
 import test_data.{Example1, Example2}
 
 import scala.concurrent.duration._
 
-class LinkedinYearsPerTechTest extends Specification {
+class DurationPerTechGeneratorTest extends Specification {
 
   val domParser = new DOMParser()
 
@@ -13,7 +13,7 @@ class LinkedinYearsPerTechTest extends Specification {
     "getFromLinkedinExperienceSection" should {
       "correctly parse example 1" in {
         val elem = elementFromString(Example1.example)
-        LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
+        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must be equalTo Map(
           "JavaScript" -> "11 years and 4 months",
           "CSS" -> "11 years and 4 months",
           "HTML" -> "11 years and 4 months",
@@ -23,7 +23,7 @@ class LinkedinYearsPerTechTest extends Specification {
 
       "correctly parse example 2" in {
         val elem = elementFromString(Example2.example)
-        LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
+        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must be equalTo Map(
           "Java" -> "3 years and 4 months",
           "Spring Framework" -> "3 years and 4 months",
           "MongoDB" -> "3 years and 4 months",
