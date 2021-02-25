@@ -50,6 +50,10 @@ class LinkedinYearsPerTechTest extends Specification {
         ExperienceItem("", "", "4 yrs").duration must be some Duration(4 * 365, DAYS)
       }
 
+      "return correct duration when duration string only contains number of months" in {
+        ExperienceItem("", "", "3 mos").duration must be some Duration(3 * 30, DAYS)
+      }
+
       "return correct duration when duration string contains years and months" in {
         ExperienceItem("", "", "7 yrs 4 mos").duration must be some Duration(7 * 365 + 4 * 30, DAYS)
       }

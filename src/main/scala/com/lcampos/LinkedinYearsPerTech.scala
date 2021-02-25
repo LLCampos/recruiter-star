@@ -13,17 +13,17 @@ case class ExperienceItem(
   durationDescription: String
 ) {
   def duration: Option[Duration] = {
-    val durationDescriptionRegex = raw"(\d+) yrs( (\d+) mos)?".r
-
     val (yearsOpt, monthsOpt) = durationDescription match {
-      case durationDescriptionRegex(years, _, null) => (Some(years), None)
-      case durationDescriptionRegex(years, _, months) => (Some(years), Some(months))
+      case s"$years yrs $months mos" => (Some(years), Some(months))
+      case s"$years yrs" => (Some(years), None)
+      case s"$months mos" => (None, Some(months))
       case _ => (None, None)
     }
 
+    val yearsStr = yearsOpt.getOrElse("0")
+    val monthsStr = monthsOpt.getOrElse("0")
+
     for {
-      yearsStr <- yearsOpt
-      monthsStr = monthsOpt.getOrElse("0")
       years <- yearsStr.toIntOption
       months <- monthsStr.toIntOption
       totalDays = 365 * years.toInt + 30 * months.toInt
