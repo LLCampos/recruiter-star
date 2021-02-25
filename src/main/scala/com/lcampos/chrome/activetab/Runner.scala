@@ -57,7 +57,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
     yearsPerTechElemP.innerHTML = ""
 
-    val yearsPerTechTexts = yearsPerTech.map { case (tech, years) => s"<b>$tech - </b> $years years</br>" }
+    val yearsPerTechTexts = yearsPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
 
     yearsPerTechTexts.init.foreach { text =>
       val normalSpanClone = spanNormal.cloneNode(true).asInstanceOf[Element]

@@ -14,22 +14,22 @@ class LinkedinYearsPerTechTest extends Specification {
       "correctly parse example 1" in {
         val elem = elementFromString(Example1.example)
         LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "JavaScript" -> "11 yrs and 4 mos",
-          "CSS" -> "11 yrs and 4 mos",
-          "HTML" -> "11 yrs and 4 mos",
-          "Azure" -> "7 yrs and 4 mos",
+          "JavaScript" -> "11 years and 4 months",
+          "CSS" -> "11 years and 4 months",
+          "HTML" -> "11 years and 4 months",
+          "Azure" -> "7 years and 4 months",
         )
       }
 
       "correctly parse example 2" in {
         val elem = elementFromString(Example2.example)
         LinkedinYearsPerTech.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "Java" -> "3 yrs and 4 mos",
-          "Spring Framework" -> "3 yrs and 4 mos",
-          "MongoDB" -> "3 yrs and 4 mos",
-          "Git" -> "3 yrs and 4 mos",
-          "Docker" -> "3 yrs and 4 mos",
-          "AWS" -> "3 yrs and 4 mos",
+          "Java" -> "3 years and 4 months",
+          "Spring Framework" -> "3 years and 4 months",
+          "MongoDB" -> "3 years and 4 months",
+          "Git" -> "3 years and 4 months",
+          "Docker" -> "3 years and 4 months",
+          "AWS" -> "3 years and 4 months",
 
         )
       }

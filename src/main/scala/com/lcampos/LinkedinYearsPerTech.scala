@@ -82,7 +82,7 @@ object LinkedinYearsPerTech {
     val days = duration.toDays
     val years = days / DaysInYear
     val months = (days % DaysInYear) / DaysInMonth
-    s"$years yrs and $months mos"
+    s"$years years and $months months"
   }
 
   protected def getYearsPerTech(experienceItem: ExperienceItem): Option[Map[String, Duration]] =
