@@ -2,7 +2,7 @@ package com.lcampos
 
 import org.scalajs.dom._
 import org.specs2.mutable.Specification
-import test_data.{Example1, Example2}
+import test_data.experience_section.{Example1, Example2}
 
 import scala.concurrent.duration._
 
