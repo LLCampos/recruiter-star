@@ -1,4 +1,5 @@
-import com.lcampos.{ExperienceItem, DurationPerTechGenerator}
+package com.lcampos
+
 import org.scalajs.dom._
 import org.specs2.mutable.Specification
 import test_data.{Example1, Example2}
