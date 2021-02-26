@@ -2,7 +2,7 @@ package com.lcampos
 
 import org.scalajs.dom._
 import org.specs2.mutable.Specification
-import test_data.experience_section.{Example1, Example2}
+import test_data.experience_section.{Example1, Example2, Example3_ItemWithEmptyDescription}
 
 import scala.concurrent.duration._
 
@@ -32,6 +32,13 @@ class DurationPerTechGeneratorTest extends Specification {
           "Docker" -> "3 years and 4 months",
           "AWS" -> "3 years and 4 months",
 
+        )
+      }
+
+      "correctly parse experience section in which an item description is empty" in {
+        val elem = elementFromString(Example3_ItemWithEmptyDescription.example)
+        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must be equalTo Map(
+          "Python" -> "0 years and 2 months",
         )
       }
     }
