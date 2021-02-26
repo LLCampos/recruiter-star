@@ -116,6 +116,10 @@ class DurationPerTechGeneratorTest extends Specification {
       "extract canon tech name" in {
         ExperienceItem("Developer", "I did cool stuff using HTML5", "").technologies must be equalTo Set("HTML")
       }
+
+      "deal with tech names separated by punctuation" in {
+        ExperienceItem("Java/Scala Developer", "JavaScript,CSS", "").technologies must be equalTo Set("Java", "Scala", "JavaScript", "CSS")
+      }
     }
   }
 
