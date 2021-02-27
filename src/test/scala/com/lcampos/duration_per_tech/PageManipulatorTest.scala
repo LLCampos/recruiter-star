@@ -27,6 +27,11 @@ class PageManipulatorTest extends Specification {
         val doc = ElementUtil.documentFromString(Example4_EmptySummary.example)
         PageManipulator.addDurationPerTechToPage(doc) must beLeft("Element for selector 'h3' not found")
       }
+
+      "return error on no employment duration" in {
+        val doc = ElementUtil.documentFromString(Example5_NoEmploymentDuration.example)
+        PageManipulator.addDurationPerTechToPage(doc) must beLeft("Element with class 'pv-entity__bullet-item-v2' not found")
+      }
     }
   }
 }
