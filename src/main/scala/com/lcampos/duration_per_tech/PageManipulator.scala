@@ -13,9 +13,8 @@ object PageManipulator {
   } yield ()
 
   private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Either[String, Unit] = for {
-    mainColumnDiv <- ElementUtil.getElementByIdSafe(document, "main").map(_.firstElementChild)
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
-    aboutSection <- ElementUtil.getNthChildSafe(profileDetail, 2)
+    aboutSection <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "pv-about-section")
     durationPerTechSection: Element = generateYearsPerTechElement(aboutSection, durationPerTech)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
   } yield ()
