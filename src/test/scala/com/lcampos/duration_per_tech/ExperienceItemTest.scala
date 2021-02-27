@@ -1,53 +1,16 @@
-package com.lcampos
+package com.lcampos.duration_per_tech
 
-import org.scalajs.dom._
+import com.lcampos.util.ElementUtil
 import org.specs2.mutable.Specification
-import test_data.experience_section.{Example1, Example2, Example3_ItemWithEmptyDescription}
+import test_data.experience_section.Example1
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.{DAYS, Duration}
 
-class DurationPerTechGeneratorTest extends Specification {
-
-  val domParser = new DOMParser()
-
-  "LinkedinYearsPerTechTest" should {
-    "getFromLinkedinExperienceSection" should {
-      "correctly parse example 1" in {
-        val elem = elementFromString(Example1.example)
-        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "JavaScript" -> "11 years and 4 months",
-          "CSS" -> "11 years and 4 months",
-          "HTML" -> "11 years and 4 months",
-          "Azure" -> "7 years and 4 months",
-        )
-      }
-
-      "correctly parse example 2" in {
-        val elem = elementFromString(Example2.example)
-        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "Java" -> "3 years and 4 months",
-          "Spring Framework" -> "3 years and 4 months",
-          "MongoDB" -> "3 years and 4 months",
-          "Git" -> "3 years and 4 months",
-          "Docker" -> "3 years and 4 months",
-          "AWS" -> "3 years and 4 months",
-
-        )
-      }
-
-      "correctly parse experience section in which an item description is empty" in {
-        val elem = elementFromString(Example3_ItemWithEmptyDescription.example)
-        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must be equalTo Map(
-          "Python" -> "0 years and 2 months",
-        )
-      }
-    }
-  }
-
+class ExperienceItemTest extends Specification {
   "ExperienceItem" should {
     "fromLinkedinExperienceSectionElem" should {
       "correctly parse example 1" in {
-        val elem = elementFromString(Example1.example)
+        val elem = ElementUtil.elementFromString(Example1.example)
 
         val expected = Seq(
           ExperienceItem(
@@ -122,7 +85,4 @@ class DurationPerTechGeneratorTest extends Specification {
       }
     }
   }
-
-  def elementFromString(s: String): Element =
-    domParser.parseFromString(s, "text/html").documentElement
 }

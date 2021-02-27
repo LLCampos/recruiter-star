@@ -1,9 +1,9 @@
 package com.lcampos.chrome.activetab
 
-import com.lcampos.DurationPerTechGenerator
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
+import com.lcampos.duration_per_tech.DurationPerTechGenerator
 import org.scalajs.dom
 import org.scalajs.dom.raw.{Element, NodeList}
 

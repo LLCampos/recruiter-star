@@ -1,4 +1,4 @@
-package com.lcampos
+package com.lcampos.duration_per_tech
 
 object TechList {
 
