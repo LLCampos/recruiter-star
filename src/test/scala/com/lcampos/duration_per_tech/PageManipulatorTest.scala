@@ -42,6 +42,20 @@ class PageManipulatorTest extends Specification {
           elem.textContent.contains("Python -  3 years and 3 months")
         })
       }
+
+      "if page already has a tech experience summary section, replace it" in {
+        val doc = ElementUtil.documentFromString(Example7_PageAlreadyWithTechExperienceSummary.example)
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
+          elem.textContent.contains("Python -  3 years and 3 months")
+        })
+        doc.documentElement.textContent.contains("4 years and 4 months") must beFalse
+
+        PageManipulator.addDurationPerTechToPage(doc) must beRight
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
+          elem.textContent.contains("Java -  4 years and 4 months")
+        })
+        doc.documentElement.textContent.contains("3 years and 3 months") must beFalse
+      }
     }
   }
 }
