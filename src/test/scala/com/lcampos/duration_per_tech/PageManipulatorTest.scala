@@ -56,6 +56,13 @@ class PageManipulatorTest extends Specification {
         })
         doc.documentElement.textContent.contains("3 years and 3 months") must beFalse
       }
+
+      "if experience section doesn't reference any technologies, don't add tech experience summary" in {
+        val doc = ElementUtil.documentFromString(Example8_NoReferenceToTechnologies.example)
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
+        PageManipulator.addDurationPerTechToPage(doc) must beRight
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
+      }
     }
   }
 }
