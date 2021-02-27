@@ -1,6 +1,7 @@
 package com.lcampos.duration_per_tech
 
 import com.lcampos.util.ElementUtil
+import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
 import test_data.full_profile._
 
@@ -33,9 +34,13 @@ class PageManipulatorTest extends Specification {
         PageManipulator.addDurationPerTechToPage(doc) must beLeft("Element with class 'pv-entity__bullet-item-v2' not found")
       }
 
-      "return error on no main element" in {
+      "add tech experience section to valid document" in {
         val doc = ElementUtil.documentFromString(Example6_ValidPage.example)
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
         PageManipulator.addDurationPerTechToPage(doc) must beRight
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
+          elem.textContent.contains("Python -  3 years and 3 months")
+        })
       }
     }
   }

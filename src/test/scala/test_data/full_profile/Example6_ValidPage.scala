@@ -8,14 +8,6 @@ object Example6_ValidPage {
       |
       | </div>
       |
-      | <div class='pv-about-section'>
-      |   <h2>Title</h2>
-      |   <p>
-      |     <span></span>
-      |     <span></span>
-      |     <span></span>
-      |   </p>
-      | </div>
       |
       | <section id="experience-section">
       |   <ul>
@@ -24,9 +16,7 @@ object Example6_ValidPage {
       |         <h3>Developer</h3>
       |       </div>
       |
-      |       <div class='pv-entity__bullet-item-v2'>
-      |         3 yrs 3 mos
-      |       </div>
+      |       <div class='pv-entity__bullet-item-v2'>3 yrs 3 mos</div>
       |
       |       <div class='pv-entity__description'>
       |         I was a Python developer
