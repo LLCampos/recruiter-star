@@ -25,4 +25,11 @@ object ElementUtil {
       case elem => Right(elem)
     }
   }
+
+  def querySelectorSafe(elem: Element, selectors: String): Either[String, Element] = {
+    elem.querySelector(selectors) match {
+      case null => Left(s"Element for selector '$selectors' not found")
+      case elem => Right(elem)
+    }
+  }
 }

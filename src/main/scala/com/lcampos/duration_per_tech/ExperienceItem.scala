@@ -54,7 +54,7 @@ object ExperienceItem {
 
   private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] = for {
     summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info")
-    title = summary.querySelector("h3").textContent
+    title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
     descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
     description = descriptionElem.map(_.textContent.trim()).getOrElse("")
     employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
