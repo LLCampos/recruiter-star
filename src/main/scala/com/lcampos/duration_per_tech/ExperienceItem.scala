@@ -1,5 +1,7 @@
 package com.lcampos.duration_per_tech
 
+import cats.syntax.all._
+import com.lcampos.util.ElementUtil
 import org.scalajs.dom.raw.{Element, HTMLLIElement}
 
 import scala.concurrent.duration.{DAYS, Duration}
@@ -39,28 +41,26 @@ case class ExperienceItem(
 }
 
 object ExperienceItem {
-  def fromLinkedinExperienceSectionElem(elem: Element): Either[String, Seq[ExperienceItem]] = {
+  def fromLinkedinExperienceSectionElem(elem: Element): Either[String, List[ExperienceItem]] = {
     val liElems = entries(elem.querySelectorAll("li"))
     if (liElems.isEmpty) {
       Left("No <li> elements in the experience section")
     } else {
-      val result = liElems.map(tuple => tuple._2 match {
+      liElems.map(tuple => tuple._2 match {
         case el: HTMLLIElement => fromExperienceListItem(el)
-      }).toSeq
-      Right(result)
+      }).toList.sequence
     }
   }
 
-  private def fromExperienceListItem(elem: HTMLLIElement): ExperienceItem = {
-    val summary = elem.getElementsByClassName("pv-entity__summary-info").item(0)
-    val title = summary.querySelector("h3").textContent
-    val descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
-    val description = descriptionElem.map(_.textContent.trim()).getOrElse("")
-    val employmentDuration = elem.getElementsByClassName("pv-entity__bullet-item-v2").item(0).textContent
-    ExperienceItem(
+  private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] = for {
+    summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info")
+    title = summary.querySelector("h3").textContent
+    descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
+    description = descriptionElem.map(_.textContent.trim()).getOrElse("")
+    employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
+  } yield ExperienceItem(
       title,
       description,
       employmentDuration
     )
-  }
 }

@@ -18,4 +18,11 @@ object ElementUtil {
       case elem => Right(elem)
     }
   }
+
+  def getFirstElementByClassNameSafe(elem: Element, className: String): Either[String, Element] = {
+    elem.getElementsByClassName(className).item(0) match {
+      case null => Left(s"Element with class '$className' not found")
+      case elem => Right(elem)
+    }
+  }
 }
