@@ -1,6 +1,6 @@
 package com.lcampos.util
 
-import org.scalajs.dom.{DOMParser, Document, Element}
+import org.scalajs.dom.{DOMParser, Document, Element, document}
 
 object ElementUtil {
 
@@ -9,8 +9,11 @@ object ElementUtil {
   def documentFromString(s: String): Document =
     domParser.parseFromString(s, "text/html")
 
-  def elementFromString(s: String): Element =
-    documentFromString(s).documentElement
+  def elementFromString(s: String): Element = {
+    val div = document.createElement("div")
+    div.innerHTML = s
+    div
+  }
 
   def getElementByIdSafe(doc: Document, id: String): Either[String, Element] = {
     doc.getElementById(id) match {

@@ -14,39 +14,35 @@ object PageManipulator {
 
   private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
-    aboutSection <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "pv-about-section")
-    durationPerTechSection <- generateYearsPerTechElement(aboutSection, durationPerTech)
+    durationPerTechSection <- generateYearsPerTechElement(durationPerTech)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
   } yield ()
 
-  private def generateYearsPerTechElement(elementToClone: Element, durationPerTech: Map[String, String]): Either[String, Element] = {
-    val durationPerTechElem: Element = elementToClone.cloneNode(true).asInstanceOf[Element]
+  private def generateYearsPerTechElement(durationPerTech: Map[String, String]): Either[String, Element] = {
+    val durationPerTechElem: Element = durationPerTechElemTemplate
 
     for {
-      h2 <- ElementUtil.querySelectorSafe(durationPerTechElem, "h2")
-      _ = h2.innerText = "Tech Experience Summary"
-
       durationPerTechElemP <- ElementUtil.querySelectorSafe(durationPerTechElem, "p")
-      spans = durationPerTechElemP.querySelectorAll("span")
-
-      // Each of these has different classes
-      spanNormal = spans.item(0).asInstanceOf[Element]
-      spanLast = spans.item(spans.length - 2).asInstanceOf[Element]
-      spanEllipsis = spans.item(spans.length - 1).asInstanceOf[Element]
-
-      _ = durationPerTechElemP.innerHTML = ""
-
       durationPerTechTexts = durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
-
-      _ = durationPerTechTexts.init.foreach { text =>
-        val normalSpanClone = spanNormal.cloneNode(true).asInstanceOf[Element]
-        normalSpanClone.innerHTML = text
-        durationPerTechElemP.appendChild(normalSpanClone)
+      _ = durationPerTechTexts.foreach { text =>
+        val span = durationPerTechSpanTemplate
+        span.innerHTML = text
+        durationPerTechElemP.appendChild(span)
       }
-
-      _ = spanLast.innerHTML = durationPerTechTexts.last
-      _ = durationPerTechElemP.appendChild(spanLast)
-      _= durationPerTechElemP.appendChild(spanEllipsis)
     } yield durationPerTechElem
   }
+
+  private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(
+    """
+      <div class="pv-oc ember-view" id="tech-experience-summary">
+          <section class="pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view"><header class="pv-profile-section__card-header">
+              <h2 class="pv-profile-section__card-heading">Tech Experience Summary</h2>
+              <!----></header>
+              <p id="ember885" class="pv-about__summary-text mt4 t-14 ember-view">
+              </p>
+          </section>
+      </div>
+      """)
+
+  private def durationPerTechSpanTemplate: Element = ElementUtil.elementFromString("""<span class="lt-line-clamp__line"></span>""")
 }
