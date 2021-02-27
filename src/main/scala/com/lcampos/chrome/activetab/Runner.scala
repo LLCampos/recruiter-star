@@ -17,7 +17,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
         case Some(v: String) if v == "page was reloaded" =>
-          setTimeout(3.seconds) {
+          setTimeout(1.milli) {
             duration_per_tech.PageManipulator.addDurationPerTechToPage(dom.document)
           }
         case _ => ()
