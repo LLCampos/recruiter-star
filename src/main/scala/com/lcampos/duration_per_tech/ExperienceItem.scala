@@ -39,10 +39,17 @@ case class ExperienceItem(
 }
 
 object ExperienceItem {
-  def fromLinkedinExperienceSectionElem(elem: Element): Seq[ExperienceItem] =
-    entries(elem.querySelectorAll("li")).map(tuple => tuple._2 match {
-      case el: HTMLLIElement => fromExperienceListItem(el)
-    }).toSeq
+  def fromLinkedinExperienceSectionElem(elem: Element): Either[String, Seq[ExperienceItem]] = {
+    val liElems = entries(elem.querySelectorAll("li"))
+    if (liElems.isEmpty) {
+      Left("No <li> elements in the experience section")
+    } else {
+      val result = liElems.map(tuple => tuple._2 match {
+        case el: HTMLLIElement => fromExperienceListItem(el)
+      }).toSeq
+      Right(result)
+    }
+  }
 
   private def fromExperienceListItem(elem: HTMLLIElement): ExperienceItem = {
     val summary = elem.getElementsByClassName("pv-entity__summary-info").item(0)

@@ -8,7 +8,7 @@ object PageManipulator {
 
   def addDurationPerTechToPage(document: Document): Either[String, Unit] = for {
     experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
-    durationPerTech = DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
+    durationPerTech <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
     _ = addYearsPerTechElem(durationPerTech, document)
   } yield ()
 

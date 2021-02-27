@@ -25,7 +25,7 @@ class ExperienceItemTest extends Specification {
           ),
         )
 
-        ExperienceItem.fromLinkedinExperienceSectionElem(elem) must be equalTo expected
+        ExperienceItem.fromLinkedinExperienceSectionElem(elem) must beRight(expected)
       }
     }
 

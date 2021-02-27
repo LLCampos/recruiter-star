@@ -12,16 +12,17 @@ object DurationPerTechGenerator {
   private val DaysInYear = 365
   private val DaysInMonth = 30
 
-  def getFromLinkedinExperienceSection(elem: Element): Map[String, String] = {
-    val experienceItems = ExperienceItem.fromLinkedinExperienceSectionElem(elem)
-    experienceItems.map(getDurationPerTech).sequence match {
-      case Some(durationPerTechSeq) =>
-        durationPerTechSeq
-          .reduce(Semigroup[Map[String, Duration]].combine)
-          .view.mapValues(formatDuration).toMap
-      case None =>
-        println("Couldn't get duration per tech for some of the experience items")
-        Map()
+  def getFromLinkedinExperienceSection(elem: Element): Either[String, Map[String, String]] = {
+    ExperienceItem.fromLinkedinExperienceSectionElem(elem).map { experienceItems =>
+      experienceItems.map(getDurationPerTech).sequence match {
+        case Some(durationPerTechSeq) =>
+          durationPerTechSeq
+            .reduce(Semigroup[Map[String, Duration]].combine)
+            .view.mapValues(formatDuration).toMap
+        case None =>
+          println("Couldn't get duration per tech for some of the experience items")
+          Map()
+      }
     }
   }
 
