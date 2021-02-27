@@ -9,16 +9,16 @@ object PageManipulator {
   def addDurationPerTechToPage(document: Document): Either[String, Unit] = for {
     experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
     durationPerTech <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
-    _ = addYearsPerTechElem(durationPerTech, document)
+    _ <- addYearsPerTechElem(durationPerTech, document)
   } yield ()
 
-  private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Unit = {
-    val mainColumnDiv: Element = document.getElementById("main").firstElementChild
-    val profileDetail: Element = mainColumnDiv.children.item(1)
-    val aboutSection: Element = profileDetail.children.item(2)
-    val durationPerTechSection: Element = generateYearsPerTechElement(aboutSection, durationPerTech)
-    profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
-  }
+  private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Either[String, Unit] = for {
+    mainColumnDiv <- ElementUtil.getElementByIdSafe(document, "main").map(_.firstElementChild)
+    profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
+    aboutSection <- ElementUtil.getNthChildSafe(profileDetail, 2)
+    durationPerTechSection: Element = generateYearsPerTechElement(aboutSection, durationPerTech)
+    _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
+  } yield ()
 
   private def generateYearsPerTechElement(elementToClone: Element, durationPerTech: Map[String, String]): Element = {
     val durationPerTechElem: Element = elementToClone.cloneNode(true).asInstanceOf[Element]
