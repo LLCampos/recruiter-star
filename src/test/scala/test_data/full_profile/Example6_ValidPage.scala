@@ -3,7 +3,7 @@ package test_data.full_profile
 object Example6_ValidPage {
 
   val example: String =
-    """<main id="main">
+    """<main>
       | <div class='profile-detail'>
       |
       | </div>

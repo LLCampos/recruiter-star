@@ -3,7 +3,7 @@ package test_data.full_profile
 object Example4_EmptySummary {
 
   val example: String =
-    """<main id="main">
+    """<main>
       |
       | <section id="experience-section">
       |   <ul>
