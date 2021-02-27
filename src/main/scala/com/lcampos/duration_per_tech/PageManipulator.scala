@@ -1,15 +1,16 @@
 package com.lcampos.duration_per_tech
 
+import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Document
 import org.scalajs.dom.raw.{Element, NodeList}
 
 object PageManipulator {
 
-  def addDurationPerTechToPage(document: Document): Unit = {
-    val experienceSectionElem: Element = document.getElementById("experience-section")
-    val durationPerTech = DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
-    addYearsPerTechElem(durationPerTech, document)
-  }
+  def addDurationPerTechToPage(document: Document): Either[String, Unit] = for {
+    experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
+    durationPerTech = DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
+    _ = addYearsPerTechElem(durationPerTech, document)
+  } yield ()
 
   private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Unit = {
     val mainColumnDiv: Element = document.getElementById("main").firstElementChild
