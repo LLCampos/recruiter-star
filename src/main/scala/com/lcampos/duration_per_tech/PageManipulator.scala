@@ -2,7 +2,7 @@ package com.lcampos.duration_per_tech
 
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Document
-import org.scalajs.dom.raw.{Element, NodeList}
+import org.scalajs.dom.raw.Element
 
 object PageManipulator {
 
@@ -15,39 +15,38 @@ object PageManipulator {
   private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
     aboutSection <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "pv-about-section")
-    durationPerTechSection: Element = generateYearsPerTechElement(aboutSection, durationPerTech)
+    durationPerTechSection <- generateYearsPerTechElement(aboutSection, durationPerTech)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
   } yield ()
 
-  private def generateYearsPerTechElement(elementToClone: Element, durationPerTech: Map[String, String]): Element = {
+  private def generateYearsPerTechElement(elementToClone: Element, durationPerTech: Map[String, String]): Either[String, Element] = {
     val durationPerTechElem: Element = elementToClone.cloneNode(true).asInstanceOf[Element]
 
-    durationPerTechElem.querySelector("h2").innerText = "Tech Experience Summary"
+    for {
+      h2 <- ElementUtil.querySelectorSafe(durationPerTechElem, "h2")
+      _ = h2.innerText = "Tech Experience Summary"
 
-    val durationPerTechElemP: Element = durationPerTechElem.querySelector("p")
+      durationPerTechElemP <- ElementUtil.querySelectorSafe(durationPerTechElem, "p")
+      spans = durationPerTechElemP.querySelectorAll("span")
 
-    val spans: NodeList = durationPerTechElemP.querySelectorAll("span")
+      // Each of these has different classes
+      spanNormal = spans.item(0).asInstanceOf[Element]
+      spanLast = spans.item(spans.length - 2).asInstanceOf[Element]
+      spanEllipsis = spans.item(spans.length - 1).asInstanceOf[Element]
 
-    // Each of these has different classes
-    val spanNormal = spans.item(0).asInstanceOf[Element]
-    val spanLast = spans.item(spans.length - 2).asInstanceOf[Element]
-    val spanEllipsis = spans.item(spans.length - 1).asInstanceOf[Element]
+      _ = durationPerTechElemP.innerHTML = ""
 
-    durationPerTechElemP.innerHTML = ""
+      durationPerTechTexts = durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
 
-    val durationPerTechTexts = durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
+      _ = durationPerTechTexts.init.foreach { text =>
+        val normalSpanClone = spanNormal.cloneNode(true).asInstanceOf[Element]
+        normalSpanClone.innerHTML = text
+        durationPerTechElemP.appendChild(normalSpanClone)
+      }
 
-    durationPerTechTexts.init.foreach { text =>
-      val normalSpanClone = spanNormal.cloneNode(true).asInstanceOf[Element]
-      normalSpanClone.innerHTML = text
-      durationPerTechElemP.appendChild(normalSpanClone)
-    }
-
-    spanLast.innerHTML = durationPerTechTexts.last
-    durationPerTechElemP.appendChild(spanLast)
-
-    durationPerTechElemP.appendChild(spanEllipsis)
-
-    durationPerTechElem
+      _ = spanLast.innerHTML = durationPerTechTexts.last
+      _ = durationPerTechElemP.appendChild(spanLast)
+      _= durationPerTechElemP.appendChild(spanEllipsis)
+    } yield durationPerTechElem
   }
 }
