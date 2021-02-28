@@ -277,7 +277,6 @@ object TechList {
     "ibm rpg" -> "IBM RPG",
     "ici" -> "ICI",
     "icon" -> "Icon",
-    "id" -> "Id",
     "idl" -> "IDL",
     "idris" -> "Idris",
     "imp" -> "IMP",
@@ -767,7 +766,6 @@ object TechList {
     "scalability" -> "Scalability",
     "must-watch talks" -> "Must-Watch Talks",
     "protips" -> "Protips",
-    "frameworks" -> "Frameworks",
     "react" -> "React",
     "relay" -> "Relay",
     "react hooks" -> "React Hooks",
@@ -869,6 +867,7 @@ object TechList {
     "spring" -> "Spring Framework",
     "springboot" -> "Spring Framework",
     "spring framework" -> "Spring Framework",
+    "kafka" -> "Kafka",
     // ################# Big Data #################
     "big data" -> "Big Data",
     "hadoop" -> "Hadoop",
@@ -890,5 +889,15 @@ object TechList {
     "hbase" -> "HBase",
     "contexture" -> "Contexture",
     "sql server" -> "SQL Server",
+    "dbvisualizer" -> "DbVisualizer",
+    // ################# Build Tools #################
+    "maven" -> "Maven",
+    // ################# Test/QA #################
+    "cucumber" -> "Cucumber",
+    "selenium" -> "Selenium",
+    "test rail" -> "TestRail",
+    "testrail" -> "TestRail",
+    // ################# CI/CD #################
+    "jenkins" -> "Jenkins"
   )
 }
