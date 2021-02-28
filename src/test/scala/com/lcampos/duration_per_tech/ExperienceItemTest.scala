@@ -15,12 +15,12 @@ class ExperienceItemTest extends Specification {
         val expected = Seq(
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
-            "Frontend and Backend developer: JavaScript, CSS, HTML5, Azure.",
+            "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
             "7 yrs 4 mos"
           ),
           ExperienceItem(
             "Analyst/Software Developer",
-            "Frontend and Backend developer.Worked with JavaScript, CSS and HTML5.",
+            "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
             "4 yrs"
           ),
         )

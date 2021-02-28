@@ -2,7 +2,7 @@ package com.lcampos.duration_per_tech
 
 import com.lcampos.util.ElementUtil
 import org.specs2.mutable.Specification
-import test_data.experience_section.{Example1, Example2, Example3_ItemWithEmptyDescription, Example4_OnlyMonthsAndOnlyYears}
+import test_data.experience_section._
 
 class DurationPerTechGeneratorTest extends Specification {
 
@@ -63,6 +63,16 @@ class DurationPerTechGeneratorTest extends Specification {
           "Cloud" -> Map(
             "Azure" -> "4 months",
           )
+        ))
+      }
+
+      "existence of break tags shouldn't affect extraction of technologies" in {
+        val elem = ElementUtil.elementFromString(Example5_BreakTag.example)
+        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
+          "Programming Languages" -> Map(
+            "JavaScript" -> "7 years and 4 months",
+            "Python" -> "7 years and 4 months",
+          ),
         ))
       }
     }

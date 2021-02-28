@@ -60,12 +60,19 @@ object ExperienceItem {
   private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] = for {
     summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info")
     title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
-    descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
-    description = descriptionElem.map(_.textContent.trim()).getOrElse("")
+    description = getDescription(elem)
     employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
   } yield ExperienceItem(
       title,
       description,
       employmentDuration
     )
+
+  private def getDescription(elem: HTMLLIElement): String = {
+    val descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
+    descriptionElem.foreach(el =>
+      el.innerHTML = el.innerHTML.replace("<br>", " ").replace("</br>", " ")
+    )
+    descriptionElem.map(_.textContent.trim()).getOrElse("")
+  }
 }
