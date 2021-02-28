@@ -32,12 +32,14 @@ object PageManipulator {
       durationPerTechTexts = durationPerTechPerCat.flatMap { case (category, durationPerTech) =>
         durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
       }
-      _ = durationPerTechTexts.foreach { text =>
-        val span = durationPerTechSpanTemplate
-        span.innerHTML = text
-        durationPerTechElemP.appendChild(span)
-      }
+      _ = durationPerTechTexts.foreach(text => addTextToElemAsSpan(text, durationPerTechElemP))
     } yield durationPerTechElem
+  }
+
+  private def addTextToElemAsSpan(text: String, elem: Element) = {
+    val span = durationPerTechSpanTemplate
+    span.innerHTML = text
+    elem.appendChild(span)
   }
 
   private def removeTechExperienceSummaryElem(doc: Document): Unit =
