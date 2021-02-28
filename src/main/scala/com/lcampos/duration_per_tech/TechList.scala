@@ -9,18 +9,27 @@ case class Tech(
 sealed trait TechCategory {
   val uiRepresentation: String
 }
+
 case object ProgrammingLanguage extends TechCategory {
   val uiRepresentation: String = "Programming Languages"
 }
+
+case object QueryLanguage extends TechCategory {
+  val uiRepresentation: String = "Query Languages"
+}
+
 case object Database extends TechCategory {
   val uiRepresentation: String = "Databases"
 }
+
 case object CICD extends TechCategory {
   val uiRepresentation: String = "CI/CD"
 }
+
 case object TestAndQA extends TechCategory {
   val uiRepresentation: String = "Test and QA"
 }
+
 case object BuildTool extends TechCategory {
   val uiRepresentation: String = "Build Tools"
 }
@@ -737,7 +746,6 @@ object TechList {
     Tech("xquery", "XQuery", ProgrammingLanguage),
     Tech("xsb", "XSB", ProgrammingLanguage),
     Tech("xslt", "XSLT", ProgrammingLanguage),
-    Tech("xpath", "XPath", ProgrammingLanguage),
     Tech("xtend", "Xtend", ProgrammingLanguage),
     Tech("yorick", "Yorick", ProgrammingLanguage),
     Tech("yql", "YQL", ProgrammingLanguage),
@@ -760,10 +768,6 @@ object TechList {
     Tech("ebpf", "eBPF", Other),
     Tech("arch-based projects", "Arch-based Projects", Other),
     Tech("macos", "macOS", Other),
-    Tech("command-line", "Command-Line", Other),
-    Tech("screensavers", "Screensavers", Other),
-    Tech("apps", "Apps", Other),
-    Tech("open source apps", "Open Source Apps", Other),
     Tech("watchos", "watchOS", Other),
     Tech("jvm", "JVM", Other),
     Tech("salesforce", "Salesforce", Other),
@@ -932,10 +936,14 @@ object TechList {
     Tech("selenium", "Selenium", TestAndQA),
     Tech("test rail", "TestRail", TestAndQA),
     Tech("testrail", "TestRail", TestAndQA),
+    Tech("backstopjs", "BackstopJS", TestAndQA),
     // ################# CI/CD #################
     Tech("jenkins", "Jenkins", CICD),
     // ################# Cloud #################
     Tech("amazon web services", "AWS", Cloud),
     Tech("aws", "AWS", Cloud),
     Tech("azure", "Azure", Cloud),
+    // ################# Query Languages #################
+    Tech("xpath", "XPath", QueryLanguage),
+
   )}
