@@ -49,6 +49,14 @@ class ExperienceItemTest extends Specification {
       "return None if duration string doesn't have the expected format" in {
         ExperienceItem("", "", "11 years 10 mos").duration must beNone
       }
+
+      "return correct duration when single year and x months included in duration string" in {
+        ExperienceItem("", "", "1 yr 10 mos").duration must be some Duration(1 * 365 + 10 * 30, DAYS)
+      }
+
+      "return correct duration when only a single year included in duration string" in {
+        ExperienceItem("", "", "1 yr").duration must be some Duration(1 * 365, DAYS)
+      }
     }
 
     "technologies" should {
