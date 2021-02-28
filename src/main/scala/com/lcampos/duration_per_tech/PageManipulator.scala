@@ -1,5 +1,6 @@
 package com.lcampos.duration_per_tech
 
+import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Document
 import org.scalajs.dom.raw.Element
@@ -12,23 +13,25 @@ object PageManipulator {
     removeTechExperienceSummaryElem(document)
     for {
       experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
-      durationPerTech <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
-      _ <- if (durationPerTech.nonEmpty) addYearsPerTechElem(durationPerTech, document) else Right(())
+      durationPerTechPerCat <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
+      _ <- if (durationPerTechPerCat.nonEmpty) addYearsPerTechElem(durationPerTechPerCat, document) else Right(())
     } yield ()
   }
 
-  private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Either[String, Unit] = for {
+  private def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
-    durationPerTechSection <- generateYearsPerTechElement(durationPerTech)
+    durationPerTechSection <- generateYearsPerTechElement(durationPerTechPerCat)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
   } yield ()
 
-  private def generateYearsPerTechElement(durationPerTech: Map[String, String]): Either[String, Element] = {
+  private def generateYearsPerTechElement(durationPerTechPerCat: DurationPerTechPerCategory): Either[String, Element] = {
     val durationPerTechElem: Element = durationPerTechElemTemplate
 
     for {
       durationPerTechElemP <- ElementUtil.querySelectorSafe(durationPerTechElem, "p")
-      durationPerTechTexts = durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
+      durationPerTechTexts = durationPerTechPerCat.flatMap { case (category, durationPerTech) =>
+        durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
+      }
       _ = durationPerTechTexts.foreach { text =>
         val span = durationPerTechSpanTemplate
         span.innerHTML = text
