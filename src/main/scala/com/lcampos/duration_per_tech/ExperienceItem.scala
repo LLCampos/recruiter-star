@@ -36,9 +36,9 @@ case class ExperienceItem(
     val tokens = s"$title $description"
       .split("(\\s|,|\\.|!|:|/|;)+")
       .map(_.toLowerCase)
-    TechList.all.keys
-      .filter(tokens.contains)
-      .map(t => TechList.all(t)).toSet
+    TechList.all
+      .filter(tech => tokens.contains(tech.name))
+      .map(_.canonName).toSet
   }
 }
 
