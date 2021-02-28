@@ -29,7 +29,12 @@ object DurationPerTechGenerator {
     val days = duration.toDays
     val years = days / DaysInYear
     val months = (days % DaysInYear) / DaysInMonth
-    s"$years years and $months months"
+
+    (years, months) match {
+      case (0, months) => s"$months months"
+      case (years, 0) => s"$years years"
+      case (years, months) => s"$years years and $months months"
+    }
   }
 
   protected def getDurationPerTech(experienceItem: ExperienceItem): Option[Map[String, Duration]] =

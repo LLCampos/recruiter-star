@@ -2,7 +2,7 @@ package com.lcampos.duration_per_tech
 
 import com.lcampos.util.ElementUtil
 import org.specs2.mutable.Specification
-import test_data.experience_section.{Example1, Example2, Example3_ItemWithEmptyDescription}
+import test_data.experience_section.{Example1, Example2, Example3_ItemWithEmptyDescription, Example4_OnlyMonthsAndOnlyYears}
 
 class DurationPerTechGeneratorTest extends Specification {
 
@@ -34,7 +34,15 @@ class DurationPerTechGeneratorTest extends Specification {
       "correctly parse experience section in which an item description is empty" in {
         val elem = ElementUtil.elementFromString(Example3_ItemWithEmptyDescription.example)
         DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
-          "Python" -> "0 years and 2 months",
+          "Python" -> "2 months",
+        ))
+      }
+
+      "correctly format duration when only years and only months" in {
+        val elem = ElementUtil.elementFromString(Example4_OnlyMonthsAndOnlyYears.example)
+        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
+          "JavaScript" -> "4 years",
+          "Azure" -> "4 months",
         ))
       }
     }
