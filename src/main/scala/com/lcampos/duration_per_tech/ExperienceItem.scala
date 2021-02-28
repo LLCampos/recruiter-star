@@ -16,9 +16,12 @@ case class ExperienceItem(
     val (yearsOpt, monthsOpt) = durationDescription match {
       case s"$years yr $months mos" => (Some(years), Some(months))
       case s"$years yrs $months mos" => (Some(years), Some(months))
+      case s"$years yrs $months mo" => (Some(years), Some(months))
+      case s"$years yr $months mo" => (Some(years), Some(months))
       case s"$years yrs" => (Some(years), None)
       case s"$years yr" => (Some(years), None)
       case s"$months mos" => (None, Some(months))
+      case s"$months mo" => (None, Some(months))
       case _ => (None, None)
     }
 

@@ -57,6 +57,18 @@ class ExperienceItemTest extends Specification {
       "return correct duration when only a single year included in duration string" in {
         ExperienceItem("", "", "1 yr").duration must be some Duration(1 * 365, DAYS)
       }
+
+      "return correct duration when only a single month included in duration string" in {
+        ExperienceItem("", "", "1 mo").duration must be some Duration(1 * 30, DAYS)
+      }
+
+      "return correct duration when x years and a single month included in duration string" in {
+        ExperienceItem("", "", "2 yrs 1 mo").duration must be some Duration(2 * 365 + 1 * 30, DAYS)
+      }
+
+      "return correct duration on single year and single month in duration string" in {
+        ExperienceItem("", "", "1 yr 1 mo").duration must be some Duration(1 * 365 + 1 * 30, DAYS)
+      }
     }
 
     "technologies" should {
