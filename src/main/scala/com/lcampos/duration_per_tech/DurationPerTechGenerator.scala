@@ -20,7 +20,6 @@ object DurationPerTechGenerator {
             .reduce(Semigroup[Map[String, Duration]].combine)
             .view.mapValues(formatDuration).toMap
         case None =>
-          println("Couldn't get duration per tech for some of the experience items")
           Map()
       }
     }
@@ -34,5 +33,10 @@ object DurationPerTechGenerator {
   }
 
   protected def getDurationPerTech(experienceItem: ExperienceItem): Option[Map[String, Duration]] =
-    experienceItem.duration.map(d => experienceItem.technologies.map(_ -> d).toMap)
+    experienceItem.duration match {
+      case Some(duration) => Some(experienceItem.technologies.map(_ -> duration).toMap)
+      case None =>
+        println(s"Couldn't parse duration: ${experienceItem.durationDescription}")
+        None
+    }
 }
