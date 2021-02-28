@@ -46,6 +46,10 @@ case object Mobile extends TechCategory {
   val uiRepresentation: String = "Mobile"
 }
 
+case object Tool extends TechCategory {
+  val uiRepresentation: String = "Tools"
+}
+
 case object Other extends TechCategory {
   val uiRepresentation: String = "Other"
 }
@@ -68,7 +72,6 @@ object TechList {
     Tech("abap", "ABAP", ProgrammingLanguage),
     Tech("abc", "ABC", ProgrammingLanguage),
     Tech("abc algol", "ABC ALGOL", ProgrammingLanguage),
-    Tech("able", "ABLE", ProgrammingLanguage),
     Tech("abset", "ABSET", ProgrammingLanguage),
     Tech("absys", "ABSYS", ProgrammingLanguage),
     Tech("acc", "ACC", ProgrammingLanguage),
@@ -793,7 +796,6 @@ object TechList {
     Tech("adafruit io", "Adafruit IO", Other),
     Tech("cloudflare", "Cloudflare", Other),
     Tech("actions on google", "Actions on Google", Other),
-    Tech("esp", "ESP", Other),
     Tech("deno", "Deno", Other),
     Tech("dos", "DOS", Other),
     // ################# Front-End Stuff #################
@@ -936,6 +938,11 @@ object TechList {
     Tech("test rail", "TestRail", TestAndQA),
     Tech("testrail", "TestRail", TestAndQA),
     Tech("backstopjs", "BackstopJS", TestAndQA),
+    Tech("junit", "JUnit", TestAndQA),
+    Tech("phpunit", "PHPUnit", TestAndQA),
+    Tech("sikuli", "Sikuli", TestAndQA),
+    Tech("testlink", "TestLink", TestAndQA),
+    Tech("jmeter", "JMeter", TestAndQA),
     // ################# CI/CD #################
     Tech("jenkins", "Jenkins", CICD),
     // ################# Cloud #################
@@ -944,5 +951,6 @@ object TechList {
     Tech("azure", "Azure", Cloud),
     // ################# Query Languages #################
     Tech("xpath", "XPath", QueryLanguage),
-
+    // ################# Query Languages #################
+    Tech("postman", "Postman", Tool),
   )}
