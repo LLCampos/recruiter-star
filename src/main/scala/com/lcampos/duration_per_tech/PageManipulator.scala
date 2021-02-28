@@ -8,16 +8,18 @@ object PageManipulator {
 
   private val TechExperienceSummaryId = "tech-experience-summary"
 
-  def addDurationPerTechToPage(document: Document): Either[String, Unit] = for {
-    experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
-    durationPerTech <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
-    _ <- if (durationPerTech.nonEmpty) addYearsPerTechElem(durationPerTech, document) else Right(())
-  } yield ()
+  def addDurationPerTechToPage(document: Document): Either[String, Unit] = {
+    removeTechExperienceSummaryElem(document)
+    for {
+      experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
+      durationPerTech <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
+      _ <- if (durationPerTech.nonEmpty) addYearsPerTechElem(durationPerTech, document) else Right(())
+    } yield ()
+  }
 
   private def addYearsPerTechElem(durationPerTech: Map[String, String], document: Document): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
     durationPerTechSection <- generateYearsPerTechElement(durationPerTech)
-    _ = removeTechExperienceSummaryElem(document)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
   } yield ()
 

@@ -57,6 +57,13 @@ class PageManipulatorTest extends Specification {
         doc.documentElement.textContent.contains("3 years and 3 months") must beFalse
       }
 
+      "if page with no reference to technologies has a tech experience summary section from previous profile, remove it" in {
+        val doc = ElementUtil.documentFromString(Example9_PageAlreadyWithTechExperienceSummaryAndNoTech.example)
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight
+        PageManipulator.addDurationPerTechToPage(doc) must beRight
+        ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
+      }
+
       "if experience section doesn't reference any technologies, don't add tech experience summary" in {
         val doc = ElementUtil.documentFromString(Example8_NoReferenceToTechnologies.example)
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
