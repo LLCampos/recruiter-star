@@ -6,12 +6,24 @@ case class Tech(
   category: TechCategory
 )
 
-sealed trait TechCategory
-case object ProgrammingLanguage extends TechCategory
-case object Database extends TechCategory
-case object CICD extends TechCategory
-case object TestAndQA extends TechCategory
-case object BuildTool extends TechCategory
+sealed trait TechCategory {
+  val uiRepresentation: String
+}
+case object ProgrammingLanguage extends TechCategory {
+  val uiRepresentation: String = "Programming Languages"
+}
+case object Database extends TechCategory {
+  val uiRepresentation: String = "Databases"
+}
+case object CICD extends TechCategory {
+  val uiRepresentation: String = "CI/CD"
+}
+case object TestAndQA extends TechCategory {
+  val uiRepresentation: String = "Test and QA"
+}
+case object BuildTool extends TechCategory {
+  val uiRepresentation: String = "Build Tools"
+}
 
 object TechList {
 

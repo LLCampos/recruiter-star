@@ -22,7 +22,7 @@ object DurationPerTechGenerator {
             .reduce(Semigroup[Map[Tech, Duration]].combine)
             .groupBy(_._1.category)
             .map { case (category, durationPerTech) =>
-              category.toString -> durationPerTech.map { case (tech, duration) => tech.canonName -> formatDuration(duration) }
+              category.uiRepresentation -> durationPerTech.map { case (tech, duration) => tech.canonName -> formatDuration(duration) }
             }
         case None =>
           Map()

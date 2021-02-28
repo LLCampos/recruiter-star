@@ -40,7 +40,7 @@ class PageManipulatorTest extends Specification {
         PageManipulator.addDurationPerTechToPage(doc) must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
           elem.textContent.contains("Python -  3 years and 3 months") &&
-          elem.textContent.contains("ProgrammingLanguage")
+          elem.textContent.contains("Programming Languages")
         })
       }
 
