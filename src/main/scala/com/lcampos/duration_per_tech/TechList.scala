@@ -640,7 +640,6 @@ object TechList {
     Tech("simulink", "Simulink", ProgrammingLanguage),
     Tech("sisal", "SISAL", ProgrammingLanguage),
     Tech("slip", "SLIP", ProgrammingLanguage),
-    Tech("small", "SMALL", ProgrammingLanguage),
     Tech("smalltalk", "Smalltalk", ProgrammingLanguage),
     Tech("small basic", "Small Basic", ProgrammingLanguage),
     Tech("sml", "SML", ProgrammingLanguage),
