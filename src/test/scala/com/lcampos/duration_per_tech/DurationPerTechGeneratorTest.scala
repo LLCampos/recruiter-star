@@ -16,6 +16,8 @@ class DurationPerTechGeneratorTest extends Specification {
             "JavaScript" -> "11 years and 4 months",
             "CSS" -> "11 years and 4 months",
             "HTML" -> "11 years and 4 months",
+          ),
+          "Cloud" -> Map(
             "Azure" -> "7 years and 4 months",
           )
         ))
@@ -25,14 +27,20 @@ class DurationPerTechGeneratorTest extends Specification {
         val elem = ElementUtil.elementFromString(Example2.example)
         DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
           "Programming Languages" -> Map(
-            "Java" -> "3 years and 4 months",
-            "Spring Framework" -> "3 years and 4 months",
-            "Git" -> "3 years and 4 months",
-            "Docker" -> "3 years and 4 months",
+            "Java" -> "3 years and 4 months"
+          ),
+          "Cloud" -> Map(
             "AWS" -> "3 years and 4 months",
+          ),
+          "Frameworks" -> Map(
+            "Spring Framework" -> "3 years and 4 months",
           ),
           "Databases" -> Map(
             "MongoDB" -> "3 years and 4 months",
+          ),
+          "Other" -> Map(
+            "Git" -> "3 years and 4 months",
+            "Docker" -> "3 years and 4 months",
           )
         ))
       }
@@ -51,6 +59,8 @@ class DurationPerTechGeneratorTest extends Specification {
         DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
           "Programming Languages" -> Map(
             "JavaScript" -> "4 years",
+          ),
+          "Cloud" -> Map(
             "Azure" -> "4 months",
           )
         ))
