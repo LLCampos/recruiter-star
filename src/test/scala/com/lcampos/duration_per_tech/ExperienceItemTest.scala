@@ -103,6 +103,10 @@ class ExperienceItemTest extends Specification {
       "deal with tech names separated by punctuation" in {
         ExperienceItem("Java/Scala Developer", "JavaScript,CSS", "").technologies.map(_.canonName) must be equalTo Set("Java", "Scala", "JavaScript", "CSS")
       }
+
+      "deal with tech name between parenthesis" in {
+        ExperienceItem("Developer", "I used a nice language (Groovy)", "").technologies.map(_.canonName) must be equalTo Set("Groovy")
+      }
     }
   }
 }
