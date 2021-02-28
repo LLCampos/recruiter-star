@@ -478,7 +478,6 @@ object TechList {
     Tech("newtonscript", "NewtonScript", ProgrammingLanguage),
     Tech("ngl", "NGL", ProgrammingLanguage),
     Tech("nial", "Nial", ProgrammingLanguage),
-    Tech("nice", "Nice", ProgrammingLanguage),
     Tech("nickle", "Nickle", ProgrammingLanguage),
     Tech("nim", "Nim", ProgrammingLanguage),
     Tech("npl", "NPL", ProgrammingLanguage),
