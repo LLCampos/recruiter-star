@@ -32,13 +32,13 @@ case class ExperienceItem(
     } yield Duration(totalDays, DAYS)
   }
 
-  def technologies: Set[String] = {
+  def technologies: Set[Tech] = {
     val tokens = s"$title $description"
       .split("(\\s|,|\\.|!|:|/|;)+")
       .map(_.toLowerCase)
     TechList.all
       .filter(tech => tokens.contains(tech.name))
-      .map(_.canonName).toSet
+      .toSet
   }
 }
 

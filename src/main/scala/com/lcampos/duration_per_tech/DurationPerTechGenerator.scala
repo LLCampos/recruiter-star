@@ -17,8 +17,8 @@ object DurationPerTechGenerator {
       experienceItems.map(getDurationPerTech).sequence match {
         case Some(durationPerTechSeq) =>
           durationPerTechSeq
-            .reduce(Semigroup[Map[String, Duration]].combine)
-            .view.mapValues(formatDuration).toMap
+            .reduce(Semigroup[Map[Tech, Duration]].combine)
+            .map { case (tech, duration) => tech.canonName -> formatDuration(duration) }
         case None =>
           Map()
       }
@@ -37,7 +37,7 @@ object DurationPerTechGenerator {
     }
   }
 
-  protected def getDurationPerTech(experienceItem: ExperienceItem): Option[Map[String, Duration]] =
+  protected def getDurationPerTech(experienceItem: ExperienceItem): Option[Map[Tech, Duration]] =
     experienceItem.duration match {
       case Some(duration) => Some(experienceItem.technologies.map(_ -> duration).toMap)
       case None =>

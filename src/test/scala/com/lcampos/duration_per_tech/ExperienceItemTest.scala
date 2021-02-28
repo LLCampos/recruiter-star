@@ -61,35 +61,35 @@ class ExperienceItemTest extends Specification {
 
     "technologies" should {
       "return empty if no technology in experience item" in {
-        ExperienceItem("Developer", "I did cool stuff!", "").technologies must be equalTo Set()
+        ExperienceItem("Developer", "I did cool stuff!", "").technologies.map(_.canonName) must be equalTo Set()
       }
 
       "return technologies in title" in {
-        ExperienceItem("Java Developer", "I did cool stuff!", "").technologies must be equalTo Set("Java")
+        ExperienceItem("Java Developer", "I did cool stuff!", "").technologies.map(_.canonName) must be equalTo Set("Java")
       }
 
       "return technologies in description" in {
-        ExperienceItem("Developer", "I did cool stuff using CSS and JavaScript", "").technologies must be equalTo Set("CSS", "JavaScript")
+        ExperienceItem("Developer", "I did cool stuff using CSS and JavaScript", "").technologies.map(_.canonName) must be equalTo Set("CSS", "JavaScript")
       }
 
       "return technologies in description and title" in {
-        ExperienceItem("Java Developer", "I did cool stuff using CSS and JavaScript", "").technologies must be equalTo Set("Java", "CSS", "JavaScript")
+        ExperienceItem("Java Developer", "I did cool stuff using CSS and JavaScript", "").technologies.map(_.canonName) must be equalTo Set("Java", "CSS", "JavaScript")
       }
 
       "return technologies even if followed by a punctuation character" in {
-        ExperienceItem("", "I did cool stuff using JavaScript! And CSS, Java.", "").technologies must be equalTo Set("JavaScript", "CSS", "Java")
+        ExperienceItem("", "I did cool stuff using JavaScript! And CSS, Java.", "").technologies.map(_.canonName) must be equalTo Set("JavaScript", "CSS", "Java")
       }
 
       "be case insensitive" in {
-        ExperienceItem("JaVa Developer", "I did cool stuff using css and Javascript", "").technologies must be equalTo Set("Java", "CSS", "JavaScript")
+        ExperienceItem("JaVa Developer", "I did cool stuff using css and Javascript", "").technologies.map(_.canonName) must be equalTo Set("Java", "CSS", "JavaScript")
       }
 
       "extract canon tech name" in {
-        ExperienceItem("Developer", "I did cool stuff using HTML5", "").technologies must be equalTo Set("HTML")
+        ExperienceItem("Developer", "I did cool stuff using HTML5", "").technologies.map(_.canonName) must be equalTo Set("HTML")
       }
 
       "deal with tech names separated by punctuation" in {
-        ExperienceItem("Java/Scala Developer", "JavaScript,CSS", "").technologies must be equalTo Set("Java", "Scala", "JavaScript", "CSS")
+        ExperienceItem("Java/Scala Developer", "JavaScript,CSS", "").technologies.map(_.canonName) must be equalTo Set("Java", "Scala", "JavaScript", "CSS")
       }
     }
   }
