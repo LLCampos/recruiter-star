@@ -29,10 +29,13 @@ object PageManipulator {
 
     for {
       durationPerTechElemP <- ElementUtil.querySelectorSafe(durationPerTechElem, "p")
-      durationPerTechTexts = durationPerTechPerCat.flatMap { case (category, durationPerTech) =>
-        durationPerTech.map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
+      _ = durationPerTechPerCat.map { case (category, durationPerTech) =>
+        val categoryText = s"</br><h5><b>$category:<b></h5></br>"
+        addTextToElemAsSpan(categoryText, durationPerTechElemP)
+        durationPerTech
+          .map { case (tech, years) => s"<b>$tech - </b> $years</br>" }
+          .foreach(text => addTextToElemAsSpan(text, durationPerTechElemP))
       }
-      _ = durationPerTechTexts.foreach(text => addTextToElemAsSpan(text, durationPerTechElemP))
     } yield durationPerTechElem
   }
 
