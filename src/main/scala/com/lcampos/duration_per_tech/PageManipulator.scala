@@ -2,8 +2,11 @@ package com.lcampos.duration_per_tech
 
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.util.ElementUtil
-import org.scalajs.dom.Document
 import org.scalajs.dom.raw.{Element, HTMLElement}
+import org.scalajs.dom.{Document, window}
+
+import scala.concurrent.duration.DurationInt
+import scala.scalajs.js.timers.setTimeout
 
 object PageManipulator {
 
@@ -64,8 +67,11 @@ object PageManipulator {
   private def durationPerTechSpanTemplate: Element = ElementUtil.elementFromString("""<span class="lt-line-clamp__line"></span>""")
 
   private def showAllExperiences(doc: Document): Unit = {
-    ElementUtil.getFirstElementByClassNameSafe(doc.documentElement, "pv-profile-section__see-more-inline").map(elem =>
+    ElementUtil.getFirstElementByClassNameSafe(doc.documentElement, "pv-profile-section__see-more-inline").map(elem => {
       elem.asInstanceOf[HTMLElement].click()
-    )
+      setTimeout(1.milli) {
+        window.scroll(0, 0)
+      }
+    })
   }
 }
