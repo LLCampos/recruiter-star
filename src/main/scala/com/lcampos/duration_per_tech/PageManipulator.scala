@@ -3,7 +3,7 @@ package com.lcampos.duration_per_tech
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Document
-import org.scalajs.dom.raw.Element
+import org.scalajs.dom.raw.{Element, HTMLElement}
 
 object PageManipulator {
 
@@ -11,6 +11,7 @@ object PageManipulator {
 
   def addDurationPerTechToPage(document: Document): Either[String, Unit] = {
     removeTechExperienceSummaryElem(document)
+    showAllExperiences(document)
     for {
       experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
       durationPerTechPerCat <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
@@ -61,4 +62,10 @@ object PageManipulator {
       """)
 
   private def durationPerTechSpanTemplate: Element = ElementUtil.elementFromString("""<span class="lt-line-clamp__line"></span>""")
+
+  private def showAllExperiences(doc: Document): Unit = {
+    ElementUtil.getFirstElementByClassNameSafe(doc.documentElement, "pv-profile-section__see-more-inline").map(elem =>
+      elem.asInstanceOf[HTMLElement].click()
+    )
+  }
 }
