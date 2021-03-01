@@ -19,17 +19,23 @@ object DurationPerTechGenerator {
     ExperienceItem.fromLinkedinExperienceSectionElem(elem).map { experienceItems =>
       experienceItems.map(getDurationPerTech).sequence match {
         case Some(durationPerTechSeq) =>
-          durationPerTechSeq
-            .reduce(Semigroup[Map[Tech, Duration]].combine)
-            .groupBy(_._1.category)
-            .map { case (category, durationPerTech) =>
-              category.uiRepresentation -> orderDurationPerTech(durationPerTech).map { case (tech, duration) => tech.canonName -> formatDuration(duration) }
-            }
+          convertToStringPrettyPresentation(
+            durationPerTechSeq
+              .reduce(Semigroup[Map[Tech, Duration]].combine)
+              .groupBy(_._1.category)
+          )
         case None =>
           Map()
       }
     }
   }
+
+  def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
+    durationPerTechPerCategory.map { case (category, durationPerTech) =>
+      category.uiRepresentation -> orderDurationPerTech(durationPerTech).map { case (tech, duration) =>
+        tech.canonName -> formatDuration(duration)
+      }
+    }
 
   private def orderDurationPerTech(durationPerTech: Map[Tech, Duration]): ListMap[Tech, Duration] =
     ListMap.from(durationPerTech.toSeq.sortBy(_._2).reverse)
