@@ -35,14 +35,25 @@ case class ExperienceItem(
     } yield Duration(totalDays, DAYS)
   }
 
-  def technologies: Set[Tech] = {
-    val tokens = s"$title $description"
+  def technologies: Set[Tech] =
+    getOneWordTechnologies ++ getMultiWordTechnologies
+
+  private def getMultiWordTechnologies: Set[Tech] = {
+    TechList.all
+      .filter(_.name.split(" ").length > 1)
+      .filter(tech => allTextLowerCase.contains(tech.name))
+      .toSet
+  }
+
+  private def getOneWordTechnologies: Set[Tech] = {
+    val tokens = allTextLowerCase
       .split("(\\s|,|\\.|!|:|/|;|\\(|\\))+")
-      .map(_.toLowerCase)
     TechList.all
       .filter(tech => tokens.contains(tech.name))
       .toSet
   }
+
+  private val allTextLowerCase = s"$title $description".toLowerCase
 }
 
 object ExperienceItem {

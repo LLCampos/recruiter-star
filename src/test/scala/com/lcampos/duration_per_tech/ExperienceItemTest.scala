@@ -107,6 +107,10 @@ class ExperienceItemTest extends Specification {
       "deal with tech name between parenthesis" in {
         ExperienceItem("Developer", "I used a nice language (Groovy)", "").technologies.map(_.canonName) must be equalTo Set("Groovy")
       }
+
+      "find technologies even if their name or composed by more than one word" in {
+        ExperienceItem("Developer", "I used to work on SQL Server", "").technologies.map(_.canonName) must be equalTo Set("SQL Server")
+      }
     }
   }
 }
