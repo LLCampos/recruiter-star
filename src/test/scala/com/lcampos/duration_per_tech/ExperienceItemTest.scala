@@ -92,10 +92,6 @@ class ExperienceItemTest extends Specification {
         ExperienceItem("", "I did cool stuff using JavaScript! And CSS, Java.", "").technologies.map(_.canonName) must be equalTo Set("JavaScript", "CSS", "Java")
       }
 
-      "be case insensitive" in {
-        ExperienceItem("JaVa Developer", "I did cool stuff using css and Javascript", "").technologies.map(_.canonName) must be equalTo Set("Java", "CSS", "JavaScript")
-      }
-
       "extract canon tech name" in {
         ExperienceItem("Developer", "I did cool stuff using HTML5", "").technologies.map(_.canonName) must be equalTo Set("HTML")
       }

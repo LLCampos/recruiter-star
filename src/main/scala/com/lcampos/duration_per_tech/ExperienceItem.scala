@@ -41,19 +41,18 @@ case class ExperienceItem(
   private def getMultiWordTechnologies: Set[Tech] = {
     TechList.all
       .filter(_.name.split(" ").length > 1)
-      .filter(tech => allTextLowerCase.contains(tech.name))
+      .filter(tech => allText.contains(tech.name))
       .toSet
   }
 
   private def getOneWordTechnologies: Set[Tech] = {
-    val tokens = allTextLowerCase
-      .split("(\\s|,|\\.|!|:|/|;|\\(|\\))+")
+    val tokens = allText.split("(\\s|,|\\.|!|:|/|;|\\(|\\))+")
     TechList.all
       .filter(tech => tokens.contains(tech.name))
       .toSet
   }
 
-  private val allTextLowerCase = s"$title $description".toLowerCase
+  private val allText = s"$title $description"
 }
 
 object ExperienceItem {
