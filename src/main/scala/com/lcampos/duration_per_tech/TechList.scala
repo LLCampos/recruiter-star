@@ -285,7 +285,9 @@ object TechList {
     Tech("GLSL", "GLSL", ProgrammingLanguage),
     Tech("GNU E", "GNU E", ProgrammingLanguage),
     Tech("GM", "GM", ProgrammingLanguage),
-    Tech("Go", "Go", ProgrammingLanguage),
+    Tech("golang", "Golang", ProgrammingLanguage),
+    Tech("Golang", "Golang", ProgrammingLanguage),
+    Tech("Go", "Golang", ProgrammingLanguage),
     Tech("Go!", "Go!", ProgrammingLanguage),
     Tech("Gödel", "Gödel", ProgrammingLanguage),
     Tech("Godiva", "Godiva", ProgrammingLanguage),
@@ -840,6 +842,7 @@ object TechList {
     Tech("Android", "Android", Mobile),
     // ################# Frameworks #################
     Tech("Spring", "Spring Framework", Framework),
+    Tech("Spring Boot", "Spring Framework", Framework),
     Tech("Springboot", "Spring Framework", Framework),
     Tech("Spring Framework", "Spring Framework", Framework),
     Tech("Flask", "Flask", Framework),
@@ -869,6 +872,7 @@ object TechList {
     Tech("DbVisualizer", "DbVisualizer", Database),
     // ################# Build Tools #################
     Tech("Maven", "Maven", BuildTool),
+    Tech("sbt", "sbt", BuildTool),
     // ################# Test/QA #################
     Tech("Cucumber", "Cucumber", TestAndQA),
     Tech("Selenium", "Selenium", TestAndQA),
