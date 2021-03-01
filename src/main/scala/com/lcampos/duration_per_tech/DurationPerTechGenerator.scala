@@ -4,6 +4,7 @@ import cats.kernel.Semigroup
 import cats.syntax.all._
 import org.scalajs.dom.raw._
 
+import scala.collection.immutable.ListMap
 import scala.concurrent.duration.Duration
 
 
@@ -12,7 +13,7 @@ object DurationPerTechGenerator {
   private val DaysInYear = 365
   private val DaysInMonth = 30
 
-  type DurationPerTechPerCategory = Map[String, Map[String, String]]
+  type DurationPerTechPerCategory = Map[String, ListMap[String, String]]
 
   def getFromLinkedinExperienceSection(elem: Element): Either[String, DurationPerTechPerCategory] = {
     ExperienceItem.fromLinkedinExperienceSectionElem(elem).map { experienceItems =>
@@ -22,13 +23,16 @@ object DurationPerTechGenerator {
             .reduce(Semigroup[Map[Tech, Duration]].combine)
             .groupBy(_._1.category)
             .map { case (category, durationPerTech) =>
-              category.uiRepresentation -> durationPerTech.map { case (tech, duration) => tech.canonName -> formatDuration(duration) }
+              category.uiRepresentation -> orderDurationPerTech(durationPerTech).map { case (tech, duration) => tech.canonName -> formatDuration(duration) }
             }
         case None =>
           Map()
       }
     }
   }
+
+  private def orderDurationPerTech(durationPerTech: Map[Tech, Duration]): ListMap[Tech, Duration] =
+    ListMap.from(durationPerTech.toSeq.sortBy(_._2).reverse)
 
   private def formatDuration(duration: Duration): String = {
     val days = duration.toDays
