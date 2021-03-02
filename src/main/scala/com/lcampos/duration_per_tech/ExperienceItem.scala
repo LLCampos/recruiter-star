@@ -35,7 +35,7 @@ case class ExperienceItem(
   }
 
   def technologies: Set[Tech] =
-    getOneWordTechnologies ++ getMultiWordTechnologies
+    getOneWordTechnologies ++ getMultiWordTechnologies ++ getTechnologiesWithDot
 
   private def getMultiWordTechnologies: Set[Tech] = {
     TechList.all
@@ -50,6 +50,12 @@ case class ExperienceItem(
       .filter(tech => tokens.contains(tech.name))
       .toSet
   }
+
+  private def getTechnologiesWithDot: Set[Tech] =
+    TechList.all
+      .filter(_.name.contains("."))
+      .filter(tech => allText.contains(tech.name))
+      .toSet
 
   private val allText = s"$title $description"
 }

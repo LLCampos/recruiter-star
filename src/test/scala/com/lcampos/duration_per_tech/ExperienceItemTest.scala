@@ -107,6 +107,10 @@ class ExperienceItemTest extends Specification {
       "find technologies even if their name or composed by more than one word" in {
         ExperienceItem("Developer", "I used to work on SQL Server", "").technologies.map(_.canonName) must be equalTo Set("SQL Server")
       }
+
+      "find technologies with a dot in their name" in {
+        ExperienceItem(".NET Developer", "Also worked in Node.js", "").technologies.map(_.canonName) must be equalTo Set(".NET", "Node.js")
+      }
     }
   }
 }
