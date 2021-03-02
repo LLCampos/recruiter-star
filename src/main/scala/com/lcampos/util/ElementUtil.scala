@@ -1,6 +1,9 @@
 package com.lcampos.util
 
+import org.scalajs.dom.raw.HTMLLIElement
 import org.scalajs.dom.{DOMParser, Document, Element, document}
+
+import scala.scalajs.js.Object.entries
 
 object ElementUtil {
 
@@ -42,4 +45,10 @@ object ElementUtil {
       case elem => Right(elem)
     }
   }
+
+  def getAllLiElements(elem: Element): List[HTMLLIElement] =
+    entries(elem.querySelectorAll("li"))
+      .map(_._2)
+      .collect { case li: HTMLLIElement => li }
+      .toList
 }

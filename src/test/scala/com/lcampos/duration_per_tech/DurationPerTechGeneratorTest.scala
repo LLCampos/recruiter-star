@@ -4,6 +4,8 @@ import com.lcampos.util.ElementUtil
 import org.specs2.mutable.Specification
 import test_data.experience_section._
 
+import scala.collection.immutable.ListMap
+
 class DurationPerTechGeneratorTest extends Specification {
 
 
@@ -72,6 +74,17 @@ class DurationPerTechGeneratorTest extends Specification {
           "Programming Languages" -> Map(
             "JavaScript" -> "7 years and 4 months",
             "Python" -> "7 years and 4 months",
+          ),
+        ))
+      }
+
+      "deal with multi-sections experience items" in {
+        val elem = ElementUtil.elementFromString(Example6_MultiSectionExperience.example)
+        DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
+          "Programming Languages" -> ListMap(
+            "Java" -> "2 years and 1 months",
+            "Scala" -> "2 years and 1 months",
+            "Python" -> "7 months",
           ),
         ))
       }

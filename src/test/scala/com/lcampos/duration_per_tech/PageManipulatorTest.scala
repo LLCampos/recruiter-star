@@ -21,10 +21,10 @@ class PageManipulatorTest extends Specification {
 
       "return error on empty experience items" in {
         val doc = ElementUtil.documentFromString(Example3_EmptyExperienceItems.example)
-        PageManipulator.addDurationPerTechToPage(doc) must beLeft("Element with class 'pv-entity__summary-info' not found")
+        PageManipulator.addDurationPerTechToPage(doc) must beLeft("Element with class 'pv-entity__summary-info-v2' not found")
       }
 
-      "return error on empty experience items" in {
+      "return error on empty summary" in {
         val doc = ElementUtil.documentFromString(Example4_EmptySummary.example)
         PageManipulator.addDurationPerTechToPage(doc) must beLeft("Element for selector 'h3' not found")
       }

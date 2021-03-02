@@ -5,7 +5,6 @@ import com.lcampos.util.ElementUtil
 import org.scalajs.dom.raw.{Element, HTMLLIElement}
 
 import scala.concurrent.duration.{DAYS, Duration}
-import scala.scalajs.js.Object.entries
 
 case class ExperienceItem(
   title: String,
@@ -57,18 +56,25 @@ case class ExperienceItem(
 
 object ExperienceItem {
   def fromLinkedinExperienceSectionElem(elem: Element): Either[String, List[ExperienceItem]] = {
-    val liElems = entries(elem.querySelectorAll("li"))
+    val liElems= ElementUtil.getAllLiElements(elem)
     if (liElems.isEmpty) {
       Left("No <li> elements in the experience section")
     } else {
-      liElems.map(tuple => tuple._2 match {
-        case el: HTMLLIElement => fromExperienceListItem(el)
-      }).toList.sequence
+      liElems
+        .filterNot(hasSubList)
+        .map(fromExperienceListItem)
+        .sequence
     }
   }
 
-  private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] = for {
-    summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info")
+  private def hasSubList(elem: HTMLLIElement): Boolean =
+    ElementUtil.querySelectorSafe(elem, "ul").isRight
+
+  private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] =
+    for {
+    summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info").orElse(
+      ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info-v2")
+    )
     title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
     description = getDescription(elem)
     employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
