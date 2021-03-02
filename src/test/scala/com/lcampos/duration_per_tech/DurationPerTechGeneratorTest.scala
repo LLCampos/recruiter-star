@@ -82,8 +82,8 @@ class DurationPerTechGeneratorTest extends Specification {
         val elem = ElementUtil.elementFromString(Example6_MultiSectionExperience.example)
         DurationPerTechGenerator.getFromLinkedinExperienceSection(elem) must beRight(Map(
           "Programming Languages" -> ListMap(
-            "Java" -> "2 years and 1 months",
-            "Scala" -> "2 years and 1 months",
+            "Java" -> "2 years and 1 month",
+            "Scala" -> "2 years and 1 month",
             "Python" -> "7 months",
           ),
         ))

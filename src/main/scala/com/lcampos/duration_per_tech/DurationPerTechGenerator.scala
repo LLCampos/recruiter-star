@@ -45,10 +45,22 @@ object DurationPerTechGenerator {
     val years = days / DaysInYear
     val months = (days % DaysInYear) / DaysInMonth
 
-    (years, months) match {
-      case (0, months) => s"$months months"
-      case (years, 0) => s"$years years"
-      case (years, months) => s"$years years and $months months"
+    val yearsString = years match {
+      case 0 => ""
+      case 1 => "1 year"
+      case x => s"$x years"
+    }
+
+    val monthString = months match {
+      case 0 => ""
+      case 1 => "1 month"
+      case x => s"$x months"
+    }
+
+    (yearsString, monthString) match {
+      case ("", m) => m
+      case (y, "") => y
+      case (y, m) => s"$y and $m"
     }
   }
 
