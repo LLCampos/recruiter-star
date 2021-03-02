@@ -46,6 +46,10 @@ case object Cloud extends TechCategory {
   val uiRepresentation: String = "Cloud"
 }
 
+case object InfrastructureTool extends TechCategory {
+  val uiRepresentation: String = "Infrastructure Tools"
+}
+
 case object Mobile extends TechCategory {
   val uiRepresentation: String = "Mobile"
 }
@@ -86,7 +90,6 @@ object TechList {
     Tech("Adenine", "Adenine", ProgrammingLanguage),
     Tech("Agda", "Agda", ProgrammingLanguage),
     Tech("Agilent VEE", "Agilent VEE", ProgrammingLanguage),
-    Tech("Agora", "Agora", ProgrammingLanguage),
     Tech("AIMMS", "AIMMS", ProgrammingLanguage),
     Tech("Alef", "Alef", ProgrammingLanguage),
     Tech("ALF", "ALF", ProgrammingLanguage),
@@ -344,6 +347,7 @@ object TechList {
     Tech("JASS", "JASS", ProgrammingLanguage),
     Tech("JAVA", "Java", ProgrammingLanguage),
     Tech("Java", "Java", ProgrammingLanguage),
+    Tech("Java8", "Java", ProgrammingLanguage),
     Tech("JavaScript", "JavaScript", ProgrammingLanguage),
     Tech("Javascript", "JavaScript", ProgrammingLanguage),
     Tech("JCL", "JCL", ProgrammingLanguage),
@@ -734,6 +738,8 @@ object TechList {
     Tech("ZOPL", "ZOPL", ProgrammingLanguage),
     Tech("ZPL", "ZPL", ProgrammingLanguage),
     Tech("Node.js", "Node.js", ProgrammingLanguage),
+    Tech("node.js", "Node.js", ProgrammingLanguage),
+    Tech("Node", "Node.js", ProgrammingLanguage),
     Tech("Flutter", "Flutter", ProgrammingLanguage),
     Tech("HTML5", "HTML", ProgrammingLanguage),
     Tech("HTML", "HTML", ProgrammingLanguage),
@@ -770,21 +776,13 @@ object TechList {
     Tech("Flexbox", "Flexbox", Other),
     Tech("Web Typography", "Web Typography", Other),
     Tech("Material Design", "Material Design", Other),
-    Tech("D3", "D3", Other),
-    Tech("jQuery", "jQuery", Other),
-    Tech("Tips", "Tips", Other),
-    Tech("Cycle.js", "Cycle.js", Other),
     Tech("Motion UI Design", "Motion UI Design", Other),
     Tech("Aurelia", "Aurelia", Other),
     Tech("Charting", "Charting", Other),
     Tech("Ionic", "Ionic", Other),
     Tech("Chrome DevTools", "Chrome DevTools", Other),
-    Tech("PostCSS", "PostCSS", Other),
-    Tech("Draft.js", "Draft.js", Other),
     Tech("choo", "choo", Other),
     Tech("Redux", "Redux", Other),
-    Tech("webpack", "webpack", Other),
-    Tech("Browserify", "Browserify", Other),
     Tech("Sass", "Sass", Other),
     Tech("Ant Design", "Ant Design", Other),
     Tech("WebGL", "WebGL", Other),
@@ -804,30 +802,25 @@ object TechList {
     Tech("Material-UI", "Material-UI", Other),
     Tech("Svelte", "Svelte", Other),
     // ################# Back-End Stuff #################
-    Tech("Docker", "Docker", Other),
-    Tech("Vagrant", "Vagrant", Other),
-    Tech("Pyramid", "Pyramid", Other),
-    Tech("Play", "Play Framework", Other),
-    Tech("Play Framework", "Play Framework", Other),
-    Tech("CakePHP", "CakePHP", Other),
-    Tech("Symfony", "Symfony", Other),
-    Tech("Laravel", "Laravel", Other),
     Tech("TALL Stack", "TALL Stack", Other),
     Tech("Phalcon", "Phalcon", Other),
     Tech("nginx", "nginx", Other),
     Tech("Dropwizard", "Dropwizard", Other),
-    Tech("Kubernetes", "Kubernetes", Other),
     Tech("Lumen", "Lumen", Other),
     Tech("Apache Wicket", "Apache Wicket", Other),
     Tech("Vert.x", "Vert.x", Other),
-    Tech("Terraform", "Terraform", Other),
     Tech("Vapor", "Vapor", Other),
     Tech("Dash", "Dash", Other),
     Tech("FastAPI", "FastAPI", Other),
     Tech("CDK", "CDK", Other),
     Tech("Git", "Git", Other),
     Tech("Kafka", "Kafka", Other),
-    // ################# Frameworks #################
+    // ################# Infrastructure #################
+    Tech("Terraform", "Terraform", InfrastructureTool),
+    Tech("Kubernetes", "Kubernetes", InfrastructureTool),
+    Tech("Docker", "Docker", InfrastructureTool),
+    Tech("Vagrant", "Vagrant", InfrastructureTool),
+    // ################# Mobile #################
     Tech("iOS", "iOS", Mobile),
     Tech("Android", "Android", Mobile),
     // ################# Frameworks #################
@@ -835,10 +828,19 @@ object TechList {
     Tech("Spring Boot", "Spring Framework", Framework),
     Tech("Springboot", "Spring Framework", Framework),
     Tech("Spring Framework", "Spring Framework", Framework),
-    Tech("Flask", "Flask", Framework),
     Tech("Ruby", "Ruby On Rails", Framework),
     Tech("Ruby On Rails", "Ruby On Rails", Framework),
+    Tech("Play", "Play Framework", Framework),
+    Tech("Play Framework", "Play Framework", Framework),
+    // ## Python
     Tech("Twisted", "Twisted", Framework),
+    Tech("Pyramid", "Pyramid", Framework),
+    Tech("Flask", "Flask", Framework),
+    Tech("Django", "Django", Framework),
+    // ## PHP
+    Tech("CakePHP", "CakePHP", Framework),
+    Tech("Symfony", "Symfony", Framework),
+    Tech("Laravel", "Laravel", Framework),
     // ## Javascript
     Tech("Ember", "Ember.js", Framework),
     Tech("Ember.js", "Ember.js", Framework),
@@ -851,12 +853,18 @@ object TechList {
     Tech("Knockout.js", "Knockout", Framework),
     Tech("Knockout", "Knockout", Framework),
     Tech("React", "React", Framework),
+    Tech("react.js", "React", Framework),
+    Tech("React.js", "React", Framework),
+    Tech("Cycle.js", "Cycle.js", Framework),
+    Tech("Draft.js", "Draft.js", Framework),
     // ################# Libraries #################
     // ## Javascript
     Tech("Backbone", "Backbone.js", Library),
     Tech("Backbone.js", "Backbone.js", Library),
     Tech("Polymer", "Polymer", Library),
     Tech("Relay", "Relay", Library),
+    Tech("D3", "D3", Library),
+    Tech("jQuery", "jQuery", Library),
     // ################# Big Data #################
     Tech("Hadoop", "Hadoop", Other),
     Tech("Streaming", "Streaming", Other),
@@ -866,6 +874,7 @@ object TechList {
     Tech("Splunk", "Splunk", Other),
     // ################# Databases #################
     Tech("MySQL", "MySQL", Database),
+    Tech("mySQL", "MySQL", Database),
     Tech("SQLAlchemy", "SQLAlchemy", Database),
     Tech("InfluxDB", "InfluxDB", Database),
     Tech("Neo4j", "Neo4j", Database),
@@ -877,7 +886,7 @@ object TechList {
     Tech("HBase", "HBase", Database),
     Tech("Contexture", "Contexture", Database),
     Tech("SQL Server", "SQL Server", Database),
-    Tech("DbVisualizer", "DbVisualizer", Database),
+    Tech("DynamoDB", "DynamoDB", Database),
     // ################# Build Tools #################
     Tech("Maven", "Maven", BuildTool),
     Tech("sbt", "sbt", BuildTool),
@@ -902,7 +911,15 @@ object TechList {
     Tech("IBM Cloud", "IBM Cloud", Cloud),
       // ################# Query Languages #################
     Tech("XPath", "XPath", QueryLanguage),
-    // ################# Query Languages #################
+    // ################# Tools #################
     Tech("Postman", "Postman", Tool),
+    Tech("DbVisualizer", "DbVisualizer", Tool),
+    Tech("Hibernate", "Hibernate", Tool),
+    Tech("Google Web Toolkit", "Google Web Toolkit", Tool),
+    Tech("GWT", "Google Web Toolkit", Tool),
+    Tech("PostCSS", "PostCSS", Tool),
+    Tech("webpack", "webpack", Tool),
+    Tech("Browserify", "Browserify", Tool),
+
   )
 }
