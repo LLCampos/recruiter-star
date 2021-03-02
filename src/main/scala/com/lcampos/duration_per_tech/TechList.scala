@@ -34,6 +34,10 @@ case object BuildTool extends TechCategory {
   val uiRepresentation: String = "Build Tools"
 }
 
+case object Library extends TechCategory {
+  val uiRepresentation: String = "Libraries"
+}
+
 case object Framework extends TechCategory {
   val uiRepresentation: String = "Frameworks"
 }
@@ -64,7 +68,7 @@ object TechList {
   val all: List[Tech] = List(
     // ################# Programming languages #################
     Tech("A#", "A#", ProgrammingLanguage),
-    Tech(",net", ".NET", ProgrammingLanguage),
+    Tech(".NET", ".NET", ProgrammingLanguage),
     Tech("A+", "A+", ProgrammingLanguage),
     Tech("A++", "A++", ProgrammingLanguage),
     Tech("ABAP", "ABAP", ProgrammingLanguage),
@@ -754,26 +758,14 @@ object TechList {
     Tech("RubyMotion", "RubyMotion", Other),
     Tech("GNOME", "GNOME", Other),
     Tech("KDE", "KDE", Other),
-    Tech(".NET", ".NET", Other),
     Tech("Roslyn", "Roslyn", Other),
     Tech("Firebase", "Firebase", Other),
     Tech("Adafruit IO", "Adafruit IO", Other),
     Tech("Deno", "Deno", Other),
     Tech("DOS", "DOS", Other),
     // ################# Front-End Stuff #################
-    Tech("Critical-Path tools", "Critical-Path Tools", Other),
-    Tech("React", "React", Other),
-    Tech("Relay", "Relay", Other),
     Tech("Web Components", "Web Components", Other),
-    Tech("Polymer", "Polymer", Other),
-    Tech("Angular", "Angular", Other),
-    Tech("Backbone", "Backbone", Other),
-    Tech("SVG", "SVG", Other),
-    Tech("Canvas", "Canvas", Other),
-    Tech("KnockoutJS", "KnockoutJS", Other),
     Tech("Dojo Toolkit", "Dojo Toolkit", Other),
-    Tech("Ember", "Ember", Other),
-    Tech("Meteor", "Meteor", Other),
     Tech("BEM", "BEM", Other),
     Tech("Flexbox", "Flexbox", Other),
     Tech("Web Typography", "Web Typography", Other),
@@ -783,8 +775,6 @@ object TechList {
     Tech("Tips", "Tips", Other),
     Tech("Cycle.js", "Cycle.js", Other),
     Tech("Motion UI Design", "Motion UI Design", Other),
-    Tech("Vue.js", "Vue.js", Other),
-    Tech("Marionette.js", "Marionette.js", Other),
     Tech("Aurelia", "Aurelia", Other),
     Tech("Charting", "Charting", Other),
     Tech("Ionic", "Ionic", Other),
@@ -849,6 +839,24 @@ object TechList {
     Tech("Ruby", "Ruby On Rails", Framework),
     Tech("Ruby On Rails", "Ruby On Rails", Framework),
     Tech("Twisted", "Twisted", Framework),
+    // ## Javascript
+    Tech("Ember", "Ember.js", Framework),
+    Tech("Ember.js", "Ember.js", Framework),
+    Tech("Meteor", "Meteor", Framework),
+    Tech("Vue.js", "Vue.js", Framework),
+    Tech("Marionette.js", "Marionette.js", Framework),
+    Tech("Angular", "Angular", Framework),
+    Tech("Angular.js", "Angular", Framework),
+    Tech("KnockoutJS", "Knockout", Framework),
+    Tech("Knockout.js", "Knockout", Framework),
+    Tech("Knockout", "Knockout", Framework),
+    Tech("React", "React", Framework),
+    // ################# Libraries #################
+    // ## Javascript
+    Tech("Backbone", "Backbone.js", Library),
+    Tech("Backbone.js", "Backbone.js", Library),
+    Tech("Polymer", "Polymer", Library),
+    Tech("Relay", "Relay", Library),
     // ################# Big Data #################
     Tech("Hadoop", "Hadoop", Other),
     Tech("Streaming", "Streaming", Other),
