@@ -40,9 +40,11 @@ class DurationPerTechGeneratorTest extends Specification {
           "Databases" -> Map(
             "MongoDB" -> "3 years and 4 months",
           ),
+          "Infrastructure Tools" -> Map(
+            "Docker" -> "3 years and 4 months",
+          ),
           "Other" -> Map(
             "Git" -> "3 years and 4 months",
-            "Docker" -> "3 years and 4 months",
           )
         ))
       }
