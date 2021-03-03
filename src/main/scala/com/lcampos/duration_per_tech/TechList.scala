@@ -821,20 +821,6 @@ object TechList {
     Tech("Yew", "Yew", Other),
     Tech("Material-UI", "Material-UI", Other),
     Tech("Svelte", "Svelte", Other),
-    // ################# Back-End Stuff #################
-    Tech("TALL Stack", "TALL Stack", Other),
-    Tech("Phalcon", "Phalcon", Other),
-    Tech("nginx", "nginx", Other),
-    Tech("Dropwizard", "Dropwizard", Other),
-    Tech("Lumen", "Lumen", Other),
-    Tech("Apache Wicket", "Apache Wicket", Other),
-    Tech("Vert.x", "Vert.x", Other),
-    Tech("Vapor", "Vapor", Other),
-    Tech("Dash", "Dash", Other),
-    Tech("FastAPI", "FastAPI", Other),
-    Tech("CDK", "CDK", Other),
-    Tech("Git", "Git", Other),
-    Tech("Kafka", "Kafka", Other),
     // ################# Infrastructure #################
     Tech("Terraform", "Terraform", InfrastructureTool),
     Tech("Kubernetes", "Kubernetes", InfrastructureTool),
@@ -858,15 +844,22 @@ object TechList {
     Tech("Spring Framework", "Spring Framework", Framework),
     Tech("Apache Jena", "Apache Jena", Framework),
     Tech("Jena", "Apache Jena", Framework),
+    Tech("Apache Wicket", "Apache Wicket", Framework),
+    Tech("Wicket", "Apache Wicket", Framework),
+    Tech("Vert.x", "Vert.x", Framework),
+    Tech("Dropwizard", "Dropwizard", Framework),
     // ## Python
     Tech("Twisted", "Twisted", Framework),
     Tech("Pyramid", "Pyramid", Framework),
     Tech("Flask", "Flask", Framework),
     Tech("Django", "Django", Framework),
+    Tech("FastAPI", "FastAPI", Framework),
     // ## PHP
     Tech("CakePHP", "CakePHP", Framework),
     Tech("Symfony", "Symfony", Framework),
     Tech("Laravel", "Laravel", Framework),
+    Tech("Lumen", "Lumen", Framework),
+    Tech("Phalcon", "Phalcon", Framework),
     // ## Javascript
     Tech("Ember", "Ember.js", Framework),
     Tech("Ember.js", "Ember.js", Framework),
@@ -960,6 +953,8 @@ object TechList {
     Tech("DynamoDB", "DynamoDB", Database),
     // ################# Build Tools #################
     Tech("Maven", "Maven", BuildTool),
+    Tech("Gradle", "Gradle", BuildTool),
+    Tech("CMake", "CMake", BuildTool),
     Tech("sbt", "sbt", BuildTool),
     // ################# Test/QA #################
     Tech("Cucumber", "Cucumber", TestAndQA),
@@ -1046,6 +1041,15 @@ object TechList {
     Tech("PostCSS", "PostCSS", Tool),
     Tech("webpack", "webpack", Tool),
     Tech("Browserify", "Browserify", Tool),
+    Tech("Prometheus", "Prometheus", Tool),
+    Tech("Thanos", "Thanos", Tool),
+    Tech("Loki", "Loki", Tool),
+    Tech("Elasticserch", "Elasticserch", Tool),
+    Tech("Kibana", "Kibana", Tool),
+    Tech("Graylog", "Graylog", Tool),
+    Tech("ReportPortal", "ReportPortal", Tool),
+    Tech("Git", "Git", Tool),
+    Tech("Kafka", "Kafka", Tool),
 
   )
 }
