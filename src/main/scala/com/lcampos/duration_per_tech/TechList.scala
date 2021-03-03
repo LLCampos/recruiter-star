@@ -183,8 +183,6 @@ object TechList {
     Tech("CHAIN", "CHAIN", ProgrammingLanguage),
     Tech("Charity", "Charity", ProgrammingLanguage),
     Tech("Charm", "Charm", ProgrammingLanguage),
-    Tech("Chef", "Chef", ProgrammingLanguage),
-    Tech("CHILL", "CHILL", ProgrammingLanguage),
     Tech("CHIP-8", "CHIP-8", ProgrammingLanguage),
     Tech("chomski", "chomski", ProgrammingLanguage),
     Tech("ChucK", "ChucK", ProgrammingLanguage),
@@ -572,7 +570,6 @@ object TechList {
     Tech("PowerBuilder", "PowerBuilder", ProgrammingLanguage),
     Tech("PowerShell", "PowerShell", ProgrammingLanguage),
     Tech("PPL", "PPL", ProgrammingLanguage),
-    Tech("Processing", "Processing", ProgrammingLanguage),
     Tech("Processing.js", "Processing.js", ProgrammingLanguage),
     Tech("Prograph", "Prograph", ProgrammingLanguage),
     Tech("PROIV", "PROIV", ProgrammingLanguage),
@@ -829,6 +826,9 @@ object TechList {
     Tech("Helm", "Helm", InfrastructureTool),
     Tech("MicroK8s", "MicroK8s", InfrastructureTool),
     Tech("Microk8s", "MicroK8s", InfrastructureTool),
+    Tech("Chef", "Chef", InfrastructureTool),
+    Tech("Puppet", "Puppet", InfrastructureTool),
+    Tech("Ansible", "Ansible", InfrastructureTool),
     // ################# Mobile #################
     Tech("iOS", "iOS", Mobile),
     Tech("Android", "Android", Mobile),
@@ -968,6 +968,8 @@ object TechList {
     Tech("TestLink", "TestLink", TestAndQA),
     Tech("Testlink", "TestLink", TestAndQA),
     Tech("JMeter", "JMeter", TestAndQA),
+    Tech("Cypress", "Cypress", TestAndQA),
+    Tech("TestCafe", "TestCafe", TestAndQA),
     // ################# CI/CD #################
     Tech("Abstruse CI", "Abstruse CI", CICD),
     Tech("Agola", "Agola", CICD),
@@ -1050,6 +1052,7 @@ object TechList {
     Tech("ReportPortal", "ReportPortal", Tool),
     Tech("Git", "Git", Tool),
     Tech("Kafka", "Kafka", Tool),
-
+    Tech("Chartio", "Chartio", Tool),
+    Tech("LaunchDarkly", "LaunchDarkly", Tool),
   )
 }
