@@ -13,7 +13,7 @@ object DurationPerTechGenerator {
   private val DaysInYear = 365
   private val DaysInMonth = 30
 
-  type DurationPerTechPerCategory = Map[String, ListMap[String, String]]
+  type DurationPerTechPerCategory = ListMap[String, ListMap[String, String]]
 
   def getFromLinkedinExperienceSection(elem: Element): Either[String, DurationPerTechPerCategory] = {
     ExperienceItem.fromLinkedinExperienceSectionElem(elem).map { experienceItems =>
@@ -25,17 +25,20 @@ object DurationPerTechGenerator {
               .groupBy(_._1.category)
           )
         case None =>
-          Map()
+          ListMap()
       }
     }
   }
 
-  def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
-    durationPerTechPerCategory.map { case (category, durationPerTech) =>
+  private def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
+    orderDurationPerTechPerCategory(durationPerTechPerCategory).map { case (category, durationPerTech) =>
       category.uiRepresentation -> orderDurationPerTech(durationPerTech).map { case (tech, duration) =>
         tech.canonName -> formatDuration(duration)
       }
     }
+
+  private def orderDurationPerTechPerCategory(m: Map[TechCategory, Map[Tech, Duration]]): ListMap[TechCategory, Map[Tech, Duration]] =
+    ListMap.from(m.toSeq.sortBy(_._1))
 
   private def orderDurationPerTech(durationPerTech: Map[Tech, Duration]): ListMap[Tech, Duration] =
     ListMap.from(durationPerTech.toSeq.sortBy(_._2).reverse)

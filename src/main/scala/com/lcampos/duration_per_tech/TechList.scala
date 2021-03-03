@@ -1,5 +1,7 @@
 package com.lcampos.duration_per_tech
 
+import com.lcampos.duration_per_tech.TechCategory._
+
 case class Tech(
   name: String,
   canonName: String,
@@ -8,59 +10,79 @@ case class Tech(
 
 sealed trait TechCategory {
   val uiRepresentation: String
+  val priorityInOrdering: Int // Lower is means first in order
 }
 
-case object ProgrammingLanguage extends TechCategory {
-  val uiRepresentation: String = "Programming Languages"
+object TechCategory {
+  case object ProgrammingLanguage extends TechCategory {
+    val uiRepresentation: String = "Programming Languages"
+    val priorityInOrdering: Int = 1
+  }
+
+  case object Framework extends TechCategory {
+    val uiRepresentation: String = "Frameworks"
+    val priorityInOrdering: Int = 2
+  }
+
+  case object Library extends TechCategory {
+    val uiRepresentation: String = "Libraries"
+    val priorityInOrdering: Int = 3
+  }
+
+  case object Mobile extends TechCategory {
+    val uiRepresentation: String = "Mobile"
+    val priorityInOrdering: Int = 4
+  }
+
+  case object Database extends TechCategory {
+    val uiRepresentation: String = "Databases"
+    val priorityInOrdering: Int = 5
+  }
+
+  case object CICD extends TechCategory {
+    val uiRepresentation: String = "CI/CD"
+    val priorityInOrdering: Int = 6
+  }
+
+  case object Cloud extends TechCategory {
+    val uiRepresentation: String = "Cloud"
+    val priorityInOrdering: Int = 7
+  }
+
+  case object InfrastructureTool extends TechCategory {
+    val uiRepresentation: String = "Infrastructure Tools"
+    val priorityInOrdering: Int = 8
+  }
+
+  case object QueryLanguage extends TechCategory {
+    val uiRepresentation: String = "Query Languages"
+    val priorityInOrdering: Int = 9
+  }
+
+  case object TestAndQA extends TechCategory {
+    val uiRepresentation: String = "Test and QA"
+    val priorityInOrdering: Int = 10
+  }
+
+  case object BuildTool extends TechCategory {
+    val uiRepresentation: String = "Build Tools"
+    val priorityInOrdering: Int = 11
+  }
+
+  case object Tool extends TechCategory {
+    val uiRepresentation: String = "Tools"
+    val priorityInOrdering: Int = 12
+  }
+
+  case object Other extends TechCategory {
+    val uiRepresentation: String = "Other"
+    val priorityInOrdering: Int = 13
+  }
+
+  implicit def techCategoryOrdering: Ordering[TechCategory] = (x: TechCategory, y: TechCategory) =>
+    x.priorityInOrdering compare y.priorityInOrdering
 }
 
-case object QueryLanguage extends TechCategory {
-  val uiRepresentation: String = "Query Languages"
-}
-
-case object Database extends TechCategory {
-  val uiRepresentation: String = "Databases"
-}
-
-case object CICD extends TechCategory {
-  val uiRepresentation: String = "CI/CD"
-}
-
-case object TestAndQA extends TechCategory {
-  val uiRepresentation: String = "Test and QA"
-}
-
-case object BuildTool extends TechCategory {
-  val uiRepresentation: String = "Build Tools"
-}
-
-case object Library extends TechCategory {
-  val uiRepresentation: String = "Libraries"
-}
-
-case object Framework extends TechCategory {
-  val uiRepresentation: String = "Frameworks"
-}
-
-case object Cloud extends TechCategory {
-  val uiRepresentation: String = "Cloud"
-}
-
-case object InfrastructureTool extends TechCategory {
-  val uiRepresentation: String = "Infrastructure Tools"
-}
-
-case object Mobile extends TechCategory {
-  val uiRepresentation: String = "Mobile"
-}
-
-case object Tool extends TechCategory {
-  val uiRepresentation: String = "Tools"
-}
-
-case object Other extends TechCategory {
-  val uiRepresentation: String = "Other"
-}
 
 object TechList {
 
