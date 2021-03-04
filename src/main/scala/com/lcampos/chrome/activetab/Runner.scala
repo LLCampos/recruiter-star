@@ -4,7 +4,7 @@ import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech
-import com.lcampos.model.{LinkedinBasic, LinkedinPremium}
+import com.lcampos.model.{Linkedin, LinkedinBasic, LinkedinPremium, Unknown}
 import org.scalajs.dom
 
 import scala.concurrent.ExecutionContext
@@ -19,10 +19,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
           setTimeout(100.milli) {
-            if (v.contains(LinkedinBasic.urlSignature)) {
-              duration_per_tech.PageManipulator.addDurationPerTechToPage(dom.document)
-            } else if (v.contains(LinkedinPremium.urlSignature)) {
-              log("Premium page!")
+            Linkedin.fromUrl(v) match {
+              case LinkedinBasic => duration_per_tech.PageManipulator.addDurationPerTechToPage(dom.document)
+              case LinkedinPremium => log("Premium page!")
+              case Unknown => ()
             }
           }
         case _ => ()
