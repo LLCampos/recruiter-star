@@ -16,9 +16,11 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     log("This was run by the active tab")
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
-        case Some(v: String) if v == "page was reloaded" =>
-          setTimeout(1.milli) {
-            duration_per_tech.PageManipulator.addDurationPerTechToPage(dom.document)
+        case Some(v: String) if v.contains("page was reloaded") =>
+          setTimeout(100.milli) {
+            if (v.contains("www.linkedin.com/in/")) {
+              duration_per_tech.PageManipulator.addDurationPerTechToPage(dom.document)
+            }
           }
         case _ => ()
       }

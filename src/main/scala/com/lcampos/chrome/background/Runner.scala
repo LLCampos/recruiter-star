@@ -54,10 +54,11 @@ class Runner(commandProcessor: CommandProcessor)(implicit ec: ExecutionContext) 
   }
 
   private def notifyOfStatusComplete(): Unit = {
-    chrome.tabs.Tabs.onUpdated.listen { case (tabId: Id, changeInfo: ChangeInfo, _: Tab) =>
+    chrome.tabs.Tabs.onUpdated.listen { case (tabId: Id, changeInfo: ChangeInfo, tab: Tab) =>
       changeInfo.status.toOption match {
         case Some(status) if status == "complete" =>
-          chrome.tabs.Tabs.sendMessage(tabId, "page was reloaded")
+          val url = tab.url.toOption.getOrElse("")
+          chrome.tabs.Tabs.sendMessage(tabId, s"$url | page was reloaded")
         case _ => ()
       }
     }

@@ -38,7 +38,7 @@ object AppManifest {
       override val contentScripts: List[ContentScript] = List(
         ContentScript(
           matches = List(
-            "https://www.linkedin.com/in/*"
+            "https://www.linkedin.com/*"
           ),
           css = List("css/active-tab.css"),
           js = commonScripts ::: List("scripts/active-tab-script.js")
