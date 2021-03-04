@@ -100,6 +100,10 @@ class ExperienceItemTest extends Specification {
         ExperienceItem("Java/Scala Developer", "JavaScript,CSS", "").technologies.map(_.canonName) must be equalTo Set("Java", "Scala", "JavaScript", "CSS")
       }
 
+      "deal with tech name between square brackets" in {
+        ExperienceItem("Developer", "I used a nice language [Groovy]", "").technologies.map(_.canonName) must be equalTo Set("Groovy")
+      }
+
       "deal with tech name between parenthesis" in {
         ExperienceItem("Developer", "I used a nice language (Groovy)", "").technologies.map(_.canonName) must be equalTo Set("Groovy")
       }
