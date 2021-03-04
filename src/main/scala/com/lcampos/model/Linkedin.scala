@@ -8,5 +8,5 @@ case object LinkedinBasic extends Linkedin {
   val urlSignature: String = "www.linkedin.com/in/"
 }
 case object LinkedinPremium extends Linkedin {
-  val urlSignature: String = ???
+  val urlSignature: String = "www.linkedin.com/recruiter/profile/"
 }
