@@ -43,7 +43,7 @@ class DurationPerTechGeneratorTest extends Specification {
           "Infrastructure Tools" -> Map(
             "Docker" -> "3 years and 4 months",
           ),
-          "Other" -> Map(
+          "Tools" -> Map(
             "Git" -> "3 years and 4 months",
           )
         ))
