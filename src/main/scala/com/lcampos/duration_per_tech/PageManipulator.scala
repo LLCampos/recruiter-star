@@ -16,7 +16,7 @@ object PageManipulator {
     removeTechExperienceSummaryElem(document)
     showAllExperiences(document)
     for {
-      experienceSectionElem <- ElementUtil.getElementByIdSafe(document, "experience-section")
+      experienceSectionElem <- ElementUtil.getElementByIdSafeCloned(document, "experience-section")
       durationPerTechPerCat <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
       _ <- if (durationPerTechPerCat.nonEmpty) addYearsPerTechElem(durationPerTechPerCat, document) else Right(())
     } yield ()

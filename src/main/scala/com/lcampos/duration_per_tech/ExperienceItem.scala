@@ -62,7 +62,7 @@ case class ExperienceItem(
 
 object ExperienceItem {
   def fromLinkedinExperienceSectionElem(elem: Element): Either[String, List[ExperienceItem]] = {
-    val liElems= ElementUtil.getAllLiElements(elem)
+    val liElems = ElementUtil.getAllLiElements(elem)
     if (liElems.isEmpty) {
       Left("No <li> elements in the experience section")
     } else {

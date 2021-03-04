@@ -18,12 +18,14 @@ object ElementUtil {
     div
   }
 
-  def getElementByIdSafe(doc: Document, id: String): Either[String, Element] = {
+  def getElementByIdSafe(doc: Document, id: String): Either[String, Element] =
     doc.getElementById(id) match {
       case null => Left(s"Element with id '$id' not found")
       case elem => Right(elem)
     }
-  }
+
+  def getElementByIdSafeCloned(doc: Document, id: String): Either[String, Element] =
+    getElementByIdSafe(doc, id).map(_.cloneNode(true).asInstanceOf[Element])
 
   def getFirstElementByClassNameSafe(elem: Element, className: String): Either[String, Element] = {
     elem.getElementsByClassName(className).item(0) match {
