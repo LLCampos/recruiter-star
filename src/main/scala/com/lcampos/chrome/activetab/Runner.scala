@@ -3,8 +3,7 @@ package com.lcampos.chrome.activetab
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
-import com.lcampos.duration_per_tech
-import com.lcampos.model.{LinkedinProfileManipulator, LinkedinProfileManipulatorBasic, LinkedinProfileManipulatorPremium, NoOpManipulator}
+import com.lcampos.model.LinkedinProfileManipulator
 import org.scalajs.dom
 
 import scala.concurrent.ExecutionContext
@@ -19,11 +18,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
           setTimeout(100.milli) {
-            LinkedinProfileManipulator.fromUrl(v) match {
-              case LinkedinProfileManipulatorBasic => duration_per_tech.PageManipulator.addDurationPerTechToPage(dom.document)
-              case LinkedinProfileManipulatorPremium => log("Premium page!")
-              case NoOpManipulator => ()
-            }
+            LinkedinProfileManipulator.fromUrl(v).addDurationPerTech(dom.document)
           }
         case _ => ()
       }

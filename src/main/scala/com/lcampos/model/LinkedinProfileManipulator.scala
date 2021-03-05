@@ -1,7 +1,11 @@
 package com.lcampos.model
 
+import com.lcampos.duration_per_tech
+import org.scalajs.dom.Document
+
 trait LinkedinProfileManipulator {
   val urlSignature: String
+  def addDurationPerTech(profile: Document): Either[String, Unit]
 }
 
 object LinkedinProfileManipulator {
@@ -16,11 +20,15 @@ object LinkedinProfileManipulator {
 
 case object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
   val urlSignature: String = "www.linkedin.com/in/"
+  def addDurationPerTech(profile: Document): Either[String, Unit] =
+    duration_per_tech.PageManipulator.addDurationPerTechToPage(profile)
 }
 case object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
   val urlSignature: String = "www.linkedin.com/recruiter/profile/"
+  def addDurationPerTech(profile: Document): Either[String, Unit] = ???
 }
 
 case object NoOpManipulator extends LinkedinProfileManipulator {
   val urlSignature: String = ""
+  def addDurationPerTech(profile: Document): Either[String, Unit] = Right(())
 }
