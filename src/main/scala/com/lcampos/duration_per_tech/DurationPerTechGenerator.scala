@@ -2,7 +2,6 @@ package com.lcampos.duration_per_tech
 
 import cats.kernel.Semigroup
 import cats.syntax.all._
-import org.scalajs.dom.raw._
 
 import scala.collection.immutable.ListMap
 import scala.concurrent.duration.Duration
@@ -23,6 +22,8 @@ object DurationPerTechGenerator {
             .reduce(Semigroup[Map[Tech, Duration]].combine)
             .groupBy(_._1.category)
         )
+      case None =>
+        ListMap.empty
     }
 
   private def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
