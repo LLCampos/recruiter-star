@@ -1,4 +1,4 @@
-package test_data.experience_section
+package test_data.linkedin_basic.experience_section
 
 object ExampleMultiSectionExperience {
 

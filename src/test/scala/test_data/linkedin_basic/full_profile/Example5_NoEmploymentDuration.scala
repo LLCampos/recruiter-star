@@ -1,6 +1,6 @@
-package test_data.full_profile
+package test_data.linkedin_basic.full_profile
 
-object Example4_EmptySummary {
+object Example5_NoEmploymentDuration {
 
   val example: String =
     """<main>
@@ -9,6 +9,7 @@ object Example4_EmptySummary {
       |   <ul>
       |     <li>
       |       <div class='pv-entity__summary-info'>
+      |         <h3>Developer</h3>
       |       </div>
       |     </li>
       |   </ul>

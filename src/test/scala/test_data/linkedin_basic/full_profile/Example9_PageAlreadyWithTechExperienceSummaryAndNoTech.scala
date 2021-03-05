@@ -1,6 +1,6 @@
-package test_data.full_profile
+package test_data.linkedin_basic.full_profile
 
-object Example7_PageAlreadyWithTechExperienceSummary {
+object Example9_PageAlreadyWithTechExperienceSummaryAndNoTech {
 
   val example: String =
     """<main>
@@ -27,7 +27,7 @@ object Example7_PageAlreadyWithTechExperienceSummary {
              <div class='pv-entity__bullet-item-v2'>4 yrs 4 mos</div>
 
              <div class='pv-entity__description'>
-               I was a Java developer
+               I was a bumba developer
              </div>
            </li>
          </ul>

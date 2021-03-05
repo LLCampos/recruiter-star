@@ -1,4 +1,4 @@
-package test_data.full_profile
+package test_data.linkedin_basic.full_profile
 
 object Example6_ValidPage {
 

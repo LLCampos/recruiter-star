@@ -4,8 +4,8 @@ import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
-import test_data.experience_section.{ExampleBasic, ExampleBreakTag, ExampleMultiSectionExperience}
-import test_data.full_profile._
+import test_data.linkedin_basic.experience_section.{ExampleBasic, ExampleBreakTag, ExampleMultiSectionExperience}
+import test_data.linkedin_basic.full_profile._
 
 class LinkedinProfileManipulatorBasicTest extends Specification {
 
