@@ -1,6 +1,6 @@
 package test_data.experience_section
 
-object Example6_MultiSectionExperience {
+object ExampleMultiSectionExperience {
 
   val example: String =
     """<section id="experience-section" class="pv-profile-section experience-section ember-view">

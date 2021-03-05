@@ -1,6 +1,6 @@
 package test_data.experience_section
 
-object Example4_OnlyMonthsAndOnlyYears {
+object ExampleBasic {
 
   val example: String =
     """<section id="experience-section" class="pv-profile-section experience-section ember-view">
@@ -37,7 +37,7 @@ object Example4_OnlyMonthsAndOnlyYears {
       |                                    </h4>
       |                                    <h4 class="t-14 t-black--light t-normal">
       |                                        <span class="visually-hidden">Employment Duration</span>
-      |                                        <span class="pv-entity__bullet-item-v2">4 mos</span>
+      |                                        <span class="pv-entity__bullet-item-v2">7 yrs 4 mos</span>
       |                                    </h4>
       |                                </div>
       |
@@ -54,7 +54,7 @@ object Example4_OnlyMonthsAndOnlyYears {
       |                                style="line-height:2rem;max-height:16rem;" data-test-inline-show-more-text=""
       |                                id="ember3829"
       |                                class="pv-entity__description t-14 t-black t-normal inline-show-more-text inline-show-more-text--is-collapsed ember-view">
-      |                            Frontend and Backend developer: <br>Azure.<br>
+      |                            Frontend and Backend developer: <br>JavaScript, CSS, HTML5, Azure.<br>
       |
       |                            <!----></p><!----></div>
       |                    </div>
@@ -104,7 +104,7 @@ object Example4_OnlyMonthsAndOnlyYears {
       |                                style="line-height:2rem;max-height:8rem;" data-test-inline-show-more-text=""
       |                                id="ember3837"
       |                                class="pv-entity__description t-14 t-black t-normal inline-show-more-text inline-show-more-text--is-collapsed ember-view">
-      |                            Frontend and Backend developer.<br>Worked with JavaScript.
+      |                            Frontend and Backend developer.<br>Worked with JavaScript, CSS and HTML5.
       |
       |                            <!----></p><!----></div>
       |                    </div>

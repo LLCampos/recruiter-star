@@ -1,8 +1,6 @@
 package com.lcampos.duration_per_tech
 
-import com.lcampos.util.ElementUtil
 import org.specs2.mutable.Specification
-import test_data.experience_section.Example1
 
 import scala.concurrent.duration.{DAYS, Duration}
 

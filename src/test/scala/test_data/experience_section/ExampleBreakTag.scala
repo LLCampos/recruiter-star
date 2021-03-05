@@ -1,6 +1,6 @@
 package test_data.experience_section
 
-object Example5_BreakTag {
+object ExampleBreakTag {
 
   val example: String =
     """<section id="experience-section" class="pv-profile-section experience-section ember-view">

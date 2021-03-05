@@ -4,7 +4,7 @@ import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
-import test_data.experience_section.{Example1, Example5_BreakTag, Example6_MultiSectionExperience}
+import test_data.experience_section.{ExampleBasic, ExampleBreakTag, ExampleMultiSectionExperience}
 import test_data.full_profile._
 
 class LinkedinProfileManipulatorBasicTest extends Specification {
@@ -77,7 +77,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
 
     "fromLinkedinExperienceSectionElem" should {
       "correctly parse example 1" in {
-        val elem = ElementUtil.elementFromString(Example1.example)
+        val elem = ElementUtil.elementFromString(ExampleBasic.example)
 
         val expected = Seq(
           ExperienceItem(
@@ -96,7 +96,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
       }
 
       "existence of break tags shouldn't affect extraction of technologies" in {
-        val elem = ElementUtil.elementFromString(Example5_BreakTag.example)
+        val elem = ElementUtil.elementFromString(ExampleBreakTag.example)
 
         val expected = List(
           ExperienceItem(
@@ -110,7 +110,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
       }
 
       "deal with multi-sections experience items" in {
-        val elem = ElementUtil.elementFromString(Example6_MultiSectionExperience.example)
+        val elem = ElementUtil.elementFromString(ExampleMultiSectionExperience.example)
         LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight((experienceItems: List[ExperienceItem]) => {
           experienceItems.size must be equalTo 3
         })
