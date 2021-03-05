@@ -2,8 +2,8 @@ package com.lcampos.duration_per_tech
 
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.util.ElementUtil
-import org.scalajs.dom.raw.{Element, HTMLElement}
-import org.scalajs.dom.{Document, window}
+import org.scalajs.dom.raw.HTMLElement
+import org.scalajs.dom.{Document, Element, window}
 
 import scala.concurrent.duration.DurationInt
 import scala.scalajs.js.timers.setTimeout
@@ -16,11 +16,14 @@ object PageManipulator {
     removeTechExperienceSummaryElem(document)
     showAllExperiences(document)
     for {
-      experienceSectionElem <- ElementUtil.getElementByIdSafeCloned(document, "experience-section")
+      experienceSectionElem <- getExperienceSection(document)
       durationPerTechPerCat <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
       _ <- if (durationPerTechPerCat.nonEmpty) addYearsPerTechElem(durationPerTechPerCat, document) else Right(())
     } yield ()
   }
+
+  private def getExperienceSection(document: Document): Either[String, Element] =
+    ElementUtil.getElementByIdSafeCloned(document, "experience-section")
 
   private def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
