@@ -1,6 +1,7 @@
 package com.lcampos.model
 
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
+import com.lcampos.duration_per_tech.ExperienceItem
 import org.scalajs.dom.{Document, Element}
 
 object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
@@ -9,4 +10,5 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
   protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = ???
   protected def removeTechExperienceSummaryElem(doc: Document): Unit = ???
   protected def showAllExperiences(doc: Document): Unit = ???
+  protected def getExperienceItems(experienceSectionElem: Element): Either[String, List[ExperienceItem]] = ???
 }

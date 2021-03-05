@@ -8,27 +8,6 @@ import scala.concurrent.duration.{DAYS, Duration}
 
 class ExperienceItemTest extends Specification {
   "ExperienceItem" should {
-    "fromLinkedinExperienceSectionElem" should {
-      "correctly parse example 1" in {
-        val elem = ElementUtil.elementFromString(Example1.example)
-
-        val expected = Seq(
-          ExperienceItem(
-            "Software Developer @ DXS powered by agap2i",
-            "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
-            "7 yrs 4 mos"
-          ),
-          ExperienceItem(
-            "Analyst/Software Developer",
-            "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
-            "4 yrs"
-          ),
-        )
-
-        ExperienceItem.fromLinkedinExperienceSectionElem(elem) must beRight(expected)
-      }
-    }
-
     "duration" should {
       "return correct duration when duration string only contains number of years" in {
         ExperienceItem("", "", "4 yrs").duration must be some Duration(4 * 365, DAYS)

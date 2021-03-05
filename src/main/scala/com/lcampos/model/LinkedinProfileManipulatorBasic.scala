@@ -1,8 +1,10 @@
 package com.lcampos.model
 
+import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
+import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
-import org.scalajs.dom.raw.HTMLElement
+import org.scalajs.dom.raw.{HTMLElement, HTMLLIElement}
 import org.scalajs.dom.{Document, Element, window}
 
 import scala.concurrent.duration.DurationInt
@@ -67,5 +69,42 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
         window.scroll(0, 0)
       }
     })
+  }
+
+  def getExperienceItems(experienceSectionElem: Element): Either[String, List[ExperienceItem]] = {
+    val liElems = ElementUtil.getAllLiElements(experienceSectionElem)
+    if (liElems.isEmpty) {
+      Left("No <li> elements in the experience section")
+    } else {
+      liElems
+        .filterNot(hasSubList)
+        .map(fromExperienceListItem)
+        .sequence
+    }
+  }
+
+  private def hasSubList(elem: HTMLLIElement): Boolean =
+    ElementUtil.querySelectorSafe(elem, "ul").isRight
+
+  private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] =
+    for {
+      summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info").orElse(
+        ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info-v2")
+      )
+      title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
+      description = getDescription(elem)
+      employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
+    } yield ExperienceItem(
+      title,
+      description,
+      employmentDuration
+    )
+
+  private def getDescription(elem: HTMLLIElement): String = {
+    val descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
+    descriptionElem.foreach(el =>
+      el.innerHTML = el.innerHTML.replace("<br>", " ").replace("</br>", " ")
+    )
+    descriptionElem.map(_.textContent.trim()).getOrElse("")
   }
 }

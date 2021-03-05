@@ -1,9 +1,5 @@
 package com.lcampos.duration_per_tech
 
-import cats.syntax.all._
-import com.lcampos.util.ElementUtil
-import org.scalajs.dom.raw.{Element, HTMLLIElement}
-
 import scala.concurrent.duration.{DAYS, Duration}
 
 case class ExperienceItem(
@@ -58,43 +54,4 @@ case class ExperienceItem(
       .toSet
 
   private val allText = s"$title $description"
-}
-
-object ExperienceItem {
-  def fromLinkedinExperienceSectionElem(elem: Element): Either[String, List[ExperienceItem]] = {
-    val liElems = ElementUtil.getAllLiElements(elem)
-    if (liElems.isEmpty) {
-      Left("No <li> elements in the experience section")
-    } else {
-      liElems
-        .filterNot(hasSubList)
-        .map(fromExperienceListItem)
-        .sequence
-    }
-  }
-
-  private def hasSubList(elem: HTMLLIElement): Boolean =
-    ElementUtil.querySelectorSafe(elem, "ul").isRight
-
-  private def fromExperienceListItem(elem: HTMLLIElement): Either[String, ExperienceItem] =
-    for {
-    summary <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info").orElse(
-      ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__summary-info-v2")
-    )
-    title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
-    description = getDescription(elem)
-    employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
-  } yield ExperienceItem(
-      title,
-      description,
-      employmentDuration
-    )
-
-  private def getDescription(elem: HTMLLIElement): String = {
-    val descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
-    descriptionElem.foreach(el =>
-      el.innerHTML = el.innerHTML.replace("<br>", " ").replace("</br>", " ")
-    )
-    descriptionElem.map(_.textContent.trim()).getOrElse("")
-  }
 }

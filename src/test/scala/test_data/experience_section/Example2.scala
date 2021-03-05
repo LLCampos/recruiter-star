@@ -46,11 +46,6 @@ object Example2 {
       |        <div id="ember105" class="pv-entity__extra-details t-14 t-black--light ember-view"><p style="line-height:2rem;" data-test-inline-show-more-text="" id="ember106" class="pv-entity__description t-14 t-black t-normal inline-show-more-text ember-view">  Projects<br><br>● Vodafone Group - Consumer IOT - November 2019 - Present<br><br>Goal: Development of a new service, that leverages the data from other services and components, to monitor and generate alarms of different kinds, based on the type of event, device and subscription.<br><br>Roles:<br>Part of the development team, responsible for developing and delivering the technical solution.<br><br>Technology stack:<br>Java, Springboot, MongoDB, Git, CI/CD, Docker, AWS<br>
       |
       |<!---->
-      |    <span class="inline-show-more-text__link-container-expanded">
-      |      <button class="inline-show-more-text__button  link" aria-expanded="true" type="button" data-ember-action="" data-ember-action-394="394">
-      |        see less
-      |      </button>
-      |    </span>
       |</p><!----></div>
       |    </div>
       |
@@ -90,12 +85,6 @@ object Example2 {
       |</a>
       |        <div id="ember113" class="pv-entity__extra-details t-14 t-black--light ember-view"><p style="line-height:2rem;max-height:8rem;" data-test-inline-show-more-text="" id="ember114" class="pv-entity__description t-14 t-black t-normal inline-show-more-text inline-show-more-text--is-collapsed ember-view">  - Configuration and administration of bla bla Server roles and services(AD:DS, AD:CS, NPS, ISA, DHCP, DNS, Exchange, AD:CS);<br>- Installation, setup and maintenance of working stations(software and hardware);<br>- Installation of physical networking infrastructure(cabling, patch-panels, etc);<br>- Helpdesk(support troubleshooting).
       |
-      |    <span class="inline-show-more-text__link-container-collapsed">
-      |        <span>…</span>
-      |        <button class="inline-show-more-text__button  link" aria-expanded="false" type="button" data-ember-action="" data-ember-action-165="165">
-      |          see more
-      |        </button>
-      |    </span>
       |
       |<!----></p><!----></div>
       |    </div>

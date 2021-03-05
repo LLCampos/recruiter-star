@@ -15,20 +15,15 @@ object DurationPerTechGenerator {
 
   type DurationPerTechPerCategory = ListMap[String, ListMap[String, String]]
 
-  def getFromLinkedinExperienceSection(elem: Element): Either[String, DurationPerTechPerCategory] = {
-    ExperienceItem.fromLinkedinExperienceSectionElem(elem).map { experienceItems =>
-      experienceItems.map(getDurationPerTech).sequence match {
-        case Some(durationPerTechSeq) =>
-          convertToStringPrettyPresentation(
-            durationPerTechSeq
-              .reduce(Semigroup[Map[Tech, Duration]].combine)
-              .groupBy(_._1.category)
-          )
-        case None =>
-          ListMap()
-      }
+  def getFromLinkedinExperienceItems(experienceItems: List[ExperienceItem]): DurationPerTechPerCategory =
+    experienceItems.map(getDurationPerTech).sequence match {
+      case Some(durationPerTechSeq) =>
+        convertToStringPrettyPresentation(
+          durationPerTechSeq
+            .reduce(Semigroup[Map[Tech, Duration]].combine)
+            .groupBy(_._1.category)
+        )
     }
-  }
 
   private def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
     orderDurationPerTechPerCategory(durationPerTechPerCategory).map { case (category, durationPerTech) =>

@@ -1,7 +1,7 @@
 package com.lcampos.model
 
-import com.lcampos.duration_per_tech.DurationPerTechGenerator
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
+import com.lcampos.duration_per_tech.{DurationPerTechGenerator, ExperienceItem}
 import org.scalajs.dom.{Document, Element}
 
 trait LinkedinProfileManipulator {
@@ -11,11 +11,13 @@ trait LinkedinProfileManipulator {
     showAllExperiences(document)
     for {
       experienceSectionElem <- getExperienceSection(document)
-      durationPerTechPerCat <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
+      experienceItems <- getExperienceItems(experienceSectionElem)
+      durationPerTechPerCat = DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems)
       _ <- if (durationPerTechPerCat.nonEmpty) addYearsPerTechElem(durationPerTechPerCat, document) else Right(())
     } yield ()
   }
 
+  protected def getExperienceItems(experienceSectionElem: Element): Either[String, List[ExperienceItem]]
   protected def getExperienceSection(document: Document): Either[String, Element]
   protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit]
   protected def removeTechExperienceSummaryElem(doc: Document): Unit

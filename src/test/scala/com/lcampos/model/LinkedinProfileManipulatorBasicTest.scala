@@ -1,9 +1,10 @@
-package com.lcampos.duration_per_tech
+package com.lcampos.model
 
-import com.lcampos.model.LinkedinProfileManipulatorBasic
+import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
+import test_data.experience_section.{Example1, Example5_BreakTag, Example6_MultiSectionExperience}
 import test_data.full_profile._
 
 class LinkedinProfileManipulatorBasicTest extends Specification {
@@ -71,6 +72,48 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
         LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
+      }
+    }
+
+    "fromLinkedinExperienceSectionElem" should {
+      "correctly parse example 1" in {
+        val elem = ElementUtil.elementFromString(Example1.example)
+
+        val expected = Seq(
+          ExperienceItem(
+            "Software Developer @ DXS powered by agap2i",
+            "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
+            "7 yrs 4 mos"
+          ),
+          ExperienceItem(
+            "Analyst/Software Developer",
+            "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
+            "4 yrs"
+          ),
+        )
+
+        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
+      }
+
+      "existence of break tags shouldn't affect extraction of technologies" in {
+        val elem = ElementUtil.elementFromString(Example5_BreakTag.example)
+
+        val expected = List(
+          ExperienceItem(
+            "Software Developer @ DXS powered by agap2i",
+            "Frontend and Backend developer:  JavaScript Python",
+            "7 yrs 4 mos"
+          )
+        )
+
+        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
+      }
+
+      "deal with multi-sections experience items" in {
+        val elem = ElementUtil.elementFromString(Example6_MultiSectionExperience.example)
+        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight((experienceItems: List[ExperienceItem]) => {
+          experienceItems.size must be equalTo 3
+        })
       }
     }
   }
