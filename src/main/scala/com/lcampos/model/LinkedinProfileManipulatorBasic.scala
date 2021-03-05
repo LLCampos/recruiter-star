@@ -1,4 +1,4 @@
-package com.lcampos.duration_per_tech
+package com.lcampos.model
 
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.util.ElementUtil
@@ -8,24 +8,15 @@ import org.scalajs.dom.{Document, Element, window}
 import scala.concurrent.duration.DurationInt
 import scala.scalajs.js.timers.setTimeout
 
-object PageManipulator {
+object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
+  val urlSignature: String = "www.linkedin.com/in/"
   private val TechExperienceSummaryId = "tech-experience-summary"
 
-  def addDurationPerTechToPage(document: Document): Either[String, Unit] = {
-    removeTechExperienceSummaryElem(document)
-    showAllExperiences(document)
-    for {
-      experienceSectionElem <- getExperienceSection(document)
-      durationPerTechPerCat <- DurationPerTechGenerator.getFromLinkedinExperienceSection(experienceSectionElem)
-      _ <- if (durationPerTechPerCat.nonEmpty) addYearsPerTechElem(durationPerTechPerCat, document) else Right(())
-    } yield ()
-  }
-
-  private def getExperienceSection(document: Document): Either[String, Element] =
+  protected def getExperienceSection(document: Document): Either[String, Element] =
     ElementUtil.getElementByIdSafeCloned(document, "experience-section")
 
-  private def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
+  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
     durationPerTechSection <- generateYearsPerTechElement(durationPerTechPerCat)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
@@ -52,7 +43,7 @@ object PageManipulator {
     elem.appendChild(span)
   }
 
-  private def removeTechExperienceSummaryElem(doc: Document): Unit =
+  protected def removeTechExperienceSummaryElem(doc: Document): Unit =
     ElementUtil.getElementByIdSafe(doc, TechExperienceSummaryId).map(el => el.parentNode.removeChild(el))
 
   private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(
@@ -69,7 +60,7 @@ object PageManipulator {
 
   private def durationPerTechSpanTemplate: Element = ElementUtil.elementFromString("""<span class="lt-line-clamp__line"></span>""")
 
-  private def showAllExperiences(doc: Document): Unit = {
+  protected def showAllExperiences(doc: Document): Unit = {
     ElementUtil.getFirstElementByClassNameSafe(doc.documentElement, "pv-profile-section__see-more-inline").map(elem => {
       elem.asInstanceOf[HTMLElement].click()
       setTimeout(1.milli) {
