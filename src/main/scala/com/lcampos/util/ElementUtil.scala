@@ -63,4 +63,10 @@ object ElementUtil {
 
   def appendNewLine(elem: Element): Unit =
     elem.innerHTML = elem.innerHTML + "</br>"
+
+  def removeBreakTags(elem: Element): Element = {
+    val elemCopy = elem.cloneNode(true).asInstanceOf[Element]
+    elemCopy.innerHTML = elemCopy.innerHTML.replace("<br>", " ").replace("</br>", " ")
+    elemCopy
+  }
 }

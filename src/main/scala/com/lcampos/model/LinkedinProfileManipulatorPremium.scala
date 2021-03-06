@@ -35,6 +35,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
   private def getDescription(positionElem: Element): String =
     ElementUtil
       .getFirstElementByClassNameSafe(positionElem, "description")
+      .map(ElementUtil.removeBreakTags)
       .map(_.textContent)
       .getOrElse("")
       .trim

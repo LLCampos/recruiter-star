@@ -95,7 +95,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
         LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
       }
 
-      "existence of break tags shouldn't affect extraction of technologies" in {
+      "deal correctly with break tags" in {
         val elem = ElementUtil.elementFromString(ExampleBreakTag.example)
 
         val expected = List(

@@ -99,11 +99,9 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       employmentDuration
     )
 
-  private def getDescription(elem: HTMLLIElement): String = {
-    val descriptionElem = Option(elem.getElementsByClassName("pv-entity__description").item(0))
-    descriptionElem.foreach(el =>
-      el.innerHTML = el.innerHTML.replace("<br>", " ").replace("</br>", " ")
-    )
-    descriptionElem.map(_.textContent.trim()).getOrElse("")
-  }
+  private def getDescription(elem: HTMLLIElement): String =
+    ElementUtil
+      .getFirstElementByClassNameSafe(elem, "pv-entity__description")
+      .map(ElementUtil.removeBreakTags)
+      .map(_.textContent.trim()).getOrElse("")
 }

@@ -34,6 +34,20 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
 
         LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
       }
+
+      "correctly deal with break tags" in {
+        val elem = ElementUtil.elementFromString(experience_section.ExampleBreakTags.example)
+
+        val expected = Seq(
+          ExperienceItem(
+            "Backend Developer",
+            "Python Java JavaScript",
+            "(2 years 1 month)"
+          )
+        )
+
+        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
+      }
     }
 
     "addDurationPerTech" in {
