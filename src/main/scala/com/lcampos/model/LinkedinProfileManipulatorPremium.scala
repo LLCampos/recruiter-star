@@ -56,6 +56,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
           .map { case (tech, years) => s"<span style='font-weight: bold'>$tech</span> - $years</br>" }
           .foreach(text => addTextToElem(text, durationPerTechElemModuleBody))
       }
+      _ = ElementUtil.appendNewLine(durationPerTechElemModuleBody)
     } yield durationPerTechElem
   }
 

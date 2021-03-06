@@ -60,4 +60,7 @@ object ElementUtil {
       .map(_._2)
       .collect { case li: HTMLLIElement => li }
       .toList
+
+  def appendNewLine(elem: Element): Unit =
+    elem.innerHTML = elem.innerHTML + "</br>"
 }
