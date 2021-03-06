@@ -75,7 +75,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
       }
     }
 
-    "fromLinkedinExperienceSectionElem" should {
+    "getExperienceItems" should {
       "correctly parse example 1" in {
         val elem = ElementUtil.elementFromString(ExampleBasic.example)
 

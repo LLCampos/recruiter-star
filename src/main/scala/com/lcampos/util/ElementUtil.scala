@@ -34,6 +34,13 @@ object ElementUtil {
     }
   }
 
+  def getFirstElementByTagNameSafe(elem: Element, tagName: String): Either[String, Element] = {
+    elem.getElementsByTagName(tagName).item(0) match {
+      case null => Left(s"Element with tag '$tagName' not found")
+      case elem => Right(elem)
+    }
+  }
+
   def querySelectorSafe(elem: Element, selectors: String): Either[String, Element] = {
     elem.querySelector(selectors) match {
       case null => Left(s"Element for selector '$selectors' not found")
