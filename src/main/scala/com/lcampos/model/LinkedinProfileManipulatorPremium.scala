@@ -38,7 +38,45 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       .getOrElse("")
       .trim
 
-  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = ???
+  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
+    durationPerTechSection <- generateYearsPerTechElement(durationPerTechPerCat)
+    primaryContent <- ElementUtil.getElementByIdSafe(document, "primary-content")
+    _ = primaryContent.insertBefore(durationPerTechSection, primaryContent.children.item(2))
+  } yield ()
+
+  private def generateYearsPerTechElement(durationPerTechPerCat: DurationPerTechPerCategory): Either[String, Element] = {
+    val durationPerTechElem: Element = durationPerTechElemTemplate
+
+    for {
+      durationPerTechElemModuleBody <- ElementUtil.getFirstElementByClassNameSafe(durationPerTechElem, "module-body")
+      _ = durationPerTechPerCat.map { case (category, durationPerTech) =>
+        val categoryText = s"</br>$category:</br>"
+        addTextToElem(categoryText, durationPerTechElemModuleBody)
+        durationPerTech
+          .map { case (tech, years) => s"$tech - $years</br>" }
+          .foreach(text => addTextToElem(text, durationPerTechElemModuleBody))
+      }
+    } yield durationPerTechElem
+  }
+
+  private def addTextToElem(text: String, elem: Element) = {
+    val p = ElementUtil.elementFromString("<p></p>")
+    p.innerHTML = text
+    elem.appendChild(p)
+  }
+
+  private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(
+    s"""
+      <div class="module primary-module module-container" id="$TechExperienceSummaryId">
+        <div class="module-header">
+          <h2 class="title">Tech Experience Summary</h2>
+        </div>
+        <div class="module primary-module">
+          <div class="module-header"/>
+          <div class="module-body searchable"></div>
+        </div>
+      </div>
+      """)
 
   protected def removeTechExperienceSummaryElem(doc: Document): Unit = ()
   protected def showAllExperiences(doc: Document): Unit = ()

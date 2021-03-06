@@ -9,6 +9,7 @@ case class ExperienceItem(
 ) {
   def duration: Option[Duration] = {
     val (yearsOpt, monthsOpt) = durationDescription match {
+      // Linkedin Basic
       case s"$years yr $months mos" => (Some(years), Some(months))
       case s"$years yrs $months mos" => (Some(years), Some(months))
       case s"$years yrs $months mo" => (Some(years), Some(months))
@@ -17,6 +18,15 @@ case class ExperienceItem(
       case s"$years yr" => (Some(years), None)
       case s"$months mos" => (None, Some(months))
       case s"$months mo" => (None, Some(months))
+      // Linkedin Premium
+      case s"($years year $months months)" => (Some(years), Some(months))
+      case s"($years years $months months)" => (Some(years), Some(months))
+      case s"($years years $months month)" => (Some(years), Some(months))
+      case s"($years year $months month)" => (Some(years), Some(months))
+      case s"($years years)" => (Some(years), None)
+      case s"($years year)" => (Some(years), None)
+      case s"($months months)" => (None, Some(months))
+      case s"($months month)" => (None, Some(months))
       case _ => (None, None)
     }
 

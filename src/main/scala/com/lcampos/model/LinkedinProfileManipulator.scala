@@ -6,6 +6,8 @@ import org.scalajs.dom.{Document, Element}
 
 trait LinkedinProfileManipulator {
   val urlSignature: String
+  val TechExperienceSummaryId = "tech-experience-summary"
+
   def addDurationPerTech(document: Document): Either[String, Unit] = {
     removeTechExperienceSummaryElem(document)
     showAllExperiences(document)

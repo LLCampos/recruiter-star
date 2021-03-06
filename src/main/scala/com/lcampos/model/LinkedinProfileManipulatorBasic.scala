@@ -13,7 +13,6 @@ import scala.scalajs.js.timers.setTimeout
 object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
   val urlSignature: String = "www.linkedin.com/in/"
-  private val TechExperienceSummaryId = "tech-experience-summary"
 
   protected def getExperienceSection(document: Document): Either[String, Element] =
     ElementUtil.getElementByIdSafeCloned(document, "experience-section")
