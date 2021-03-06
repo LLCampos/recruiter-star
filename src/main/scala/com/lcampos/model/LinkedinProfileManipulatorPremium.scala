@@ -11,6 +11,7 @@ import scala.scalajs.js.Object.entries
 
 object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
   val urlSignature: String = "www.linkedin.com/recruiter/profile/"
+
   protected def getExperienceSection(document: Document): Either[String, Element] =
     ElementUtil.getElementByIdSafe(document, "profile-experience")
 

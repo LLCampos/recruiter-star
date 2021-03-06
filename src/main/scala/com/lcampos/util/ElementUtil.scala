@@ -15,7 +15,7 @@ object ElementUtil {
   def elementFromString(s: String): Element = {
     val div = document.createElement("div")
     div.innerHTML = s
-    div
+    div.firstElementChild
   }
 
   def getElementByIdSafe(doc: Document, id: String): Either[String, Element] =
