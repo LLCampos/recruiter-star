@@ -50,10 +50,10 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
     for {
       durationPerTechElemModuleBody <- ElementUtil.getFirstElementByClassNameSafe(durationPerTechElem, "module-body")
       _ = durationPerTechPerCat.map { case (category, durationPerTech) =>
-        val categoryText = s"</br>$category:</br>"
+        val categoryText = s"</br><p style='font-size: large; font-weight: bold'>$category:</p></br>"
         addTextToElem(categoryText, durationPerTechElemModuleBody)
         durationPerTech
-          .map { case (tech, years) => s"$tech - $years</br>" }
+          .map { case (tech, years) => s"<span style='font-weight: bold'>$tech</span> - $years</br>" }
           .foreach(text => addTextToElem(text, durationPerTechElemModuleBody))
       }
     } yield durationPerTechElem
