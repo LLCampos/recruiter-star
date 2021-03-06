@@ -94,9 +94,6 @@ object TechList {
   val all: List[Tech] = List(
     // ################# Programming languages #################
     Tech("A#", "A#", ProgrammingLanguage),
-    Tech(".NET", ".NET", ProgrammingLanguage),
-    Tech(".net", ".NET", ProgrammingLanguage),
-    Tech(".Net", ".NET", ProgrammingLanguage),
     Tech("A+", "A+", ProgrammingLanguage),
     Tech("A++", "A++", ProgrammingLanguage),
     Tech("ABAP", "ABAP", ProgrammingLanguage),
@@ -775,6 +772,9 @@ object TechList {
     Tech("Play Framework", "Play Framework", Framework),
     Tech("ASP.NET", "ASP.NET", Framework),
     Tech("Electron", "Electron", Framework),
+    Tech(".NET", ".NET", Framework),
+    Tech(".net", ".NET", Framework),
+    Tech(".Net", ".NET", Framework),
     // ## Java
     Tech("Spring", "Spring Framework", Framework),
     Tech("Spring Boot", "Spring Framework", Framework),
@@ -905,7 +905,17 @@ object TechList {
     Tech("HBase", "HBase", Database),
     Tech("Contexture", "Contexture", Database),
     Tech("SQL Server", "SQL Server", Database),
+    Tech("MSSQL", "SQL Server", Database),
+    Tech("mssql", "SQL Server", Database),
     Tech("DynamoDB", "DynamoDB", Database),
+    Tech("Redis", "Redis", Database),
+    Tech("redis", "Redis", Database),
+    Tech("Couchbase", "Couchbase", Database),
+    Tech("Cassandra", "Apache Cassandra", Database),
+    Tech("HBase", "Apache HBase", Database),
+    Tech("Neo4j", "Neo4j", Database),
+    Tech("Oracle Database", "Oracle Database", Database),
+    Tech("Oracle database", "Oracle Database", Database),
     // ################# Build Tools #################
     Tech("Maven", "Maven", BuildTool),
     Tech("Gradle", "Gradle", BuildTool),
