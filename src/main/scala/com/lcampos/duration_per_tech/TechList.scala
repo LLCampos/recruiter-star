@@ -886,7 +886,6 @@ object TechList {
     Tech("akka", "Akka", Library),
     // ################# Big Data #################
     Tech("Hadoop", "Hadoop", Other),
-    Tech("Streaming", "Streaming", Other),
     Tech("Spark", "Apache Spark", Other),
     Tech("Apache Spark", "Apache Spark", Other),
     Tech("Qlik", "Qlik", Other),
