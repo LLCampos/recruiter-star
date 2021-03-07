@@ -23,7 +23,7 @@ object AppManifest {
 
       // TODO: REPLACE ME
       override val browserAction: Option[BrowserAction] =
-        Some(BrowserAction(icons, Some("TO BE DEFINED - POPUP TITLE"), Some("popup.html")))
+        Some(BrowserAction(icons, Some(appName), Some("popup.html")))
 
       // scripts used on all modules
       val commonScripts = List("scripts/common.js", "main-bundle.js")

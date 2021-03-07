@@ -1,6 +1,6 @@
 import com.alexitc.ChromeSbtPlugin
 
-lazy val appName = "linkedin-util-years-per-tech"
+lazy val appName = "RecruiterStar"
 lazy val isProductionBuild = sys.env.getOrElse("PROD", "false") == "true"
 
 val circeVersion = "0.13.0"
@@ -10,7 +10,7 @@ lazy val baseSettings: Project => Project = {
   _.enablePlugins(ScalaJSPlugin)
     .settings(
       name := appName,
-      version := "1.0.0",
+      version := "0.0.1",
       scalaVersion := "2.13.3",
       scalacOptions ++= Seq(
         "-language:implicitConversions",
@@ -64,7 +64,7 @@ lazy val bundlerSettings: Project => Project = {
 lazy val buildInfoSettings: Project => Project = {
   _.enablePlugins(BuildInfoPlugin)
     .settings(
-      buildInfoPackage := "com.alexitc",
+      buildInfoPackage := "com.lcampos",
       buildInfoKeys := Seq[BuildInfoKey](name),
       buildInfoKeys ++= Seq[BuildInfoKey](
         "production" -> isProductionBuild

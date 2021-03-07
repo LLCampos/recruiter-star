@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
  */
 object Main {
 
-  private val config = if (com.alexitc.BuildInfo.production) {
+  private val config = if (com.lcampos.BuildInfo.production) {
     Config.Default
   } else {
     Config.Dev
