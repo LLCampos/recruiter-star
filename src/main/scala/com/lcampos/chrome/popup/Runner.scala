@@ -9,15 +9,16 @@ import scala.concurrent.ExecutionContext
 class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI) {
 
   def run(): Unit = {
-    log("This was run by the popup script")
-    document.onreadystatechange = _ => {
-      if (document.readyState == "interactive") {
-        document
-          .getElementById("popup-view-id")
-          .innerHTML = s"<p>${messages.appName}!!!</p>"
-      }
-    }
-    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
+    ()
+//    log("This was run by the popup script")
+//    document.onreadystatechange = _ => {
+//      if (document.readyState == "interactive") {
+//        document
+//          .getElementById("popup-view-id")
+//          .innerHTML = s"<p>${messages.appName}!!!</p>"
+//      }
+//    }
+//    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
   }
 
   private def log(msg: String): Unit = {
