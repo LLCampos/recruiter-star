@@ -13,7 +13,6 @@ import scala.scalajs.js.timers._
 class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I18NMessages) {
 
   def run(): Unit = {
-    log("This was run by the active tab")
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
@@ -26,7 +25,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         case _ => ()
       }
     }
-    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the tab!!")
   }
 
   private def log(msg: String): Unit = {
