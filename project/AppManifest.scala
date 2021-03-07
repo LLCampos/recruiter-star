@@ -13,9 +13,8 @@ object AppManifest {
       override val description: Option[String] = Some(
         "Enhance your sourcing experience!"
       )
-      override val icons: Map[Int, String] = Chrome.icons("icons", "app.png", Set(48, 96, 128))
+      override val icons: Map[Int, String] = Chrome.icons("icons", "app.png", Set(16, 48, 96, 128))
 
-      // TODO: REPLACE ME, use only the minimum required permissions
       override val permissions: Set[Permission] = Set[Permission](
         API.Tabs
       )
