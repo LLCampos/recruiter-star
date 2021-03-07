@@ -21,7 +21,6 @@ object AppManifest {
 
       override val defaultLocale: Option[String] = Some("en")
 
-      // TODO: REPLACE ME
       override val browserAction: Option[BrowserAction] =
         Some(BrowserAction(icons, Some(appName), Some("popup.html")))
 

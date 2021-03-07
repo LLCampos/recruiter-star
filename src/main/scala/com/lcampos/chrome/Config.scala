@@ -11,7 +11,6 @@ case class Config(
     activeTabConfig: activetab.ActiveTabConfig
 )
 
-// TODO: REPLACE ME
 object Config {
 
   val Default: Config = {
