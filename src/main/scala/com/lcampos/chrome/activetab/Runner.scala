@@ -18,7 +18,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         case Some(v: String) if v.contains("page was reloaded") =>
           setTimeout(100.milli) {
             LinkedinProfileManipulator.fromUrl(v) match {
-              case Some(manipulator) => manipulator.addDurationPerTech(dom.document)
+              case Some(manipulator) => manipulator.addDurationPerTech(dom.document) match {
+                case Left(err) => println(err)
+                case Right(_) => ()
+              }
               case None => ()
             }
           }
