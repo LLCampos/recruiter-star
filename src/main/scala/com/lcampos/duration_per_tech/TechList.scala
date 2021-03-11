@@ -24,59 +24,64 @@ object TechCategory {
     val priorityInOrdering: Int = 2
   }
 
+  case object Platform extends TechCategory {
+    val uiRepresentation: String = "Platforms"
+    val priorityInOrdering: Int = 3
+  }
+
   case object Library extends TechCategory {
     val uiRepresentation: String = "Libraries"
-    val priorityInOrdering: Int = 3
+    val priorityInOrdering: Int = 4
   }
 
   case object Mobile extends TechCategory {
     val uiRepresentation: String = "Mobile"
-    val priorityInOrdering: Int = 4
+    val priorityInOrdering: Int = 5
   }
 
   case object Database extends TechCategory {
     val uiRepresentation: String = "Databases"
-    val priorityInOrdering: Int = 5
+    val priorityInOrdering: Int = 6
   }
 
   case object CICD extends TechCategory {
     val uiRepresentation: String = "CI/CD"
-    val priorityInOrdering: Int = 6
+    val priorityInOrdering: Int = 7
   }
 
   case object Cloud extends TechCategory {
     val uiRepresentation: String = "Cloud"
-    val priorityInOrdering: Int = 7
+    val priorityInOrdering: Int = 8
   }
 
   case object InfrastructureTool extends TechCategory {
     val uiRepresentation: String = "Infrastructure Tools"
-    val priorityInOrdering: Int = 8
+    val priorityInOrdering: Int = 9
   }
 
   case object QueryLanguage extends TechCategory {
     val uiRepresentation: String = "Query Languages"
-    val priorityInOrdering: Int = 9
+    val priorityInOrdering: Int = 10
   }
 
   case object TestAndQA extends TechCategory {
     val uiRepresentation: String = "Test and QA"
-    val priorityInOrdering: Int = 10
+    val priorityInOrdering: Int = 11
   }
 
   case object BuildTool extends TechCategory {
     val uiRepresentation: String = "Build Tools"
-    val priorityInOrdering: Int = 11
+    val priorityInOrdering: Int = 12
   }
 
   case object Tool extends TechCategory {
     val uiRepresentation: String = "Tools"
-    val priorityInOrdering: Int = 12
+    val priorityInOrdering: Int = 13
   }
 
   case object Other extends TechCategory {
     val uiRepresentation: String = "Other"
-    val priorityInOrdering: Int = 13
+    val priorityInOrdering: Int = 14
   }
 
   implicit def techCategoryOrdering: Ordering[TechCategory] = (x: TechCategory, y: TechCategory) =>
@@ -734,10 +739,6 @@ object TechList {
     Tech("Zeno", "Zeno", ProgrammingLanguage),
     Tech("ZOPL", "ZOPL", ProgrammingLanguage),
     Tech("ZPL", "ZPL", ProgrammingLanguage),
-    Tech("Node.js", "Node.js", ProgrammingLanguage),
-    Tech("node.js", "Node.js", ProgrammingLanguage),
-    Tech("Node", "Node.js", ProgrammingLanguage),
-    Tech("NodeJS", "Node.js", ProgrammingLanguage),
     Tech("Flutter", "Flutter", ProgrammingLanguage),
     Tech("HTML5", "HTML", ProgrammingLanguage),
     Tech("HTML", "HTML", ProgrammingLanguage),
@@ -747,6 +748,16 @@ object TechList {
     // ################# Front-End Stuff #################
     Tech("Sass", "Sass", Other),
     Tech("SCSS", "Sass", Other),
+    // ################# Platforms #################
+    Tech("Node.js", "Node.js", Platform),
+    Tech("node.js", "Node.js", Platform),
+    Tech("Node", "Node.js", Platform),
+    Tech("NodeJS", "Node.js", Platform),
+    Tech("Nodejs", "Node.js", Platform),
+    Tech("NodeJs", "Node.js", Platform),
+    Tech(".NET", ".NET", Platform),
+    Tech(".net", ".NET", Platform),
+    Tech(".Net", ".NET", Platform),
     // ################# Infrastructure #################
     Tech("Terraform", "Terraform", InfrastructureTool),
     Tech("Kubernetes", "Kubernetes", InfrastructureTool),
@@ -772,9 +783,6 @@ object TechList {
     Tech("Play Framework", "Play Framework", Framework),
     Tech("ASP.NET", "ASP.NET", Framework),
     Tech("Electron", "Electron", Framework),
-    Tech(".NET", ".NET", Framework),
-    Tech(".net", ".NET", Framework),
-    Tech(".Net", ".NET", Framework),
     // ## Java
     Tech("Spring", "Spring Framework", Framework),
     Tech("Spring Boot", "Spring Framework", Framework),
