@@ -10,7 +10,7 @@ lazy val baseSettings: Project => Project = {
   _.enablePlugins(ScalaJSPlugin)
     .settings(
       name := appName,
-      version := "0.0.1",
+      version := "0.0.2-SNAPSHOT",
       scalaVersion := "2.13.3",
       scalacOptions ++= Seq(
         "-language:implicitConversions",
