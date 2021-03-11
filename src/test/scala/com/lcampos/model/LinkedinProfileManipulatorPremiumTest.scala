@@ -48,6 +48,25 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
 
         LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
       }
+
+      "correctly deal with no duration section" in {
+        val elem = ElementUtil.elementFromString(experience_section.ExampleNoDuration.example)
+
+        val expected = Seq(
+          ExperienceItem(
+            "Consultor de TI",
+            "By Bold International",
+            ""
+          ),
+          ExperienceItem(
+            "Java Programmer (Outsourcing na Everis Portugal)",
+            "-Outsourcing na Everis Portugal, S.A.",
+            "(1 year 1 month)"
+          ),
+        )
+
+        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
+      }
     }
 
     "addDurationPerTech" in {
