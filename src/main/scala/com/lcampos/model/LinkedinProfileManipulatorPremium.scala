@@ -22,7 +22,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   private def getExperienceItem(positionElem: Element): Either[String, ExperienceItem] = for {
     title <- ElementUtil.getFirstElementByTagNameSafe(positionElem, "h4").map(_.textContent.trim)
-    duration <- ElementUtil.getFirstElementByClassNameSafe(positionElem, "duration").map(_.textContent)
+    duration = getDuration(positionElem)
     description = getDescription(positionElem)
   } yield ExperienceItem(title, description, duration)
 
@@ -31,6 +31,12 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       .map(_._2)
       .collect { case li: HTMLElement => li }
       .toList
+
+  private def getDuration(positionElem: Element): String =
+    ElementUtil
+      .getFirstElementByClassNameSafe(positionElem, "duration")
+      .map(_.textContent)
+      .getOrElse("")
 
   private def getDescription(positionElem: Element): String =
     ElementUtil
