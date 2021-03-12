@@ -45,22 +45,20 @@ case class ExperienceItem(
 
   private def getMultiWordTechnologies: Set[Tech] = {
     TechList.all
-      .filter(_.name.split(" ").length > 1)
-      .filter(tech => allText.contains(tech.name))
+      .filter(tech => tech.multiWordAliases.exists(allText.contains))
       .toSet
   }
 
   private def getOneWordTechnologies: Set[Tech] = {
     val tokens = allText.split("(\\s|,|\\.|!|:|/|;|\\(|\\)|\\[|])+")
     TechList.all
-      .filter(tech => tokens.contains(tech.name))
+      .filter(tech => tech.aliases.exists(tokens.contains))
       .toSet
   }
 
   private def getTechnologiesWithDot: Set[Tech] =
     TechList.all
-      .filter(_.name.contains("."))
-      .filter(tech => allText.contains(tech.name))
+      .filter(tech => tech.aliasesWithDot.exists(allText.contains))
       .toSet
 
   private val allText = s"$title $description"

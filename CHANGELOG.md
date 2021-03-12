@@ -11,3 +11,7 @@
 
 ### Fixed
 * Premium: deal with cases in which experience section has no duration
+* Correctly sum technology experience even when they are represented with different aliases
+
+### Removed
+* Remove some minor technologies

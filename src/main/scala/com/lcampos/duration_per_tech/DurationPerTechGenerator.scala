@@ -29,7 +29,7 @@ object DurationPerTechGenerator {
   private def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
     orderDurationPerTechPerCategory(durationPerTechPerCategory).map { case (category, durationPerTech) =>
       category.uiRepresentation -> orderDurationPerTech(durationPerTech).map { case (tech, duration) =>
-        tech.canonName -> formatDuration(duration)
+        tech.name -> formatDuration(duration)
       }
     }
 

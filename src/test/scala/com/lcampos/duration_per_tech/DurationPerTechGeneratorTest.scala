@@ -62,6 +62,19 @@ class DurationPerTechGeneratorTest extends Specification {
           )
         )
       }
+
+      "correctly sum technology experience even when they are represented with different aliases" in {
+        val experienceItems = List(
+          ExperienceItem("Java", "", "2 yrs"),
+          ExperienceItem("JavaEE", "", "2 yrs"),
+        )
+
+        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
+          "Programming Languages" -> ListMap(
+            "Java" -> "4 years",
+          )
+        )
+      }
     }
   }
 }
