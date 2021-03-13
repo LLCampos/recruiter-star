@@ -86,6 +86,32 @@ class DurationPerTechGeneratorTest extends Specification {
           )
         )
       }
+
+      "correctly sum overlapping experiences" in {
+        val experienceItems = List(
+          ExperienceItem(
+            "Java",
+            "",
+            InstantRange(
+              parseDateStrToInstant("2009-03-01"),
+              parseDateStrToInstant("2011-03-01"),
+            )
+          ),
+          ExperienceItem(
+            "Java",
+            "",
+            InstantRange(
+              parseDateStrToInstant("2010-03-01"),
+              parseDateStrToInstant("2014-03-01"),
+            )),
+        )
+
+        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
+          "Programming Languages" -> ListMap(
+            "Java" -> "5 years",
+          )
+        )
+      }
     }
   }
 }
