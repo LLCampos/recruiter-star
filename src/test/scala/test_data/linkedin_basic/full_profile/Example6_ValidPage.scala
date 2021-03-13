@@ -18,7 +18,7 @@ object Example6_ValidPage {
       |
       |       <h4 class="pv-entity__date-range">
       |         <span class="visually-hidden">Dates Employed</span>
-      |         <span>Dec 2009 – Nov 2013</span>
+      |         <span>Jan 2009 – Apr 2012</span>
       |       </h4>
       |
       |       <div class='pv-entity__bullet-item-v2'>3 yrs 3 mos</div>
