@@ -31,7 +31,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   private def getEmploymentTsRange(positionElem: Element): Either[String, InstantRange] = for {
     dateRangeElem <- ElementUtil.getFirstElementByClassNameSafe(positionElem, "date-range")
-    dateRangeStr = dateRangeElem.textContent.split("\n").head
+    dateRangeStr = dateRangeElem.innerHTML.split("<span").head.trim
     formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM uuuu")
   } yield toInstantRange(dateRangeStr, " – ", formatter)
 
