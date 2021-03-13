@@ -706,7 +706,7 @@ object TechList {
     // ################# Front-End Stuff #################
     Tech("Sass", Set("Sass", "SCSS"), Other),
     // ################# Platforms #################
-    Tech("Node.js", Set("Node.js", "node.js", "Node", "NodeJS", "NodeJs", "Nodejs"), Platform),
+    Tech("Node.js", Set("Node.js", "node.js", "NodeJS", "NodeJs", "Nodejs"), Platform),
     Tech(".NET", Set(".NET", ".net", ".Net"), Platform),
     // ################# Infrastructure #################
     Tech("Terraform", Set("Terraform"), InfrastructureTool),

@@ -16,3 +16,4 @@
 
 ### Removed
 * Remove some minor technologies
+* Remove "Node" as a Node.js alias
