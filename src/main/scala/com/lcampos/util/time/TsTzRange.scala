@@ -1,4 +1,4 @@
-package com.lcampos.duration_per_tech
+package com.lcampos.util.time
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit

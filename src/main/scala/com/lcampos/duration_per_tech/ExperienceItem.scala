@@ -1,11 +1,14 @@
 package com.lcampos.duration_per_tech
 
+import com.lcampos.util.time.TsTzRange
+
 import scala.concurrent.duration.{DAYS, Duration}
 
 case class ExperienceItem(
   title: String,
   description: String,
-  durationDescription: String
+  durationDescription: String,
+  instantRange: TsTzRange
 ) {
   def duration: Option[Duration] = {
     val (yearsOpt, monthsOpt) = durationDescription match {

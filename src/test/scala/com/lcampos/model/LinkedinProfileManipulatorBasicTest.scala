@@ -2,10 +2,12 @@ package com.lcampos.model
 
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
+import com.lcampos.util.time.{TsTzRange, currentInstantYearMonth, parseDateStrToInstant}
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
 import test_data.linkedin_basic.experience_section.{ExampleBasic, ExampleBreakTag, ExampleMultiSectionExperience}
 import test_data.linkedin_basic.full_profile._
+
 
 class LinkedinProfileManipulatorBasicTest extends Specification {
 
@@ -83,12 +85,20 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
-            "7 yrs 4 mos"
+            "7 yrs 4 mos",
+            TsTzRange(
+              parseDateStrToInstant("2013-11-01"),
+              currentInstantYearMonth
+            )
           ),
           ExperienceItem(
             "Analyst/Software Developer",
             "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
-            "4 yrs"
+            "4 yrs",
+            TsTzRange(
+              parseDateStrToInstant("2009-12-01"),
+              parseDateStrToInstant("2013-11-01"),
+            )
           ),
         )
 
@@ -102,7 +112,11 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript Python",
-            "7 yrs 4 mos"
+            "7 yrs 4 mos",
+            TsTzRange(
+              parseDateStrToInstant("2013-11-01"),
+              currentInstantYearMonth
+            )
           )
         )
 

@@ -1,9 +1,9 @@
-package com.lcampos.duration_per_tech
+package com.lcampos.util.time
 
 import org.specs2.mutable.Specification
+
 import java.time.Instant
 import scala.concurrent.duration._
-
 
 class TsTzRangeTest extends Specification {
 

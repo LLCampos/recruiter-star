@@ -26,6 +26,11 @@ object Example9_PageAlreadyWithTechExperienceSummaryAndNoTech {
 
              <div class='pv-entity__bullet-item-v2'>4 yrs 4 mos</div>
 
+             <h4 class="pv-entity__date-range">
+              <span class="visually-hidden">Dates Employed</span>
+              <span>Dec 2009 – Nov 2013</span>
+             </h4>
+
              <div class='pv-entity__description'>
                I was a bumba developer
              </div>
