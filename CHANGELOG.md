@@ -8,6 +8,7 @@
 
 ### Changed
 * .NET and Node.js are now categorized as platforms
+* Change how total experience per technology is calculated, to consider cases when experiences overlap in time
 
 ### Fixed
 * Premium: deal with cases in which experience section has no duration
