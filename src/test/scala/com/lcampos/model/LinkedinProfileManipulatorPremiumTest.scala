@@ -18,7 +18,6 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ExperienceItem(
             "Java Backend Developer",
             "",
-            "(1 year 11 months)",
             InstantRange(
               parseDateStrToInstant("2019-04-01"),
               currentInstantYearMonth
@@ -27,7 +26,6 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ExperienceItem(
             "Consultor de TI",
             "By Bold International",
-            "(2 years 1 month)",
             InstantRange(
               parseDateStrToInstant("2017-02-01"),
               parseDateStrToInstant("2019-03-01"),
@@ -36,7 +34,6 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ExperienceItem(
             "Java Programmer (Outsourcing na Everis Portugal)",
             "-Outsourcing na Everis Portugal, S.A.",
-            "(1 year 1 month)",
             InstantRange(
               parseDateStrToInstant("2015-03-01"),
               parseDateStrToInstant("2016-04-01"),
@@ -54,39 +51,11 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ExperienceItem(
             "Backend Developer",
             "Python Java JavaScript",
-            "(2 years 1 month)",
             InstantRange(
               parseDateStrToInstant("2017-02-01"),
               parseDateStrToInstant("2019-03-01"),
             )
           )
-        )
-
-        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
-      }
-
-      "correctly deal with no duration section" in {
-        val elem = ElementUtil.elementFromString(experience_section.ExampleNoDuration.example)
-
-        val expected = Seq(
-          ExperienceItem(
-            "Consultor de TI",
-            "By Bold International",
-            "",
-            InstantRange(
-              parseDateStrToInstant("2017-02-01"),
-              parseDateStrToInstant("2019-03-01"),
-            )
-          ),
-          ExperienceItem(
-            "Java Programmer (Outsourcing na Everis Portugal)",
-            "-Outsourcing na Everis Portugal, S.A.",
-            "(1 year 1 month)",
-            InstantRange(
-              parseDateStrToInstant("2015-03-01"),
-              parseDateStrToInstant("2016-04-01"),
-            )
-          ),
         )
 
         LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)

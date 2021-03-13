@@ -94,12 +94,10 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       )
       title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
       description = getDescription(elem)
-      employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
       instantRange <- getEmploymentTsRange(elem)
     } yield ExperienceItem(
       title,
       description,
-      employmentDuration,
       instantRange
     )
 

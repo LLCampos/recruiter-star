@@ -33,11 +33,6 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
         LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element for selector 'h3' not found")
       }
 
-      "return error on no employment duration" in {
-        val doc = ElementUtil.documentFromString(Example5_NoEmploymentDuration.example)
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element with class 'pv-entity__bullet-item-v2' not found")
-      }
-
       "add tech experience section to valid document" in {
         val doc = ElementUtil.documentFromString(Example6_ValidPage.example)
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
@@ -85,7 +80,6 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
-            "7 yrs 4 mos",
             InstantRange(
               parseDateStrToInstant("2013-11-01"),
               currentInstantYearMonth
@@ -94,7 +88,6 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Analyst/Software Developer",
             "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
-            "4 yrs",
             InstantRange(
               parseDateStrToInstant("2009-12-01"),
               parseDateStrToInstant("2013-11-01"),
@@ -112,7 +105,6 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript Python",
-            "7 yrs 4 mos",
             InstantRange(
               parseDateStrToInstant("2013-11-01"),
               currentInstantYearMonth

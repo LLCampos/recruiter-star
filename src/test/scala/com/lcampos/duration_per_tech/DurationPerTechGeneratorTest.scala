@@ -15,7 +15,6 @@ class DurationPerTechGeneratorTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
-            "7 yrs 4 mos",
             InstantRange(
               parseDateStrToInstant("2013-11-01"),
               currentInstantYearMonth
@@ -24,7 +23,6 @@ class DurationPerTechGeneratorTest extends Specification {
           ExperienceItem(
             "Analyst/Software Developer",
             "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
-            "4 yrs",
             InstantRange(
               parseDateStrToInstant("2009-12-01"),
               parseDateStrToInstant("2013-11-01"),
@@ -49,7 +47,6 @@ class DurationPerTechGeneratorTest extends Specification {
           ExperienceItem(
             "Python Developer",
             "",
-            "2 mos",
             InstantRange(
               parseDateStrToInstant("2009-03-01"),
               parseDateStrToInstant("2009-05-01"),
@@ -64,41 +61,11 @@ class DurationPerTechGeneratorTest extends Specification {
         )
       }
 
-      "correctly format duration when only years and only months" in {
-        val experienceItems = List(
-          ExperienceItem(
-            "JavaScript",
-            "",
-            "4 yrs",
-            InstantRange(
-              parseDateStrToInstant("2009-03-01"),
-              parseDateStrToInstant("2013-03-01"),
-            )
-          ),
-          ExperienceItem("Azure", "", "4 mos",
-            InstantRange(
-              parseDateStrToInstant("2009-03-01"),
-              parseDateStrToInstant("2009-07-01"),
-            )
-          ),
-        )
-
-        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
-          "Programming Languages" -> ListMap(
-            "JavaScript" -> "4 years",
-          ),
-          "Cloud" -> ListMap(
-            "Azure" -> "4 months",
-          )
-        )
-      }
-
       "correctly sum technology experience even when they are represented with different aliases" in {
         val experienceItems = List(
           ExperienceItem(
             "Java",
             "",
-            "2 yrs",
             InstantRange(
               parseDateStrToInstant("2009-03-01"),
               parseDateStrToInstant("2011-03-01"),
@@ -107,7 +74,6 @@ class DurationPerTechGeneratorTest extends Specification {
           ExperienceItem(
             "JavaEE",
             "",
-            "2 yrs",
             InstantRange(
               parseDateStrToInstant("2012-03-01"),
               parseDateStrToInstant("2014-03-01"),

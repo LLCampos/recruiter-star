@@ -24,10 +24,9 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   private def getExperienceItem(positionElem: Element): Either[String, ExperienceItem] = for {
     title <- ElementUtil.getFirstElementByTagNameSafe(positionElem, "h4").map(_.textContent.trim)
-    duration = getDuration(positionElem)
     description = getDescription(positionElem)
     instantRange <- getEmploymentTsRange(positionElem)
-  } yield ExperienceItem(title, description, duration, instantRange)
+  } yield ExperienceItem(title, description, instantRange)
 
   private def getEmploymentTsRange(positionElem: Element): Either[String, InstantRange] = for {
     dateRangeElem <- ElementUtil.getFirstElementByClassNameSafe(positionElem, "date-range")
@@ -40,12 +39,6 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       .map(_._2)
       .collect { case li: HTMLElement => li }
       .toList
-
-  private def getDuration(positionElem: Element): String =
-    ElementUtil
-      .getFirstElementByClassNameSafe(positionElem, "duration")
-      .map(_.textContent)
-      .getOrElse("")
 
   private def getDescription(positionElem: Element): String =
     ElementUtil

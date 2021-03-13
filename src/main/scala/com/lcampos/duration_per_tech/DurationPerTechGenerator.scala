@@ -59,14 +59,6 @@ object DurationPerTechGenerator {
     }
   }
 
-  protected def getDurationPerTech(experienceItem: ExperienceItem): Option[Map[Tech, Duration]] =
-    experienceItem.duration match {
-      case Some(duration) => Some(experienceItem.technologies.map(_ -> duration).toMap)
-      case None =>
-        println(s"Couldn't parse duration: ${experienceItem.durationDescription}")
-        None
-    }
-
   protected def getTsRangesPerTech(experienceItem: ExperienceItem): Map[Tech, InstantRange] =
     experienceItem.technologies.map(_ -> experienceItem.instantRange).toMap
 }
