@@ -13,7 +13,7 @@ package object time {
   def getInstantYearMonth(yearMonthStr: String, formatter: DateTimeFormatter): Instant =
     YearMonth.parse(yearMonthStr, formatter).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC)
 
-  def toInstantRange(rangeStr: String, separator: String, formatter: DateTimeFormatter): TsTzRange = {
+  def toInstantRange(rangeStr: String, separator: String, formatter: DateTimeFormatter): InstantRange = {
     val instants = rangeStr
       .split(separator)
       .map(dateString => {
@@ -23,6 +23,6 @@ package object time {
           getInstantYearMonth(dateString, formatter)
         }
       })
-    TsTzRange(instants.head, instants.last)
+    InstantRange(instants.head, instants.last)
   }
 }

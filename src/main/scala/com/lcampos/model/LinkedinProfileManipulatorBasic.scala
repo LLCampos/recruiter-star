@@ -4,7 +4,7 @@ import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
-import com.lcampos.util.time.{TsTzRange, currentInstantYearMonth, getInstantYearMonth, toInstantRange}
+import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.{HTMLElement, HTMLLIElement}
 import org.scalajs.dom.{Document, Element, window}
 
@@ -103,7 +103,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       instantRange
     )
 
-  private def getEmploymentTsRange(elem: HTMLLIElement): Either[String, TsTzRange] = for {
+  private def getEmploymentTsRange(elem: HTMLLIElement): Either[String, InstantRange] = for {
     dateRangeElem <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__date-range")
     dateRangeStr <- ElementUtil.getNthChildSafe(dateRangeElem, 1).map(_.textContent)
     formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM uuuu")

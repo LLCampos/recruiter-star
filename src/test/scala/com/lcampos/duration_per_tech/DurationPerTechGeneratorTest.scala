@@ -1,6 +1,6 @@
 package com.lcampos.duration_per_tech
 
-import com.lcampos.util.time.{TsTzRange, currentInstantYearMonth, parseDateStrToInstant}
+import com.lcampos.util.time.{InstantRange, currentInstantYearMonth, parseDateStrToInstant}
 import org.specs2.mutable.Specification
 
 import java.time.Instant
@@ -17,7 +17,7 @@ class DurationPerTechGeneratorTest extends Specification {
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
             "7 yrs 4 mos",
-            TsTzRange(
+            InstantRange(
               parseDateStrToInstant("2013-11-01"),
               currentInstantYearMonth
             )
@@ -26,7 +26,7 @@ class DurationPerTechGeneratorTest extends Specification {
             "Analyst/Software Developer",
             "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
             "4 yrs",
-            TsTzRange(
+            InstantRange(
               parseDateStrToInstant("2009-12-01"),
               parseDateStrToInstant("2013-11-01"),
             )
@@ -47,7 +47,7 @@ class DurationPerTechGeneratorTest extends Specification {
 
       "correctly parse experience section in which an item description is empty" in {
         val experienceItems = List(
-          ExperienceItem("Python Developer", "", "2 mos", TsTzRange(Instant.now(), Instant.now())),
+          ExperienceItem("Python Developer", "", "2 mos", InstantRange(Instant.now(), Instant.now())),
         )
 
         DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
@@ -59,8 +59,8 @@ class DurationPerTechGeneratorTest extends Specification {
 
       "correctly format duration when only years and only months" in {
         val experienceItems = List(
-          ExperienceItem("JavaScript", "", "4 yrs", TsTzRange(Instant.now(), Instant.now())),
-          ExperienceItem("Azure", "", "4 mos", TsTzRange(Instant.now(), Instant.now())),
+          ExperienceItem("JavaScript", "", "4 yrs", InstantRange(Instant.now(), Instant.now())),
+          ExperienceItem("Azure", "", "4 mos", InstantRange(Instant.now(), Instant.now())),
         )
 
         DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
@@ -75,8 +75,8 @@ class DurationPerTechGeneratorTest extends Specification {
 
       "correctly sum technology experience even when they are represented with different aliases" in {
         val experienceItems = List(
-          ExperienceItem("Java", "", "2 yrs", TsTzRange(Instant.now(), Instant.now())),
-          ExperienceItem("JavaEE", "", "2 yrs", TsTzRange(Instant.now(), Instant.now())),
+          ExperienceItem("Java", "", "2 yrs", InstantRange(Instant.now(), Instant.now())),
+          ExperienceItem("JavaEE", "", "2 yrs", InstantRange(Instant.now(), Instant.now())),
         )
 
         DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(

@@ -4,7 +4,7 @@ import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
-import com.lcampos.util.time.{TsTzRange, toInstantRange}
+import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.{Document, Element}
 
@@ -29,7 +29,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
     instantRange <- getEmploymentTsRange(positionElem)
   } yield ExperienceItem(title, description, duration, instantRange)
 
-  private def getEmploymentTsRange(positionElem: Element): Either[String, TsTzRange] = for {
+  private def getEmploymentTsRange(positionElem: Element): Either[String, InstantRange] = for {
     dateRangeElem <- ElementUtil.getFirstElementByClassNameSafe(positionElem, "date-range")
     dateRangeStr = dateRangeElem.textContent.split("\n").head
     formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM uuuu")

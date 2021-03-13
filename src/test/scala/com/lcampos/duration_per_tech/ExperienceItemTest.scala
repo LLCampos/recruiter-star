@@ -1,6 +1,6 @@
 package com.lcampos.duration_per_tech
 
-import com.lcampos.util.time.TsTzRange
+import com.lcampos.util.time.InstantRange
 import org.specs2.mutable.Specification
 
 import java.time.Instant
@@ -8,7 +8,7 @@ import scala.concurrent.duration.{DAYS, Duration}
 
 class ExperienceItemTest extends Specification {
 
-  private val defaultInstantRange = TsTzRange(Instant.now, Instant.now)
+  private val defaultInstantRange = InstantRange(Instant.now, Instant.now)
 
   "ExperienceItem" should {
     "duration" should {
