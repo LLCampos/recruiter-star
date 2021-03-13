@@ -90,6 +90,8 @@ lazy val root = (project in file("."))
 
       "org.typelevel" %%% "cats-core" % catsVersion,
 
+      "io.github.cquiroz" %%% "scala-java-time" % "2.2.0",
+
       "org.specs2" %%% "specs2-core" % "4.10.0" % "test"
     )
   )

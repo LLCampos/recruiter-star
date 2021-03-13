@@ -4,9 +4,11 @@ import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
+import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.{Document, Element}
 
+import java.time.format.DateTimeFormatter
 import scala.scalajs.js.Object.entries
 
 object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
@@ -22,21 +24,21 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   private def getExperienceItem(positionElem: Element): Either[String, ExperienceItem] = for {
     title <- ElementUtil.getFirstElementByTagNameSafe(positionElem, "h4").map(_.textContent.trim)
-    duration = getDuration(positionElem)
     description = getDescription(positionElem)
-  } yield ExperienceItem(title, description, duration)
+    instantRange <- getEmploymentTsRange(positionElem)
+  } yield ExperienceItem(title, description, instantRange)
+
+  private def getEmploymentTsRange(positionElem: Element): Either[String, InstantRange] = for {
+    dateRangeElem <- ElementUtil.getFirstElementByClassNameSafe(positionElem, "date-range")
+    dateRangeStr = dateRangeElem.innerHTML.split("<span").head.trim
+    formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM uuuu")
+  } yield toInstantRange(dateRangeStr, " – ", formatter)
 
   private def getAllPositionElements(elem: Element): List[HTMLElement] =
     entries(elem.getElementsByClassName("position"))
       .map(_._2)
       .collect { case li: HTMLElement => li }
       .toList
-
-  private def getDuration(positionElem: Element): String =
-    ElementUtil
-      .getFirstElementByClassNameSafe(positionElem, "duration")
-      .map(_.textContent)
-      .getOrElse("")
 
   private def getDescription(positionElem: Element): String =
     ElementUtil

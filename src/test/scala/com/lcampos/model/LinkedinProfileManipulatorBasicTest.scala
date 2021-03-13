@@ -2,10 +2,12 @@ package com.lcampos.model
 
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
+import com.lcampos.util.time.{InstantRange, currentInstantYearMonth, parseDateStrToInstant}
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
 import test_data.linkedin_basic.experience_section.{ExampleBasic, ExampleBreakTag, ExampleMultiSectionExperience}
 import test_data.linkedin_basic.full_profile._
+
 
 class LinkedinProfileManipulatorBasicTest extends Specification {
 
@@ -29,11 +31,6 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
       "return error on empty summary" in {
         val doc = ElementUtil.documentFromString(Example4_EmptySummary.example)
         LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element for selector 'h3' not found")
-      }
-
-      "return error on no employment duration" in {
-        val doc = ElementUtil.documentFromString(Example5_NoEmploymentDuration.example)
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element with class 'pv-entity__bullet-item-v2' not found")
       }
 
       "add tech experience section to valid document" in {
@@ -83,12 +80,18 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
-            "7 yrs 4 mos"
+            InstantRange(
+              parseDateStrToInstant("2013-11-01"),
+              currentInstantYearMonth
+            )
           ),
           ExperienceItem(
             "Analyst/Software Developer",
             "Frontend and Backend developer. Worked with JavaScript, CSS and HTML5.",
-            "4 yrs"
+            InstantRange(
+              parseDateStrToInstant("2009-12-01"),
+              parseDateStrToInstant("2013-11-01"),
+            )
           ),
         )
 
@@ -102,7 +105,10 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ExperienceItem(
             "Software Developer @ DXS powered by agap2i",
             "Frontend and Backend developer:  JavaScript Python",
-            "7 yrs 4 mos"
+            InstantRange(
+              parseDateStrToInstant("2013-11-01"),
+              currentInstantYearMonth
+            )
           )
         )
 

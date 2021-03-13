@@ -1,7 +1,6 @@
 package com.lcampos.duration_per_tech
 
-import cats.kernel.Semigroup
-import cats.syntax.all._
+import com.lcampos.util.time.InstantRange
 
 import scala.collection.immutable.ListMap
 import scala.concurrent.duration.Duration
@@ -14,17 +13,14 @@ object DurationPerTechGenerator {
 
   type DurationPerTechPerCategory = ListMap[String, ListMap[String, String]]
 
-  def getFromLinkedinExperienceItems(experienceItems: List[ExperienceItem]): DurationPerTechPerCategory =
-    experienceItems.map(getDurationPerTech).sequence match {
-      case Some(durationPerTechSeq) =>
-        convertToStringPrettyPresentation(
-          durationPerTechSeq
-            .reduce(Semigroup[Map[Tech, Duration]].combine)
-            .groupBy(_._1.category)
-        )
-      case None =>
-        ListMap.empty
-    }
+  def getFromLinkedinExperienceItems(experienceItems: List[ExperienceItem]): DurationPerTechPerCategory = {
+    val tsRangesPerTech = experienceItems.map(getTsRangesPerTech)
+    val durationPerTech = toDurationPerTech(tsRangesPerTech.flatMap(_.toList).groupMap(_._1)(_._2))
+    convertToStringPrettyPresentation(durationPerTech.groupBy(_._1.category))
+  }
+
+  private def toDurationPerTech(rangesPerTech: Map[Tech, List[InstantRange]]): Map[Tech, Duration] =
+    rangesPerTech.view.mapValues(InstantRange.totalDuration).toMap
 
   private def convertToStringPrettyPresentation(durationPerTechPerCategory: Map[TechCategory, Map[Tech, Duration]]): DurationPerTechPerCategory =
     orderDurationPerTechPerCategory(durationPerTechPerCategory).map { case (category, durationPerTech) =>
@@ -63,11 +59,6 @@ object DurationPerTechGenerator {
     }
   }
 
-  protected def getDurationPerTech(experienceItem: ExperienceItem): Option[Map[Tech, Duration]] =
-    experienceItem.duration match {
-      case Some(duration) => Some(experienceItem.technologies.map(_ -> duration).toMap)
-      case None =>
-        println(s"Couldn't parse duration: ${experienceItem.durationDescription}")
-        None
-    }
+  protected def getTsRangesPerTech(experienceItem: ExperienceItem): Map[Tech, InstantRange] =
+    experienceItem.technologies.map(_ -> experienceItem.instantRange).toMap
 }

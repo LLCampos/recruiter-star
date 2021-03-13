@@ -2,10 +2,10 @@ package com.lcampos.model
 
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
+import com.lcampos.util.time.{InstantRange, currentInstantYearMonth, parseDateStrToInstant}
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
-import test_data.linkedin_premium.experience_section
-import test_data.linkedin_premium.full_profile
+import test_data.linkedin_premium.{experience_section, full_profile}
 
 class LinkedinProfileManipulatorPremiumTest extends Specification {
 
@@ -18,17 +18,26 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ExperienceItem(
             "Java Backend Developer",
             "",
-            "(1 year 11 months)"
+            InstantRange(
+              parseDateStrToInstant("2019-04-01"),
+              currentInstantYearMonth
+            )
           ),
           ExperienceItem(
             "Consultor de TI",
             "By Bold International",
-            "(2 years 1 month)"
+            InstantRange(
+              parseDateStrToInstant("2017-02-01"),
+              parseDateStrToInstant("2019-03-01"),
+            )
           ),
           ExperienceItem(
             "Java Programmer (Outsourcing na Everis Portugal)",
             "-Outsourcing na Everis Portugal, S.A.",
-            "(1 year 1 month)"
+            InstantRange(
+              parseDateStrToInstant("2015-03-01"),
+              parseDateStrToInstant("2016-04-01"),
+            )
           ),
         )
 
@@ -42,27 +51,11 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ExperienceItem(
             "Backend Developer",
             "Python Java JavaScript",
-            "(2 years 1 month)"
+            InstantRange(
+              parseDateStrToInstant("2017-02-01"),
+              parseDateStrToInstant("2019-03-01"),
+            )
           )
-        )
-
-        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
-      }
-
-      "correctly deal with no duration section" in {
-        val elem = ElementUtil.elementFromString(experience_section.ExampleNoDuration.example)
-
-        val expected = Seq(
-          ExperienceItem(
-            "Consultor de TI",
-            "By Bold International",
-            ""
-          ),
-          ExperienceItem(
-            "Java Programmer (Outsourcing na Everis Portugal)",
-            "-Outsourcing na Everis Portugal, S.A.",
-            "(1 year 1 month)"
-          ),
         )
 
         LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)

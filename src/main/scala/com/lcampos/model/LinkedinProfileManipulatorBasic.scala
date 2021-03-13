@@ -4,9 +4,11 @@ import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
 import com.lcampos.util.ElementUtil
+import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.{HTMLElement, HTMLLIElement}
 import org.scalajs.dom.{Document, Element, window}
 
+import java.time.format.DateTimeFormatter
 import scala.concurrent.duration.DurationInt
 import scala.scalajs.js.timers.setTimeout
 
@@ -92,12 +94,18 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       )
       title <- ElementUtil.querySelectorSafe(summary, "h3").map(_.textContent)
       description = getDescription(elem)
-      employmentDuration <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__bullet-item-v2").map(_.textContent)
+      instantRange <- getEmploymentTsRange(elem)
     } yield ExperienceItem(
       title,
       description,
-      employmentDuration
+      instantRange
     )
+
+  private def getEmploymentTsRange(elem: HTMLLIElement): Either[String, InstantRange] = for {
+    dateRangeElem <- ElementUtil.getFirstElementByClassNameSafe(elem, "pv-entity__date-range")
+    dateRangeStr <- ElementUtil.getNthChildSafe(dateRangeElem, 1).map(_.textContent)
+    formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM uuuu")
+  } yield toInstantRange(dateRangeStr, " – ", formatter)
 
   private def getDescription(elem: HTMLLIElement): String =
     ElementUtil
