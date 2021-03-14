@@ -1,7 +1,8 @@
 package com.lcampos.util
 
 import java.time.format.DateTimeFormatter
-import java.time.{Instant, LocalDate, YearMonth, ZoneId, ZoneOffset}
+import java.time.{Instant, LocalDate, Year, YearMonth, ZoneId, ZoneOffset}
+import scala.util.{Failure, Success, Try}
 
 package object time {
   def parseDateStrToInstant(dateString: String): Instant =
@@ -13,14 +14,17 @@ package object time {
   def getInstantYearMonth(yearMonthStr: String, formatter: DateTimeFormatter): Instant =
     YearMonth.parse(yearMonthStr, formatter).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC)
 
-  def toInstantRange(rangeStr: String, separator: String, formatter: DateTimeFormatter): InstantRange = {
+  def toInstantRange(rangeStr: String, separator: String, dateMonthFormatter: DateTimeFormatter): InstantRange = {
     val instants = rangeStr
       .split(separator)
       .map(dateString => {
         if (dateString == "Present") {
           currentInstantYearMonth
         } else {
-          getInstantYearMonth(dateString, formatter)
+          Try(getInstantYearMonth(dateString, dateMonthFormatter)) match {
+            case Success(instant) => instant
+            case Failure(_) => Year.parse(dateString).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC)
+          }
         }
       })
     InstantRange(instants.head, instants.last)

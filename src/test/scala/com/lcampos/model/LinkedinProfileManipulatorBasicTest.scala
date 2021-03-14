@@ -5,7 +5,7 @@ import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, currentInstantYearMonth, parseDateStrToInstant}
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
-import test_data.linkedin_basic.experience_section.{ExampleBasic, ExampleBreakTag, ExampleMultiSectionExperience}
+import test_data.linkedin_basic.experience_section.{ExampleBasic, ExampleBreakTag, ExampleExperienceRangeOnlyYears, ExampleMultiSectionExperience}
 import test_data.linkedin_basic.full_profile._
 
 
@@ -120,6 +120,23 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
         LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight((experienceItems: List[ExperienceItem]) => {
           experienceItems.size must be equalTo 3
         })
+      }
+
+      "deal with experience duration range only having years, not months" in {
+        val elem = ElementUtil.elementFromString(ExampleExperienceRangeOnlyYears.example)
+
+        val expected = Seq(
+          ExperienceItem(
+            "Software Developer @ DXS powered by agap2i",
+            "Frontend and Backend developer: JavaScript",
+            InstantRange(
+              parseDateStrToInstant("2013-01-01"),
+              parseDateStrToInstant("2015-01-01"),
+            )
+          ),
+        )
+
+        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
       }
     }
   }

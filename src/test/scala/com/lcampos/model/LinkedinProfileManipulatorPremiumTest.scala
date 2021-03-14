@@ -5,6 +5,7 @@ import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, currentInstantYearMonth, parseDateStrToInstant}
 import org.scalajs.dom.Element
 import org.specs2.mutable.Specification
+import test_data.linkedin_premium.experience_section.ExampleExperienceRangeOnlyYears
 import test_data.linkedin_premium.{experience_section, full_profile}
 
 class LinkedinProfileManipulatorPremiumTest extends Specification {
@@ -54,6 +55,23 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
             InstantRange(
               parseDateStrToInstant("2017-02-01"),
               parseDateStrToInstant("2019-03-01"),
+            )
+          )
+        )
+
+        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
+      }
+
+      "deal with experience duration range only having years, not months" in {
+        val elem = ElementUtil.elementFromString(ExampleExperienceRangeOnlyYears.example)
+
+        val expected = Seq(
+          ExperienceItem(
+            "Java Backend Developer",
+            "",
+            InstantRange(
+              parseDateStrToInstant("2018-01-01"),
+              parseDateStrToInstant("2020-01-01"),
             )
           )
         )
