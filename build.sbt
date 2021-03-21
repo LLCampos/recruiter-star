@@ -92,6 +92,8 @@ lazy val root = (project in file("."))
 
       "io.github.cquiroz" %%% "scala-java-time" % "2.2.0",
 
+      "com.softwaremill.retry" %%% "retry" % "0.3.3",
+
       "org.specs2" %%% "specs2-core" % "4.10.0" % "test"
     )
   )

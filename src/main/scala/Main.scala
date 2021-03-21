@@ -1,7 +1,9 @@
 import com.lcampos.chrome._
+import odelay.Timer
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.annotation.JSExportTopLevel
+import odelay.js.JsTimer
 
 /**
  * Entry-point for any context, it loads the config based on the current environment, which can be
@@ -12,6 +14,8 @@ import scala.scalajs.js.annotation.JSExportTopLevel
  * It is assumed that the entry-point is an actual JavaScript file that invokes these functions.
  */
 object Main {
+
+  private implicit val timer: Timer = JsTimer.newTimer
 
   private val config = if (com.lcampos.BuildInfo.production) {
     Config.Default
