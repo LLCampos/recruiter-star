@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.3]
+
+### Fixed
+* On error, retry to add experience summary box
+
 ## [0.0.2]
 
 ### Added
