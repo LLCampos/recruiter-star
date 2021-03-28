@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.0]
+
+### Removed
+* Remove minor technologies
+
 ## [1.0.0]
 
 ### Fixed
