@@ -16,7 +16,8 @@ object AppManifest {
       override val icons: Map[Int, String] = Chrome.icons("icons", "app.png", Set(16, 48, 96, 128))
 
       override val permissions: Set[Permission] = Set[Permission](
-        API.Tabs
+        API.Tabs,
+        API.Storage
       )
 
       override val defaultLocale: Option[String] = Some("en")
