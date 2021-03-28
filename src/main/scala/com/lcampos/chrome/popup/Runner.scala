@@ -2,6 +2,7 @@ package com.lcampos.chrome.popup
 
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
+import com.lcampos.model.StorageKeys
 import com.lcampos.util.StorageSyncUtil
 import org.scalajs.dom._
 import org.scalajs.dom.raw.HTMLInputElement
@@ -26,13 +27,11 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
   }
 
   private def extensionActiveHandling(): Unit = {
-    val isActiveStorageKey = "recruiter-star-is-active"
-
     val isActiveCheckbox = document
       .getElementById("isExtensionActiveCheckbox")
       .asInstanceOf[HTMLInputElement]
 
-    StorageSyncUtil.get[Boolean](isActiveStorageKey).onComplete {
+    StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).onComplete {
       case Success(isActiveOpt) => isActiveOpt match {
         case Some(isActive) => isActiveCheckbox.checked = isActive
         case None => isActiveCheckbox.checked = true
@@ -40,7 +39,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
       case Failure(exception) => println(s"failure when getting from storage! $exception")
     }
 
-    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(isActiveStorageKey, isActiveCheckbox.checked)
+    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(StorageKeys.isExtensionActive, isActiveCheckbox.checked)
   }
 }
 

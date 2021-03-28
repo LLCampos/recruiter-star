@@ -3,7 +3,7 @@ package com.lcampos.chrome.activetab
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
-import com.lcampos.model.LinkedinProfileManipulator
+import com.lcampos.model.{LinkedinProfileManipulator, StorageKeys}
 import com.lcampos.util.StorageSyncUtil
 import odelay.Timer
 import org.scalajs.dom
@@ -18,7 +18,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
-          StorageSyncUtil.get[Boolean]("recruiter-star-is-active").flatMap {
+          StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).flatMap {
             case Some(isActive) => if (isActive) addTechExperienceSummaryBoxWithRetries(v) else Future.unit
             case None => addTechExperienceSummaryBoxWithRetries(v)
           }
