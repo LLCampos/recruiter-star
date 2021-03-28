@@ -3,7 +3,8 @@ package com.lcampos.chrome.activetab
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
-import com.lcampos.model.LinkedinProfileManipulator
+import com.lcampos.model.{LinkedinProfileManipulator, StorageKeys}
+import com.lcampos.util.StorageSyncUtil
 import odelay.Timer
 import org.scalajs.dom
 
@@ -17,18 +18,24 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
-          retry.Pause(50, 100.milli)(timer) { () =>
-            Future {
-              addTechExperienceSummaryBox(v)
-            }
-          }.map {
-            case Right(_) => ()
-            case Left(err) => println(err)
+          StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).flatMap {
+            case Some(isActive) => if (isActive) addTechExperienceSummaryBoxWithRetries(v) else Future.unit
+            case None => addTechExperienceSummaryBoxWithRetries(v)
           }
         case _ => ()
       }
     }
   }
+
+  private def addTechExperienceSummaryBoxWithRetries(msg: String) =
+    retry.Pause(50, 100.milli)(timer) { () =>
+      Future {
+        addTechExperienceSummaryBox(msg)
+      }
+    }.map {
+      case Right(_) => ()
+      case Left(err) => println(err)
+    }
 
   private def addTechExperienceSummaryBox(msg: String) =
       LinkedinProfileManipulator.fromUrl(msg) match {
