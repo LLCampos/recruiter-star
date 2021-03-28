@@ -2,6 +2,9 @@
 
 ## [1.1.0]
 
+### Added
+* Possible to activate and deactivate extension
+
 ### Removed
 * Remove minor technologies
 
