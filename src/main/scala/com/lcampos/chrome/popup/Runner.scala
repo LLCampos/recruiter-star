@@ -13,17 +13,12 @@ import scala.util.{Failure, Success}
 class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: ExecutionContext) {
 
   def run(): Unit = {
-    log("This was run by the popup script")
     document.onreadystatechange = _ => {
       if (document.readyState == "complete") {
         extensionActiveHandling()
       }
     }
 //    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
-  }
-
-  private def log(msg: String): Unit = {
-    println(s"popup: $msg")
   }
 
   private def extensionActiveHandling(): Unit = {
