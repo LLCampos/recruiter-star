@@ -39,15 +39,11 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     }
 
   private def addTechExperienceSummaryBox(msg: String, baseTechs: List[Tech]) =
-      LinkedinProfileManipulator.fromUrl(msg) match {
-        case Some(manipulator) =>
-          manipulator.addDurationPerTech(dom.document, baseTechs)
-        case None => Right(())
-      }
-
-  private def log(msg: String): Unit = {
-    println(s"activeTab: $msg")
-  }
+    LinkedinProfileManipulator.fromUrl(msg) match {
+      case Some(manipulator) =>
+        manipulator.addDurationPerTech(dom.document, baseTechs)
+      case None => Right(())
+    }
 }
 
 object Runner {
