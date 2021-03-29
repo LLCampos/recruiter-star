@@ -20,8 +20,8 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
           StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).flatMap {
-            case Some(isActive) => if (isActive) addTechExperienceSummaryBoxWithRetries(v, TechList.all) else Future.unit
-            case None => addTechExperienceSummaryBoxWithRetries(v, TechList.all)
+            case Some(isActive) if !isActive => Future.unit
+            case _ => addTechExperienceSummaryBoxWithRetries(v, TechList.all)
           }
         case _ => ()
       }
