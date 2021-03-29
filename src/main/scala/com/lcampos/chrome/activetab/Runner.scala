@@ -3,6 +3,7 @@ package com.lcampos.chrome.activetab
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
+import com.lcampos.duration_per_tech.{Tech, TechList}
 import com.lcampos.model.{LinkedinProfileManipulator, StorageKeys}
 import com.lcampos.util.StorageSyncUtil
 import odelay.Timer
@@ -19,28 +20,28 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
           StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).flatMap {
-            case Some(isActive) => if (isActive) addTechExperienceSummaryBoxWithRetries(v) else Future.unit
-            case None => addTechExperienceSummaryBoxWithRetries(v)
+            case Some(isActive) => if (isActive) addTechExperienceSummaryBoxWithRetries(v, TechList.all) else Future.unit
+            case None => addTechExperienceSummaryBoxWithRetries(v, TechList.all)
           }
         case _ => ()
       }
     }
   }
 
-  private def addTechExperienceSummaryBoxWithRetries(msg: String) =
+  private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
     retry.Pause(50, 100.milli)(timer) { () =>
       Future {
-        addTechExperienceSummaryBox(msg)
+        addTechExperienceSummaryBox(msg, baseTechs)
       }
     }.map {
       case Right(_) => ()
       case Left(err) => println(err)
     }
 
-  private def addTechExperienceSummaryBox(msg: String) =
+  private def addTechExperienceSummaryBox(msg: String, baseTechs: List[Tech]) =
       LinkedinProfileManipulator.fromUrl(msg) match {
         case Some(manipulator) =>
-          manipulator.addDurationPerTech(dom.document)
+          manipulator.addDurationPerTech(dom.document, baseTechs)
         case None => Right(())
       }
 

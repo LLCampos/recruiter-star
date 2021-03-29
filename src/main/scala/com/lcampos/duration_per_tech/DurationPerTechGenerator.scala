@@ -13,8 +13,8 @@ object DurationPerTechGenerator {
 
   type DurationPerTechPerCategory = ListMap[String, ListMap[String, String]]
 
-  def getFromLinkedinExperienceItems(experienceItems: List[ExperienceItem]): DurationPerTechPerCategory = {
-    val tsRangesPerTech = experienceItems.map(getTsRangesPerTech)
+  def getFromLinkedinExperienceItems(experienceItems: List[ExperienceItem], baseTechs: List[Tech] = TechList.all): DurationPerTechPerCategory = {
+    val tsRangesPerTech = experienceItems.map(getTsRangesPerTech(_, baseTechs))
     val durationPerTech = toDurationPerTech(tsRangesPerTech.flatMap(_.toList).groupMap(_._1)(_._2))
     convertToStringPrettyPresentation(durationPerTech.groupBy(_._1.category))
   }
@@ -59,6 +59,6 @@ object DurationPerTechGenerator {
     }
   }
 
-  protected def getTsRangesPerTech(experienceItem: ExperienceItem): Map[Tech, InstantRange] =
-    experienceItem.technologies(TechList.all).map(_ -> experienceItem.instantRange).toMap
+  protected def getTsRangesPerTech(experienceItem: ExperienceItem, baseTechs: List[Tech]): Map[Tech, InstantRange] =
+    experienceItem.technologies(baseTechs).map(_ -> experienceItem.instantRange).toMap
 }
