@@ -60,5 +60,5 @@ object DurationPerTechGenerator {
   }
 
   protected def getTsRangesPerTech(experienceItem: ExperienceItem): Map[Tech, InstantRange] =
-    experienceItem.technologies.map(_ -> experienceItem.instantRange).toMap
+    experienceItem.technologies(TechList.all).map(_ -> experienceItem.instantRange).toMap
 }
