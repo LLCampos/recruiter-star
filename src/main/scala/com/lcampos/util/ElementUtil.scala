@@ -1,6 +1,6 @@
 package com.lcampos.util
 
-import org.scalajs.dom.raw.{HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
+import org.scalajs.dom.raw.{HTMLCollection, HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
 import org.scalajs.dom.{DOMParser, Document, Element, document}
 
 import scala.scalajs.js.Object.entries
@@ -87,11 +87,14 @@ object ElementUtil {
   }
 
   def getAllSelected(selectElem: HTMLSelectElement): List[String] =
-    entries(selectElem.children)
-      .map(_._2)
-      .collect { case opt: HTMLOptionElement => opt }
+    toListOf[HTMLOptionElement](selectElem.children)
       .filter(_.selected)
       .map(_.value)
+
+  def toListOf[A](htmlCollection: HTMLCollection): List[A] =
+    entries(htmlCollection)
+      .map(_._2)
+      .collect { case a: A => a }
       .toList
     
 }
