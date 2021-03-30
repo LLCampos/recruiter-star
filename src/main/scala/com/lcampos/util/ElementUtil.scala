@@ -85,5 +85,13 @@ object ElementUtil {
     option.text = optionValue
     selectElem.add(option)
   }
+
+  def getAllSelected(selectElem: HTMLSelectElement): List[String] =
+    entries(selectElem.children)
+      .map(_._2)
+      .collect { case opt: HTMLOptionElement => opt }
+      .filter(_.selected)
+      .map(_.value)
+      .toList
     
 }

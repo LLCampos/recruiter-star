@@ -18,6 +18,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
       if (document.readyState == "complete") {
         extensionActiveHandling()
         addTechOptions()
+        whichTechnologiesToSeeHandler()
       }
     }
 //    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
@@ -37,6 +38,14 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     }
 
     isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(StorageKeys.isExtensionActive, isActiveCheckbox.checked)
+  }
+
+  private def whichTechnologiesToSeeHandler(): Unit = {
+    ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
+      case Right(selectElem) =>
+        selectElem.onchange = (_: Event) => println(ElementUtil.getAllSelected(selectElem))
+      case Left(err) => println(err)
+    }
   }
 
   private def addTechOptions(): Unit = {
