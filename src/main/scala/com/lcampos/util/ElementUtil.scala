@@ -1,7 +1,7 @@
 package com.lcampos.util
 
-import org.scalajs.dom.raw.{HTMLCollection, HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
-import org.scalajs.dom.{DOMParser, Document, Element, document}
+import org.scalajs.dom.raw.{HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
+import org.scalajs.dom._
 
 import scala.scalajs.js.Object.entries
 
@@ -65,10 +65,7 @@ object ElementUtil {
   }
 
   def getAllLiElements(elem: Element): List[HTMLLIElement] =
-    entries(elem.querySelectorAll("li"))
-      .map(_._2)
-      .collect { case li: HTMLLIElement => li }
-      .toList
+    toListOf(elem.querySelectorAll("li"))
 
   def appendNewLine(elem: Element): Unit =
     elem.innerHTML = elem.innerHTML + "</br>"
@@ -91,8 +88,8 @@ object ElementUtil {
       .filter(_.selected)
       .map(_.value)
 
-  def toListOf[A](htmlCollection: HTMLCollection): List[A] =
-    entries(htmlCollection)
+  private def toListOf[A](domList: DOMList[_]): List[A] =
+    entries(domList)
       .map(_._2)
       .collect { case a: A => a }
       .toList
