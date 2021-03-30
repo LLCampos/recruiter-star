@@ -1,1 +1,5 @@
 runOnPopup();
+
+$(function() {
+    $('#whichTechnologiesToSee').chosen()
+});

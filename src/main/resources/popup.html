@@ -5,10 +5,11 @@
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/chosen.min.css" />
     <link rel="stylesheet" href="css/popup.css" />
 
     <script src="scripts/jquery-3.5.1.slim.min.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/chosen.jquery.min.js"></script>
     <script src="scripts/common.js"></script>
     <script src="main-bundle.js"></script>
     <script src="scripts/popup-script.js"></script>
@@ -17,17 +18,23 @@
 <body>
     <img id="logo" src="icons/app.png" alt="recruiter start logo">
     <br>
-    <div>
-        <b>Options:</b>
-        <br>
-        <div>
-            <input id="isExtensionActiveCheckbox" name="isExtensionActiveCheckbox" type="checkbox">
+    <form>
+        <b>Configuration:</b>
+
+        <div class="form-check">
+            <input id="isExtensionActiveCheckbox" name="isExtensionActiveCheckbox" type="checkbox" class="form-check-input">
             <label for="isExtensionActiveCheckbox">Activate extension?</label>
         </div>
-    </div>
 
-
-
+        <div class="form-group">
+            <label for="whichTechnologiesToSee">Select technologies:</label>
+            <select name="whichTechnologiesToSee" id="whichTechnologiesToSee" multiple class="form-control" data-placeholder="Pick which technologies you want to see...">
+                <option>Mustard</option>
+                <option>Ketchup</option>
+                <option>Relish</option>
+            </select>
+        </div>
+    </form>
 </body>
 
 </html>
