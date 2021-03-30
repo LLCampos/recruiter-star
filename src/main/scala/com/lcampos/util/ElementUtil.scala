@@ -1,6 +1,6 @@
 package com.lcampos.util
 
-import org.scalajs.dom.raw.HTMLLIElement
+import org.scalajs.dom.raw.{HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
 import org.scalajs.dom.{DOMParser, Document, Element, document}
 
 import scala.scalajs.js.Object.entries
@@ -22,6 +22,15 @@ object ElementUtil {
     doc.getElementById(id) match {
       case null => Left(s"Element with id '$id' not found")
       case elem => Right(elem)
+    }
+
+  def getElementByIdSafeAs[A](doc: Document, id: String): Either[String, A] =
+    getElementByIdSafe(doc, id).flatMap { elem =>
+      try {
+        Right(elem.asInstanceOf[A])
+      } catch {
+        case err: Throwable => Left(err.toString)
+      }
     }
 
   def getElementByIdSafeCloned(doc: Document, id: String): Either[String, Element] =
@@ -69,4 +78,12 @@ object ElementUtil {
     elemCopy.innerHTML = elemCopy.innerHTML.replace("<br>", " ").replace("</br>", " ")
     elemCopy
   }
+
+  def addOption(selectElem: HTMLSelectElement, optionValue: String): Unit = {
+    val option = document.createElement("option").asInstanceOf[HTMLOptionElement]
+    option.value = optionValue
+    option.text = optionValue
+    selectElem.add(option)
+  }
+    
 }

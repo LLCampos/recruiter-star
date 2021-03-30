@@ -2,10 +2,11 @@ package com.lcampos.chrome.popup
 
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
+import com.lcampos.duration_per_tech.TechList
 import com.lcampos.model.StorageKeys
-import com.lcampos.util.StorageSyncUtil
+import com.lcampos.util.{ElementUtil, StorageSyncUtil}
 import org.scalajs.dom._
-import org.scalajs.dom.raw.HTMLInputElement
+import org.scalajs.dom.raw.{HTMLInputElement, HTMLSelectElement}
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
@@ -16,6 +17,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     document.onreadystatechange = _ => {
       if (document.readyState == "complete") {
         extensionActiveHandling()
+        addTechOptions()
       }
     }
 //    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
@@ -35,6 +37,13 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     }
 
     isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(StorageKeys.isExtensionActive, isActiveCheckbox.checked)
+  }
+
+  private def addTechOptions(): Unit = {
+    ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
+      case Right(selectElem) => TechList.all.foreach(tech => ElementUtil.addOption(selectElem, tech.name))
+      case Left(err) => println(s"Something wrong happened while trying to add technologies options: $err")
+    }
   }
 }
 
