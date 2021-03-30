@@ -17,8 +17,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     document.onreadystatechange = _ => {
       if (document.readyState == "complete") {
         extensionActiveHandling()
-        addTechOptions()
-        whichTechnologiesToSeeHandler()
+        whichTechnologiesToSeeHandling()
       }
     }
 //    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
@@ -40,20 +39,16 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(StorageKeys.isExtensionActive, isActiveCheckbox.checked)
   }
 
-  private def whichTechnologiesToSeeHandler(): Unit = {
+  private def whichTechnologiesToSeeHandling(): Unit =
     ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
       case Right(selectElem) =>
+        addTechOptions(selectElem)
         selectElem.onchange = (_: Event) => println(ElementUtil.getAllSelected(selectElem))
       case Left(err) => println(err)
     }
-  }
 
-  private def addTechOptions(): Unit = {
-    ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
-      case Right(selectElem) => TechList.all.foreach(tech => ElementUtil.addOption(selectElem, tech.name))
-      case Left(err) => println(s"Something wrong happened while trying to add technologies options: $err")
-    }
-  }
+  private def addTechOptions(whichTechnologiesToSeeElem: HTMLSelectElement): Unit =
+      TechList.all.foreach(tech => ElementUtil.addOption(whichTechnologiesToSeeElem, tech.name))
 }
 
 object Runner {
