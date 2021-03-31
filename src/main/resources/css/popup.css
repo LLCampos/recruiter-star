@@ -1,5 +1,6 @@
 body {
     min-width: 300px;
+    min-height: 350px;
     margin: 20px;
 }
 
@@ -8,4 +9,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     max-width: 100px;
+}
+
+.chosen-container .chosen-results {
+    max-height: 100px;
 }
