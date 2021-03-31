@@ -9,6 +9,7 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.{HTMLInputElement, HTMLSelectElement}
 
 import scala.concurrent.ExecutionContext
+import scala.scalajs.js.JSConverters.JSRichIterableOnce
 import scala.util.{Failure, Success}
 
 class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: ExecutionContext) {
@@ -33,7 +34,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
         case Some(isActive) => isActiveCheckbox.checked = isActive
         case None => isActiveCheckbox.checked = true
       }
-      case Failure(exception) => println(s"failure when getting from storage! $exception")
+      case Failure(exception) => println(s"failure when getting '${StorageKeys.isExtensionActive}' from storage! $exception")
     }
 
     isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(StorageKeys.isExtensionActive, isActiveCheckbox.checked)
@@ -43,7 +44,19 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
       case Right(selectElem) =>
         addTechOptions(selectElem)
-        selectElem.onchange = (_: Event) => println(ElementUtil.getAllSelected(selectElem))
+
+        StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).onComplete {
+          case Success(technologiesOpt) => technologiesOpt match {
+            case Some(technologies) => println(technologies)
+            case None => ()
+          }
+          case Failure(exception) => println(s"failure when getting '${StorageKeys.selectedTechnologies}' from storage! $exception")
+        }
+
+        selectElem.onchange = (_: Event) => StorageSyncUtil.set(
+          StorageKeys.selectedTechnologies,
+          ElementUtil.getAllSelected(selectElem).toJSArray
+        )
       case Left(err) => println(err)
     }
 
