@@ -43,12 +43,10 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
   private def whichTechnologiesToSeeHandling(): Unit =
     ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
       case Right(selectElem) =>
-        addTechOptions(selectElem)
-
         StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).onComplete {
           case Success(technologiesOpt) => technologiesOpt match {
-            case Some(technologies) => println(technologies)
-            case None => ()
+            case Some(technologies) => ElementUtil.addOptions(selectElem, TechList.all.map(_.name), technologies.toList)
+            case None => ElementUtil.addOptions(selectElem, TechList.all.map(_.name))
           }
           case Failure(exception) => println(s"failure when getting '${StorageKeys.selectedTechnologies}' from storage! $exception")
         }
@@ -59,9 +57,6 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
         )
       case Left(err) => println(err)
     }
-
-  private def addTechOptions(whichTechnologiesToSeeElem: HTMLSelectElement): Unit =
-      TechList.all.foreach(tech => ElementUtil.addOption(whichTechnologiesToSeeElem, tech.name))
 }
 
 object Runner {

@@ -1,7 +1,7 @@
 package com.lcampos.util
 
-import org.scalajs.dom.raw.{HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
 import org.scalajs.dom._
+import org.scalajs.dom.raw.{HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
 
 import scala.scalajs.js.Object.entries
 
@@ -76,12 +76,19 @@ object ElementUtil {
     elemCopy
   }
 
-  def addOption(selectElem: HTMLSelectElement, optionValue: String): Unit = {
+  def addOption(selectElem: HTMLSelectElement, optionValue: String, selected: Boolean = false): Unit = {
     val option = document.createElement("option").asInstanceOf[HTMLOptionElement]
     option.value = optionValue
     option.text = optionValue
+    option.selected = selected
     selectElem.add(option)
   }
+
+  def addOptions(selectElem: HTMLSelectElement, optionsValues: List[String], selectedOptions: List[String] = List.empty): Unit =
+    optionsValues.foreach { optionValue =>
+      val selected = if (selectedOptions.contains(optionValue)) true else false
+      ElementUtil.addOption(selectElem, optionValue, selected)
+    }
 
   def getAllSelected(selectElem: HTMLSelectElement): List[String] =
     toListOf[HTMLOptionElement](selectElem.children)
