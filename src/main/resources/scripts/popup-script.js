@@ -1,5 +1,5 @@
 runOnPopup();
 
 $(function() {
-    $('#whichTechnologiesToSee').chosen()
+    $('#whichTechnologiesToSee').select2()
 });

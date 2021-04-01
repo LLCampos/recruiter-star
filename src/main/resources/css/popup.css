@@ -11,6 +11,10 @@ body {
     max-width: 100px;
 }
 
-.chosen-container .chosen-results {
+.select2-container .select2-results .select2-results__options {
     max-height: 100px;
+}
+
+.select2-container {
+    font-size: 0.8em;
 }
