@@ -1,6 +1,6 @@
 package com.lcampos.duration_per_tech
 
-import com.lcampos.util.time.{InstantRange, currentInstantYearMonth, parseDateStrToInstant}
+import com.lcampos.util.time.{InstantRange, parseDateStrToInstant}
 import org.specs2.mutable.Specification
 
 import scala.collection.immutable.ListMap
@@ -17,7 +17,7 @@ class DurationPerTechGeneratorTest extends Specification {
             "Frontend and Backend developer:  JavaScript, CSS, HTML5, Azure.",
             InstantRange(
               parseDateStrToInstant("2013-11-01"),
-              currentInstantYearMonth
+              parseDateStrToInstant("2021-03-05"),
             )
           ),
           ExperienceItem(
