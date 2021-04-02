@@ -3,7 +3,7 @@ package com.lcampos.chrome.activetab
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
-import com.lcampos.duration_per_tech.{Tech, TechList}
+import com.lcampos.duration_per_tech.Tech
 import com.lcampos.model.{LinkedinProfileManipulator, StorageKeys}
 import com.lcampos.util.StorageSyncUtil
 import odelay.Timer
@@ -23,7 +23,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
             case Some(isActive) if !isActive => Future.unit
             case _ => StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).flatMap {
               case Some(selectedTechnologies) =>
-                val techList = if (selectedTechnologies.isEmpty) TechList.all else selectedTechnologies.toList.flatMap(TechList.fromName)
+                val techList = if (selectedTechnologies.isEmpty) Tech.all else selectedTechnologies.toList.flatMap(Tech.fromName)
                 addTechExperienceSummaryBoxWithRetries(v, techList)
               case _ => Future.unit
             }

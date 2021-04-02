@@ -2,7 +2,7 @@ package com.lcampos.chrome.popup
 
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
-import com.lcampos.duration_per_tech.TechList
+import com.lcampos.duration_per_tech.Tech
 import com.lcampos.model.StorageKeys
 import com.lcampos.util.{ElementUtil, StorageSyncUtil}
 import org.scalajs.dom._
@@ -45,8 +45,8 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
       case Right(selectElem) =>
         StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).onComplete {
           case Success(technologiesOpt) => technologiesOpt match {
-            case Some(technologies) => ElementUtil.addOptions(selectElem, TechList.all.map(_.name), technologies.toList)
-            case None => ElementUtil.addOptions(selectElem, TechList.all.map(_.name))
+            case Some(technologies) => ElementUtil.addOptions(selectElem, Tech.all.map(_.name), technologies.toList)
+            case None => ElementUtil.addOptions(selectElem, Tech.all.map(_.name))
           }
           case Failure(exception) => println(s"failure when getting '${StorageKeys.selectedTechnologies}' from storage! $exception")
         }
