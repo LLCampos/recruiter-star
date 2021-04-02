@@ -1,9 +1,9 @@
 package com.lcampos.util
 
-import org.specs2.mutable.Specification
 import com.lcampos.util.ElementUtil._
 import org.scalajs.dom.Element
 import org.scalajs.dom.raw.HTMLSelectElement
+import org.specs2.mutable.Specification
 
 class ElementUtilTest extends Specification {
 
@@ -135,6 +135,76 @@ class ElementUtilTest extends Specification {
         querySelectorSafe(doc.documentElement, "h2") must beLeft((err: String) =>
           err must be equalTo "Element for selector 'h2' not found"
         )
+      }
+    }
+
+    "getNthChildSafe" should {
+
+      "return first matching element if existent" in {
+        val elem = elementFromString(
+          """
+            |<main>
+            |   <div id="elem1"></div>
+            |   <div id="elem2"></div>
+            |</main>""".stripMargin)
+        getNthChildSafe(elem, 1) must beRight((elem: Element) =>
+          elem.id must be equalTo "elem2"
+        )
+      }
+
+      "return error if nth children doesn't exist" in {
+        val elem = elementFromString(
+          """
+            |<main>
+            |   <div id="elem1"></div>
+            |   <div id="elem2"></div>
+            |</main>""".stripMargin)
+        getNthChildSafe(elem, 2) must beLeft((error: String) =>
+          error.contains("doesn't have a child in position 2")
+        )
+      }
+    }
+
+    "getAllLiElements" should {
+
+      "return all li elements" in {
+        val elem = elementFromString(
+          """
+            |<ul>
+            |   <li id="elem1"></li>
+            |   <li id="elem2"></li>
+            |   <li id="elem3"></li>
+            |   <li id="elem4"></li>
+            |</ul>""".stripMargin)
+        getAllLiElements(elem).size must be equalTo 4
+      }
+
+      "return empty list of no li elements" in {
+        val elem = elementFromString(
+          """
+            |<ul>
+            |</ul>""".stripMargin)
+        getAllLiElements(elem).isEmpty must beTrue
+      }
+    }
+
+    "appendNewLine" should {
+      "append new line" in {
+        val elem = elementFromString("<div></div>")
+        elem.innerHTML must be equalTo ""
+        appendNewLine(elem)
+        elem.innerHTML must be equalTo "<br>"
+        appendNewLine(elem)
+        elem.innerHTML must be equalTo "<br><br>"
+      }
+    }
+
+    "removeBreakTags" should {
+      "remove break tags and return new elem" in {
+        val elem = elementFromString("<div><br><br></div>")
+        val resultElem = removeBreakTags(elem)
+        elem.innerHTML must be equalTo "<br><br>"
+        resultElem.innerHTML must be equalTo "  "
       }
     }
   }

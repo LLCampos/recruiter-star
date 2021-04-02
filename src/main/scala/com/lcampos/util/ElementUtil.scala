@@ -54,12 +54,11 @@ object ElementUtil {
       case elem => Right(elem)
     }
 
-  def getNthChildSafe(elem: Element, index: Int): Either[String, Element] = {
+  def getNthChildSafe(elem: Element, index: Int): Either[String, Element] =
     elem.children.item(index) match {
       case null => Left(s"Element $elem doesn't have a child in position $index")
       case elem => Right(elem)
     }
-  }
 
   def getAllLiElements(elem: Element): List[HTMLLIElement] =
     toListOf(elem.querySelectorAll("li"))
