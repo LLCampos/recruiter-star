@@ -4,7 +4,7 @@ import com.lcampos.util.StorageSyncUtil
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object StorageKeys {
+object UserConfigKeys {
   val isExtensionActive = "recruiter-star-is-active"
   val selectedTechnologies = "recruiter-star-selected-technologies"
 }
@@ -17,11 +17,11 @@ case class UserConfig(
 object UserConfig {
 
   def load(implicit ec: ExecutionContext): Future[UserConfig] = for {
-    isExtensionActive <- StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).map {
+    isExtensionActive <- StorageSyncUtil.get[Boolean](UserConfigKeys.isExtensionActive).map {
       case Some(v) => v
       case None => true
     }
-    selectedTechnologies <- StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).map {
+    selectedTechnologies <- StorageSyncUtil.get[scalajs.js.Array[String]](UserConfigKeys.selectedTechnologies).map {
       case Some(v) => v.toList
       case None => List.empty
     }

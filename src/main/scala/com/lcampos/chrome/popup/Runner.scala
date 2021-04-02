@@ -3,7 +3,7 @@ package com.lcampos.chrome.popup
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
-import com.lcampos.model.StorageKeys
+import com.lcampos.model.{UserConfigKeys, UserConfig}
 import com.lcampos.util.{ElementUtil, StorageSyncUtil}
 import org.scalajs.dom._
 import org.scalajs.dom.raw.{HTMLInputElement, HTMLSelectElement}
@@ -17,42 +17,31 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
   def run(): Unit = {
     document.onreadystatechange = _ => {
       if (document.readyState == "complete") {
-        extensionActiveHandling()
-        whichTechnologiesToSeeHandling()
+        UserConfig.load.onComplete {
+          case Success(userConfig: UserConfig) =>
+            extensionActiveHandling(userConfig.isExtensionActive)
+            whichTechnologiesToSeeHandling(userConfig.selectedTechnologies)
+          case Failure(exception) => println(exception)
+        }
       }
     }
 //    backgroundAPI.sendBrowserNotification(messages.appName, "I'm on the Pop-up")
   }
 
-  private def extensionActiveHandling(): Unit = {
+  private def extensionActiveHandling(isExtensionActive: Boolean): Unit = {
     val isActiveCheckbox = document
       .getElementById("isExtensionActiveCheckbox")
       .asInstanceOf[HTMLInputElement]
-
-    StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).onComplete {
-      case Success(isActiveOpt) => isActiveOpt match {
-        case Some(isActive) => isActiveCheckbox.checked = isActive
-        case None => isActiveCheckbox.checked = true
-      }
-      case Failure(exception) => println(s"failure when getting '${StorageKeys.isExtensionActive}' from storage! $exception")
-    }
-
-    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(StorageKeys.isExtensionActive, isActiveCheckbox.checked)
+    isActiveCheckbox.checked = isExtensionActive
+    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(UserConfigKeys.isExtensionActive, isActiveCheckbox.checked)
   }
 
-  private def whichTechnologiesToSeeHandling(): Unit =
+  private def whichTechnologiesToSeeHandling(selectedTechnologies: List[String]): Unit =
     ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
       case Right(selectElem) =>
-        StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).onComplete {
-          case Success(technologiesOpt) => technologiesOpt match {
-            case Some(technologies) => ElementUtil.addOptions(selectElem, Tech.all.map(_.name), technologies.toList)
-            case None => ElementUtil.addOptions(selectElem, Tech.all.map(_.name))
-          }
-          case Failure(exception) => println(s"failure when getting '${StorageKeys.selectedTechnologies}' from storage! $exception")
-        }
-
+        ElementUtil.addOptions(selectElem, Tech.all.map(_.name), selectedTechnologies)
         selectElem.onchange = (_: Event) => StorageSyncUtil.set(
-          StorageKeys.selectedTechnologies,
+          UserConfigKeys.selectedTechnologies,
           ElementUtil.getAllSelected(selectElem).toJSArray
         )
       case Left(err) => println(err)
