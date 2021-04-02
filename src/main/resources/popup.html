@@ -19,19 +19,30 @@
     <img id="logo" src="icons/app.png" alt="recruiter start logo">
     <br>
     <form>
-        <b>Configuration:</b>
+        <div>
+            <div class="sectionTitle">
+                <h4>Configuration</h4>
+            </div>
 
-        <div class="form-check">
-            <input id="isExtensionActiveCheckbox" name="isExtensionActiveCheckbox" type="checkbox" class="form-check-input">
-            <label for="isExtensionActiveCheckbox">Activate extension?</label>
+            <div class="form-check">
+                <input id="isExtensionActiveCheckbox" name="isExtensionActiveCheckbox" type="checkbox" class="form-check-input">
+                <label for="isExtensionActiveCheckbox">Activate extension?</label>
+            </div>
         </div>
 
-        <div class="form-group" id="whichTechnologiesToSeeForm">
-            <label for="whichTechnologiesToSee">Select technologies:</label>
-            <select name="whichTechnologiesToSee" id="whichTechnologiesToSee" multiple class="form-control"
-                    data-placeholder="Pick which technologies you want to see...">
-            </select>
-            <button type=button class="btn btn-primary btn-sm" id="selectedTechnologiesClean">Clean</button>
+        <hr>
+
+        <div>
+            <div class="sectionTitle">
+                <h4>Select technologies</h4>
+            </div>
+
+            <div class="form-group" id="whichTechnologiesToSeeForm">
+                <select name="whichTechnologiesToSee" id="whichTechnologiesToSee" multiple class="form-control"
+                        data-placeholder="Pick which technologies you want to see...">
+                </select>
+                <button type=button class="btn btn-primary btn-sm" id="selectedTechnologiesClean">Clean</button>
+            </div>
         </div>
     </form>
 </body>

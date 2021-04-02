@@ -11,14 +11,15 @@ body {
     max-width: 100px;
 }
 
-.select2-container .select2-results .select2-results__options {
-    max-height: 100px;
-}
-
 .select2-container {
     font-size: 0.8em;
 }
 
 #selectedTechnologiesClean {
     margin-top: 1em;
+}
+
+.sectionTitle {
+    text-align: center;
+    margin-bottom: 1em;
 }
