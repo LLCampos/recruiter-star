@@ -96,5 +96,10 @@ object ElementUtil {
       .map(_._2)
       .collect { case a: A => a }
       .toList
-    
+
+  def getChildren[A](elem: Element): List[A] =
+    toListOf[A](elem.children)
+
+  def getElementsByClassName[A](elem: Element, className: String): List[A] =
+    entries(elem.getElementsByClassName(className)).map(_._2.asInstanceOf[A]).toList
 }
