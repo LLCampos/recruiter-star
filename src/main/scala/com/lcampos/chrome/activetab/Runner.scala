@@ -21,7 +21,12 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         case Some(v: String) if v.contains("page was reloaded") =>
           StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).flatMap {
             case Some(isActive) if !isActive => Future.unit
-            case _ => addTechExperienceSummaryBoxWithRetries(v, TechList.all)
+            case _ => StorageSyncUtil.get[scalajs.js.Array[String]](StorageKeys.selectedTechnologies).flatMap {
+              case Some(selectedTechnologies) =>
+                val techList = if (selectedTechnologies.isEmpty) TechList.all else selectedTechnologies.toList.flatMap(TechList.fromName)
+                addTechExperienceSummaryBoxWithRetries(v, techList)
+              case _ => Future.unit
+            }
           }
         case _ => ()
       }

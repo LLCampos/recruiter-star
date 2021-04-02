@@ -905,5 +905,8 @@ object TechList {
     Tech("Grafana", Set("Grafana"), Tool),
   )
 
+  def fromName(name: String): Option[Tech] =
+    all.find(_.name == name)
+
   //println(s"Duplicated tech: ${all.groupBy(_.name).values.filter(_.size > 1)}")
 }
