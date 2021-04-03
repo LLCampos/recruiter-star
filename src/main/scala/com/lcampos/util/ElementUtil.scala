@@ -60,9 +60,6 @@ object ElementUtil {
       case elem => Right(elem)
     }
 
-  def getAllLiElements(elem: Element): List[HTMLLIElement] =
-    toListOf(elem.querySelectorAll("li"))
-
   def appendNewLine(elem: Element): Unit =
     elem.innerHTML = elem.innerHTML + "</br>"
 
@@ -102,4 +99,10 @@ object ElementUtil {
 
   def getElementsByClassName[A](elem: Element, className: String): List[A] =
     entries(elem.getElementsByClassName(className)).map(_._2.asInstanceOf[A]).toList
+
+  def getAllLiElements(elem: Element): List[HTMLLIElement] =
+    toListOf(elem.querySelectorAll("li"))
+
+  def querySelectorAll(elem: Element, selectors: String): List[Node] =
+    toListOf(elem.querySelectorAll(selectors))
 }

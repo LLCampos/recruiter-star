@@ -4,6 +4,7 @@ import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
+import com.lcampos.linkedin.LinkedinProfileHighlighter
 import com.lcampos.model.{LinkedinProfileManipulator, UserConfig}
 import odelay.Timer
 import org.scalajs.dom
@@ -32,7 +33,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def onExtensionActive(userConfig: UserConfig, msgValue: String) = {
     val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
-    addTechExperienceSummaryBoxWithRetries(msgValue, techList)
+    for {
+      _ <- addTechExperienceSummaryBoxWithRetries(msgValue, techList)
+      _ <- Future(LinkedinProfileHighlighter.highlight(dom.document))
+    } yield ()
   }
 
   private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
@@ -51,8 +55,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         manipulator.addDurationPerTech(dom.document, baseTechs)
       case None => Right(())
     }
-
-  private def highlightSelectedTechnologies(tech: List[String]): Unit = ???
 }
 
 object Runner {

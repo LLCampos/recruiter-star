@@ -55,7 +55,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
           <section class="pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view"><header class="pv-profile-section__card-header">
               <h2 class="pv-profile-section__card-heading">Tech Experience Summary</h2>
               <!----></header>
-              <p class="pv-about__summary-text mt4 t-14 ember-view">
+              <p class="pv-about__summary-text mt4 t-14 ember-view" id="tech-experience-summary-content">
               </p>
           </section>
       </div>
