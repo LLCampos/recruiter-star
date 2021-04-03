@@ -33,14 +33,14 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
       .getElementById("isExtensionActiveCheckbox")
       .asInstanceOf[HTMLInputElement]
     isActiveCheckbox.checked = isExtensionActive
-    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.set(UserConfigKeys.isExtensionActive, isActiveCheckbox.checked)
+    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.add(UserConfigKeys.isExtensionActive, isActiveCheckbox.checked)
   }
 
   private def whichTechnologiesToSeeHandling(selectedTechnologies: List[String]): Unit =
     ElementUtil.getElementByIdSafeAs[HTMLSelectElement](document, "whichTechnologiesToSee") match {
       case Right(selectElem) =>
         ElementUtil.addOptions(selectElem, Tech.all.map(_.name), selectedTechnologies)
-        selectElem.onchange = (_: Event) => StorageSyncUtil.set(
+        selectElem.onchange = (_: Event) => StorageSyncUtil.add(
           UserConfigKeys.selectedTechnologies,
           ElementUtil.getAllSelected(selectElem).toJSArray
         )
