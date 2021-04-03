@@ -3,8 +3,8 @@ package com.lcampos.chrome.activetab
 import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
-import com.lcampos.model.{LinkedinProfileManipulator, StorageKeys}
-import com.lcampos.util.StorageSyncUtil
+import com.lcampos.duration_per_tech.Tech
+import com.lcampos.model.{LinkedinProfileManipulator, UserConfig}
 import odelay.Timer
 import org.scalajs.dom
 
@@ -18,35 +18,35 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
-          StorageSyncUtil.get[Boolean](StorageKeys.isExtensionActive).flatMap {
-            case Some(isActive) => if (isActive) addTechExperienceSummaryBoxWithRetries(v) else Future.unit
-            case None => addTechExperienceSummaryBoxWithRetries(v)
+          UserConfig.load.flatMap { userConf =>
+            if (!userConf.isExtensionActive) {
+              Future.unit
+            } else {
+              val techList = if (userConf.selectedTechnologies.isEmpty) Tech.all else userConf.selectedTechnologies.flatMap(Tech.fromName)
+              addTechExperienceSummaryBoxWithRetries(v, techList)
+            }
           }
         case _ => ()
       }
     }
   }
 
-  private def addTechExperienceSummaryBoxWithRetries(msg: String) =
+  private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
     retry.Pause(50, 100.milli)(timer) { () =>
       Future {
-        addTechExperienceSummaryBox(msg)
+        addTechExperienceSummaryBox(msg, baseTechs)
       }
     }.map {
       case Right(_) => ()
       case Left(err) => println(err)
     }
 
-  private def addTechExperienceSummaryBox(msg: String) =
-      LinkedinProfileManipulator.fromUrl(msg) match {
-        case Some(manipulator) =>
-          manipulator.addDurationPerTech(dom.document)
-        case None => Right(())
-      }
-
-  private def log(msg: String): Unit = {
-    println(s"activeTab: $msg")
-  }
+  private def addTechExperienceSummaryBox(msg: String, baseTechs: List[Tech]) =
+    LinkedinProfileManipulator.fromUrl(msg) match {
+      case Some(manipulator) =>
+        manipulator.addDurationPerTech(dom.document, baseTechs)
+      case None => Right(())
+    }
 }
 
 object Runner {

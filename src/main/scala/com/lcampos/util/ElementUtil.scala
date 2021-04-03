@@ -1,13 +1,13 @@
 package com.lcampos.util
 
-import org.scalajs.dom.raw.HTMLLIElement
-import org.scalajs.dom.{DOMParser, Document, Element, document}
+import org.scalajs.dom._
+import org.scalajs.dom.raw.{HTMLLIElement, HTMLOptionElement, HTMLSelectElement}
 
 import scala.scalajs.js.Object.entries
 
 object ElementUtil {
 
-  val domParser = new DOMParser()
+  private val domParser = new DOMParser()
 
   def documentFromString(s: String): Document =
     domParser.parseFromString(s, "text/html")
@@ -24,42 +24,44 @@ object ElementUtil {
       case elem => Right(elem)
     }
 
+  def getElementByIdSafeAs[A](doc: Document, id: String): Either[String, A] =
+    getElementByIdSafe(doc, id).flatMap { elem =>
+      try {
+        Right(elem.asInstanceOf[A])
+      } catch {
+        case err: Throwable => Left(err.toString)
+      }
+    }
+
   def getElementByIdSafeCloned(doc: Document, id: String): Either[String, Element] =
     getElementByIdSafe(doc, id).map(_.cloneNode(true).asInstanceOf[Element])
 
-  def getFirstElementByClassNameSafe(elem: Element, className: String): Either[String, Element] = {
+  def getFirstElementByClassNameSafe(elem: Element, className: String): Either[String, Element] =
     elem.getElementsByClassName(className).item(0) match {
       case null => Left(s"Element with class '$className' not found")
       case elem => Right(elem)
     }
-  }
 
-  def getFirstElementByTagNameSafe(elem: Element, tagName: String): Either[String, Element] = {
+  def getFirstElementByTagNameSafe(elem: Element, tagName: String): Either[String, Element] =
     elem.getElementsByTagName(tagName).item(0) match {
       case null => Left(s"Element with tag '$tagName' not found")
       case elem => Right(elem)
     }
-  }
 
-  def querySelectorSafe(elem: Element, selectors: String): Either[String, Element] = {
+  def querySelectorSafe(elem: Element, selectors: String): Either[String, Element] =
     elem.querySelector(selectors) match {
       case null => Left(s"Element for selector '$selectors' not found")
       case elem => Right(elem)
     }
-  }
 
-  def getNthChildSafe(elem: Element, index: Int): Either[String, Element] = {
+  def getNthChildSafe(elem: Element, index: Int): Either[String, Element] =
     elem.children.item(index) match {
       case null => Left(s"Element $elem doesn't have a child in position $index")
       case elem => Right(elem)
     }
-  }
 
   def getAllLiElements(elem: Element): List[HTMLLIElement] =
-    entries(elem.querySelectorAll("li"))
-      .map(_._2)
-      .collect { case li: HTMLLIElement => li }
-      .toList
+    toListOf(elem.querySelectorAll("li"))
 
   def appendNewLine(elem: Element): Unit =
     elem.innerHTML = elem.innerHTML + "</br>"
@@ -69,4 +71,35 @@ object ElementUtil {
     elemCopy.innerHTML = elemCopy.innerHTML.replace("<br>", " ").replace("</br>", " ")
     elemCopy
   }
+
+  def addOption(selectElem: HTMLSelectElement, optionValue: String, selected: Boolean = false): Unit = {
+    val option = document.createElement("option").asInstanceOf[HTMLOptionElement]
+    option.value = optionValue
+    option.text = optionValue
+    option.selected = selected
+    selectElem.add(option)
+  }
+
+  def addOptions(selectElem: HTMLSelectElement, optionsValues: List[String], selectedOptions: List[String] = List.empty): Unit =
+    optionsValues.foreach { optionValue =>
+      val selected = if (selectedOptions.contains(optionValue)) true else false
+      ElementUtil.addOption(selectElem, optionValue, selected)
+    }
+
+  def getAllSelected(selectElem: HTMLSelectElement): List[String] =
+    toListOf[HTMLOptionElement](selectElem.children)
+      .filter(_.selected)
+      .map(_.value)
+
+  private def toListOf[A](domList: DOMList[_]): List[A] =
+    entries(domList)
+      .map(_._2)
+      .collect { case a: A => a }
+      .toList
+
+  def getChildren[A](elem: Element): List[A] =
+    toListOf[A](elem.children)
+
+  def getElementsByClassName[A](elem: Element, className: String): List[A] =
+    entries(elem.getElementsByClassName(className)).map(_._2.asInstanceOf[A]).toList
 }

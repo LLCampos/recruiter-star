@@ -2,11 +2,6 @@ package com.lcampos.duration_per_tech
 
 import com.lcampos.duration_per_tech.TechCategory._
 
-case class Tech(name: String, aliases: Set[String], category: TechCategory) {
-  lazy val aliasesWithDot: Set[String] = aliases.filter(_.contains("."))
-  lazy val multiWordAliases: Set[String] = aliases.filter(_.split(" ").length > 1)
-}
-
 sealed trait TechCategory {
   val uiRepresentation: String
   val priorityInOrdering: Int // Lower is means first in order
@@ -87,8 +82,12 @@ object TechCategory {
     x.priorityInOrdering compare y.priorityInOrdering
 }
 
+case class Tech(name: String, aliases: Set[String], category: TechCategory) {
+  lazy val aliasesWithDot: Set[String] = aliases.filter(_.contains("."))
+  lazy val multiWordAliases: Set[String] = aliases.filter(_.split(" ").length > 1)
+}
 
-object TechList {
+object Tech {
 
   /**
    * Sources:
@@ -101,11 +100,9 @@ object TechList {
     Tech("A+", Set("A+"), ProgrammingLanguage),
     Tech("A++", Set("A++"), ProgrammingLanguage),
     Tech("ABAP", Set("ABAP"), ProgrammingLanguage),
-    Tech("ABC", Set("ABC"), ProgrammingLanguage),
     Tech("ABC ALGOL", Set("ABC ALGOL"), ProgrammingLanguage),
     Tech("ABSET", Set("ABSET"), ProgrammingLanguage),
     Tech("ABSYS", Set("ABSYS"), ProgrammingLanguage),
-    Tech("ACC", Set("ACC"), ProgrammingLanguage),
     Tech("Accent", Set("Accent"), ProgrammingLanguage),
     Tech("ACL2", Set("ACL2"), ProgrammingLanguage),
     Tech("Action!", Set("Action!"), ProgrammingLanguage),
@@ -116,22 +113,16 @@ object TechList {
     Tech("Agilent VEE", Set("Agilent VEE"), ProgrammingLanguage),
     Tech("AIMMS", Set("AIMMS"), ProgrammingLanguage),
     Tech("Alef", Set("Alef"), ProgrammingLanguage),
-    Tech("ALF", Set("ALF"), ProgrammingLanguage),
     Tech("ALGOL 58", Set("ALGOL 58"), ProgrammingLanguage),
     Tech("ALGOL 60", Set("ALGOL 60"), ProgrammingLanguage),
     Tech("ALGOL 68", Set("ALGOL 68"), ProgrammingLanguage),
-    Tech("Alice", Set("Alice"), ProgrammingLanguage),
     Tech("AmbientTalk", Set("AmbientTalk"), ProgrammingLanguage),
-    Tech("AMOS", Set("AMOS"), ProgrammingLanguage),
-    Tech("AMPL", Set("AMPL"), ProgrammingLanguage),
-    Tech("APL", Set("APL"), ProgrammingLanguage),
     Tech("AppleScript", Set("AppleScript"), ProgrammingLanguage),
     Tech("Arc", Set("Arc"), ProgrammingLanguage),
     Tech("ARexx", Set("ARexx"), ProgrammingLanguage),
     Tech("Argus", Set("Argus"), ProgrammingLanguage),
     Tech("AspectJ", Set("AspectJ"), ProgrammingLanguage),
     Tech("Assembly language", Set("Assembly Language"), ProgrammingLanguage),
-    Tech("ATS", Set("ATS"), ProgrammingLanguage),
     Tech("Ateji PX", Set("Ateji PX"), ProgrammingLanguage),
     Tech("AutoHotkey", Set("AutoHotkey"), ProgrammingLanguage),
     Tech("Autocoder", Set("Autocoder"), ProgrammingLanguage),
@@ -142,36 +133,23 @@ object TechList {
     Tech("Babbage", Set("Babbage"), ProgrammingLanguage),
     Tech("Bash", Set("Bash"), ProgrammingLanguage),
     Tech("BASIC", Set("BASIC"), ProgrammingLanguage),
-    Tech("bc", Set("bc"), ProgrammingLanguage),
-    Tech("BCPL", Set("BCPL"), ProgrammingLanguage),
     Tech("BeanShell", Set("BeanShell"), ProgrammingLanguage),
     Tech("Bertrand", Set("Bertrand"), ProgrammingLanguage),
-    Tech("BETA", Set("BETA"), ProgrammingLanguage),
     Tech("Bigwig", Set("Bigwig"), ProgrammingLanguage),
-    Tech("Bistro", Set("Bistro"), ProgrammingLanguage),
-    Tech("BitC", Set("BitC"), ProgrammingLanguage),
     Tech("BLISS", Set("BLISS"), ProgrammingLanguage),
-    Tech("Blue", Set("Blue"), ProgrammingLanguage),
-    Tech("Bon", Set("Bon"), ProgrammingLanguage),
-    Tech("Boo", Set("Boo"), ProgrammingLanguage),
-    Tech("Boomerang", Set("Boomerang"), ProgrammingLanguage),
     Tech("Bourne shell", Set("Bourne shell"), ProgrammingLanguage),
-    Tech("bash", Set("bash"), ProgrammingLanguage),
     Tech("BREW", Set("BREW"), ProgrammingLanguage),
     Tech("BPEL", Set("BPEL"), ProgrammingLanguage),
     Tech("C", Set("C"), ProgrammingLanguage),
     Tech("C--", Set("C--"), ProgrammingLanguage),
     Tech("C++", Set("C++"), ProgrammingLanguage),
     Tech("C#", Set("C#"), ProgrammingLanguage),
-    Tech("C/AL", Set("C/AL"), ProgrammingLanguage),
     Tech("Caché ObjectScript", Set("Caché ObjectScript"), ProgrammingLanguage),
     Tech("C Shell", Set("C Shell"), ProgrammingLanguage),
     Tech("Caml", Set("Caml"), ProgrammingLanguage),
-    Tech("Candle", Set("Candle"), ProgrammingLanguage),
     Tech("Cayenne", Set("Cayenne"), ProgrammingLanguage),
     Tech("CDuce", Set("CDuce"), ProgrammingLanguage),
     Tech("Cecil", Set("Cecil"), ProgrammingLanguage),
-    Tech("Cel", Set("Cel"), ProgrammingLanguage),
     Tech("Cesil", Set("Cesil"), ProgrammingLanguage),
     Tech("Ceylon", Set("Ceylon"), ProgrammingLanguage),
     Tech("CFEngine", Set("CFEngine"), ProgrammingLanguage),
@@ -179,17 +157,11 @@ object TechList {
     Tech("Chapel", Set("Chapel"), ProgrammingLanguage),
     Tech("CHIP-8", Set("CHIP-8"), ProgrammingLanguage),
     Tech("chomski", Set("chomski"), ProgrammingLanguage),
-    Tech("ChucK", Set("ChucK"), ProgrammingLanguage),
-    Tech("CICS", Set("CICS"), ProgrammingLanguage),
-    Tech("Cilk", Set("Cilk"), ProgrammingLanguage),
-    Tech("CL", Set("CL"), ProgrammingLanguage),
-    Tech("Claire", Set("Claire"), ProgrammingLanguage),
     Tech("Clarion", Set("Clarion"), ProgrammingLanguage),
     Tech("Clipper", Set("Clipper"), ProgrammingLanguage),
     Tech("CLIST", Set("CLIST"), ProgrammingLanguage),
     Tech("Clojure", Set("Clojure"), ProgrammingLanguage),
     Tech("COBOL", Set("COBOL"), ProgrammingLanguage),
-    Tech("Cobra", Set("Cobra"), ProgrammingLanguage),
     Tech("CoffeeScript", Set("CoffeeScript"), ProgrammingLanguage),
     Tech("ColdC", Set("ColdC"), ProgrammingLanguage),
     Tech("ColdFusion", Set("ColdFusion"), ProgrammingLanguage),
@@ -201,12 +173,8 @@ object TechList {
     Tech("Converge", Set("Converge"), ProgrammingLanguage),
     Tech("Coq", Set("Coq"), ProgrammingLanguage),
     Tech("Coral 66", Set("Coral 66"), ProgrammingLanguage),
-    Tech("Corn", Set("Corn"), ProgrammingLanguage),
     Tech("CorVision", Set("CorVision"), ProgrammingLanguage),
     Tech("COWSEL", Set("COWSEL"), ProgrammingLanguage),
-    Tech("CPL", Set("CPL"), ProgrammingLanguage),
-    Tech("csh", Set("csh"), ProgrammingLanguage),
-    Tech("CSP", Set("CSP"), ProgrammingLanguage),
     Tech("Csound", Set("Csound"), ProgrammingLanguage),
     Tech("CUDA", Set("CUDA"), ProgrammingLanguage),
     Tech("Curl", Set("Curl"), ProgrammingLanguage),
@@ -219,19 +187,15 @@ object TechList {
     Tech("Datalog", Set("Datalog"), ProgrammingLanguage),
     Tech("DATATRIEVE", Set("DATATRIEVE"), ProgrammingLanguage),
     Tech("dBase", Set("dBase"), ProgrammingLanguage),
-    Tech("dc", Set("dc"), ProgrammingLanguage),
-    Tech("DCL", Set("DCL"), ProgrammingLanguage),
     Tech("Deesel", Set("Deesel"), ProgrammingLanguage),
     Tech("Delphi", Set("Delphi"), ProgrammingLanguage),
     Tech("DinkC", Set("DinkC"), ProgrammingLanguage),
     Tech("DIBOL", Set("DIBOL"), ProgrammingLanguage),
-    Tech("Dog", Set("Dog"), ProgrammingLanguage),
     Tech("Draco", Set("Draco"), ProgrammingLanguage),
     Tech("DRAKON", Set("DRAKON"), ProgrammingLanguage),
     Tech("Dylan", Set("Dylan"), ProgrammingLanguage),
     Tech("DYNAMO", Set("DYNAMO"), ProgrammingLanguage),
     Tech("E#", Set("E#"), ProgrammingLanguage),
-    Tech("Ease", Set("Ease"), ProgrammingLanguage),
     Tech("ECMAScript", Set("ECMAScript"), ProgrammingLanguage),
     Tech("EGL", Set("EGL"), ProgrammingLanguage),
     Tech("Eiffel", Set("Eiffel"), ProgrammingLanguage),
@@ -241,7 +205,6 @@ object TechList {
     Tech("Emacs Lisp", Set("Emacs Lisp"), ProgrammingLanguage),
     Tech("Emerald", Set("Emerald"), ProgrammingLanguage),
     Tech("Epigram", Set("Epigram"), ProgrammingLanguage),
-    Tech("EPL", Set("EPL"), ProgrammingLanguage),
     Tech("Erlang", Set("Erlang"), ProgrammingLanguage),
     Tech("Escapade", Set("Escapade"), ProgrammingLanguage),
     Tech("Escher", Set("Escher"), ProgrammingLanguage),
@@ -258,9 +221,7 @@ object TechList {
     Tech("F#", Set("F#"), ProgrammingLanguage),
     Tech("Fantom", Set("Fantom"), ProgrammingLanguage),
     Tech("FAUST", Set("FAUST"), ProgrammingLanguage),
-    Tech("Felix", Set("Felix"), ProgrammingLanguage),
     Tech("Ferite", Set("Ferite"), ProgrammingLanguage),
-    Tech("FFP", Set("FFP"), ProgrammingLanguage),
     Tech("Fjölnir", Set("Fjölnir"), ProgrammingLanguage),
     Tech("Flavors", Set("Flavors"), ProgrammingLanguage),
     Tech("Flex", Set("Flex"), ProgrammingLanguage),
@@ -284,11 +245,9 @@ object TechList {
     Tech("Genie", Set("Genie"), ProgrammingLanguage),
     Tech("GDL", Set("GDL"), ProgrammingLanguage),
     Tech("Gibiane", Set("Gibiane"), ProgrammingLanguage),
-    Tech("GJ", Set("GJ"), ProgrammingLanguage),
     Tech("GEORGE", Set("GEORGE"), ProgrammingLanguage),
     Tech("GLSL", Set("GLSL"), ProgrammingLanguage),
     Tech("GNU E", Set("GNU E"), ProgrammingLanguage),
-    Tech("GM", Set("GM"), ProgrammingLanguage),
     Tech("Golang", Set("Golang", "golang", "Go"), ProgrammingLanguage),
     Tech("Gödel", Set("Gödel"), ProgrammingLanguage),
     Tech("Godiva", Set("Godiva"), ProgrammingLanguage),
@@ -306,7 +265,6 @@ object TechList {
     Tech("Haxe", Set("Haxe"), ProgrammingLanguage),
     Tech("High Level Assembly", Set("High Level Assembly"), ProgrammingLanguage),
     Tech("HLSL", Set("HLSL"), ProgrammingLanguage),
-    Tech("Hop", Set("Hop"), ProgrammingLanguage),
     Tech("Hope", Set("Hope"), ProgrammingLanguage),
     Tech("Hugo", Set("Hugo"), ProgrammingLanguage),
     Tech("Hume", Set("Hume"), ProgrammingLanguage),
@@ -317,7 +275,6 @@ object TechList {
     Tech("Idris", Set("Idris"), ProgrammingLanguage),
     Tech("IMP", Set("IMP"), ProgrammingLanguage),
     Tech("Inform", Set("Inform"), ProgrammingLanguage),
-    Tech("Io", Set("Io"), ProgrammingLanguage),
     Tech("Ioke", Set("Ioke"), ProgrammingLanguage),
     Tech("IPL", Set("IPL"), ProgrammingLanguage),
     Tech("IPTSCRAE", Set("IPTSCRAE"), ProgrammingLanguage),
@@ -334,12 +291,10 @@ object TechList {
     Tech("Java", Set("JAVA", "Java", "Java8", "Java11", "JavaEE"), ProgrammingLanguage),
     Tech("JavaScript", Set("JavaScript", "Javascript"), ProgrammingLanguage),
     Tech("JCL", Set("JCL"), ProgrammingLanguage),
-    Tech("JEAN", Set("JEAN"), ProgrammingLanguage),
     Tech("Join Java", Set("Join Java"), ProgrammingLanguage),
     Tech("JOSS", Set("JOSS"), ProgrammingLanguage),
     Tech("Joule", Set("Joule"), ProgrammingLanguage),
     Tech("JOVIAL", Set("JOVIAL"), ProgrammingLanguage),
-    Tech("Joy", Set("Joy"), ProgrammingLanguage),
     Tech("JScript", Set("JScript"), ProgrammingLanguage),
     Tech("JavaFX Script", Set("JavaFX Script"), ProgrammingLanguage),
     Tech("Julia", Set("Julia"), ProgrammingLanguage),
@@ -948,6 +903,9 @@ object TechList {
     Tech("TIBCO StreamBase", Set("StreamBase", "Streambase", "TIBCO StreamBase"), Tool),
     Tech("Grafana", Set("Grafana"), Tool),
   )
+
+  def fromName(name: String): Option[Tech] =
+    all.find(_.name == name)
 
   //println(s"Duplicated tech: ${all.groupBy(_.name).values.filter(_.size > 1)}")
 }

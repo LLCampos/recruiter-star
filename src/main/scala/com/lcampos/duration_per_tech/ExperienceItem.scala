@@ -7,24 +7,23 @@ case class ExperienceItem(
   description: String,
   instantRange: InstantRange
 ) {
-  def technologies: Set[Tech] =
-    getOneWordTechnologies ++ getMultiWordTechnologies ++ getTechnologiesWithDot
+  def technologies(baseTechs: List[Tech]): Set[Tech] =
+    getOneWordTechnologies(baseTechs) ++ getMultiWordTechnologies(baseTechs) ++ getTechnologiesWithDot(baseTechs)
 
-  private def getMultiWordTechnologies: Set[Tech] = {
-    TechList.all
+  private def getMultiWordTechnologies(baseTechs: List[Tech]): Set[Tech] =
+    baseTechs
       .filter(tech => tech.multiWordAliases.exists(allText.contains))
       .toSet
-  }
 
-  private def getOneWordTechnologies: Set[Tech] = {
+  private def getOneWordTechnologies(baseTechs: List[Tech]): Set[Tech] = {
     val tokens = allText.split("(\\s|,|\\.|!|:|/|;|\\(|\\)|\\[|])+")
-    TechList.all
+    baseTechs
       .filter(tech => tech.aliases.exists(tokens.contains))
       .toSet
   }
 
-  private def getTechnologiesWithDot: Set[Tech] =
-    TechList.all
+  private def getTechnologiesWithDot(baseTechs: List[Tech]): Set[Tech] =
+    baseTechs
       .filter(tech => tech.aliasesWithDot.exists(allText.contains))
       .toSet
 

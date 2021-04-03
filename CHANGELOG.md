@@ -4,6 +4,7 @@
 
 ### Added
 * Possible to activate and deactivate extension
+* Possible to select which technologies to see
 
 ### Removed
 * Remove minor technologies

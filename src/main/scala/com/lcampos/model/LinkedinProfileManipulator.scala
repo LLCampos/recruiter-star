@@ -1,20 +1,20 @@
 package com.lcampos.model
 
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
-import com.lcampos.duration_per_tech.{DurationPerTechGenerator, ExperienceItem}
+import com.lcampos.duration_per_tech.{DurationPerTechGenerator, ExperienceItem, Tech}
 import org.scalajs.dom.{Document, Element}
 
 trait LinkedinProfileManipulator {
   val urlSignature: String
   val TechExperienceSummaryId = "tech-experience-summary"
 
-  def addDurationPerTech(document: Document): Either[String, Unit] = {
+  def addDurationPerTech(document: Document, baseTechs: List[Tech] = Tech.all): Either[String, Unit] = {
     removeTechExperienceSummaryElem(document)
     showAllExperiences(document)
     for {
       experienceSectionElem <- getExperienceSection(document)
       experienceItems <- getExperienceItems(experienceSectionElem)
-      durationPerTechPerCat = DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems)
+      durationPerTechPerCat = DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems, baseTechs)
       _ <- if (durationPerTechPerCat.nonEmpty) addYearsPerTechElem(durationPerTechPerCat, document) else Right(())
     } yield ()
   }
