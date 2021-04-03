@@ -1,6 +1,6 @@
 package com.lcampos.util
 
-import org.scalajs.dom.{Element, document}
+import org.scalajs.dom.Element
 
 object SearchAndReplace {
 
