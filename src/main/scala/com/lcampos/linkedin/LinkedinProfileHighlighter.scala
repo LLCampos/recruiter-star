@@ -5,11 +5,16 @@ import org.scalajs.dom.{Document, Element}
 
 object LinkedinProfileHighlighter {
 
-  def highlight(doc: Document): Unit =
+  def highlight(doc: Document, techNamesToHighlight: List[String]): Unit = {
+    val elementsToHighlight = getElementsToHighlight(doc)
+    techNamesToHighlight.foreach(t => highlight(t, elementsToHighlight))
+  }
+
+  private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element]): Unit =
     SearchAndReplace.replace(
-      "Java",
-      "<mark>Java</mark>",
-      getElementsToHighlight(doc)
+      techNameToHighlight,
+      s"<mark>$techNameToHighlight</mark>",
+      elementsToHighlight
     )
 
   private def getElementsToHighlight(doc: Document): List[Element] =

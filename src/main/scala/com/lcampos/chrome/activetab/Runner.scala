@@ -35,7 +35,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
     for {
       _ <- addTechExperienceSummaryBoxWithRetries(msgValue, techList)
-      _ <- Future(LinkedinProfileHighlighter.highlight(dom.document))
+      _ <- Future(LinkedinProfileHighlighter.highlight(dom.document, userConfig.selectedTechnologies))
     } yield ()
   }
 
