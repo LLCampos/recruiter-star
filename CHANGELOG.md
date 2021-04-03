@@ -6,6 +6,9 @@
 * Possible to activate and deactivate extension
 * Possible to select which technologies to see
 
+### Changed
+* Increase times it tries to create the tech box
+
 ### Removed
 * Remove minor technologies
 

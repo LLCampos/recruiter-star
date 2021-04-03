@@ -32,7 +32,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   }
 
   private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
-    retry.Pause(50, 100.milli)(timer) { () =>
+    retry.Pause(100, 100.milli)(timer) { () =>
       Future {
         addTechExperienceSummaryBox(msg, baseTechs)
       }
