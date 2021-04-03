@@ -5,15 +5,29 @@ import org.scalajs.dom.{Document, Element}
 
 object LinkedinProfileHighlighter {
 
+  private val HighlightingColors = Set(
+    "#FFF380", // Corn Yellow
+    "#E77471", // Light Coral (Red)
+    "#7FFFD4", // Aquamarine (Blue)
+    "#FF8040", // Mango Orange
+    "#F778A1", // Carnation Pink
+    "#82CAFA", // Light Sky Blue
+    "#C38EC7", // Purple Dragon
+    "#E3E4FA", // Lavender blue
+    "#89C35C", // Green Peas
+  )
+
   def highlight(doc: Document, techNamesToHighlight: List[String]): Unit = {
     val elementsToHighlight = getElementsToHighlight(doc)
-    techNamesToHighlight.foreach(t => highlight(t, elementsToHighlight))
+    techNamesToHighlight.zip(HighlightingColors).foreach{ case (name, color) =>
+      highlight(name, elementsToHighlight, color)
+    }
   }
 
-  private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element]): Unit =
+  private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit =
     SearchAndReplace.replace(
       techNameToHighlight,
-      s"<mark>$techNameToHighlight</mark>",
+      s"<mark style='background-color: $color'>$techNameToHighlight</mark>",
       elementsToHighlight
     )
 
