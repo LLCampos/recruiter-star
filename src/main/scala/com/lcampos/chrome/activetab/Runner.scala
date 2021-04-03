@@ -19,16 +19,20 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
           UserConfig.load.flatMap { userConf =>
-            if (!userConf.isExtensionActive) {
-              Future.unit
+            if (userConf.isExtensionActive) {
+              onExtensionActive(userConf, v)
             } else {
-              val techList = if (userConf.selectedTechnologies.isEmpty) Tech.all else userConf.selectedTechnologies.flatMap(Tech.fromName)
-              addTechExperienceSummaryBoxWithRetries(v, techList)
+              Future.unit
             }
           }
         case _ => ()
       }
     }
+  }
+
+  private def onExtensionActive(userConfig: UserConfig, msgValue: String) = {
+    val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
+    addTechExperienceSummaryBoxWithRetries(msgValue, techList)
   }
 
   private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
@@ -47,6 +51,8 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         manipulator.addDurationPerTech(dom.document, baseTechs)
       case None => Right(())
     }
+
+  private def highlightSelectedTechnologies(tech: List[String]): Unit = ???
 }
 
 object Runner {
