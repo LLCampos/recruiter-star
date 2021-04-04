@@ -1,5 +1,6 @@
 package com.lcampos.linkedin
 
+import com.lcampos.model.LinkedinProfileManipulator
 import com.lcampos.util.{ElementUtil, SearchAndReplace}
 import org.scalajs.dom.{Document, Element}
 
@@ -35,7 +36,7 @@ object LinkedinProfileHighlighter {
     getElementsToHighlightByClass(doc, List(
       "pv-entity__description"
     )) ++ getElementsToHighlightByIds(doc, List(
-      "tech-experience-summary-content"
+      LinkedinProfileManipulator.TechExperienceSummaryContentId
     ))
 
 

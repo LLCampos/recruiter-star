@@ -3,6 +3,7 @@ package com.lcampos.model
 import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
+import com.lcampos.model.LinkedinProfileManipulator.TechExperienceSummaryId
 import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.HTMLElement

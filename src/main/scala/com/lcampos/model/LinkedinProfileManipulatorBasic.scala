@@ -3,6 +3,7 @@ package com.lcampos.model
 import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
+import com.lcampos.model.LinkedinProfileManipulator.{TechExperienceSummaryContentId, TechExperienceSummaryId}
 import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.{HTMLElement, HTMLLIElement}
@@ -55,7 +56,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
           <section class="pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view"><header class="pv-profile-section__card-header">
               <h2 class="pv-profile-section__card-heading">Tech Experience Summary</h2>
               <!----></header>
-              <p class="pv-about__summary-text mt4 t-14 ember-view" id="tech-experience-summary-content">
+              <p class="pv-about__summary-text mt4 t-14 ember-view" id="$TechExperienceSummaryContentId">
               </p>
           </section>
       </div>
