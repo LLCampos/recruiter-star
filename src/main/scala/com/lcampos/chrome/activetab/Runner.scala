@@ -39,10 +39,11 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   }
 
   private def onExtensionActive(userConfig: UserConfig, profileManipulator: LinkedinProfileManipulator): Future[Unit] = {
-    val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
+    val selectedTech = userConfig.selectedTechnologies.flatMap(Tech.fromName)
+    val techToShow = if (userConfig.selectedTechnologies.isEmpty) Tech.all else selectedTech
     for {
-      _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techList)
-      _ <- highlightSelectedTechnologies(profileManipulator, userConfig.selectedTechnologies)
+      _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
+      _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
     } yield ()
   }
 
@@ -56,11 +57,11 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       case Left(err) => println(err)
     }
 
-  private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTechnologies: List[String]) = Future {
-    if (selectedTechnologies.nonEmpty) {
+  private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTech: List[Tech]) = Future {
+    if (selectedTech.nonEmpty) {
       profileManipulator.expandEachExperience(dom.document)
       profileManipulator.removeSeeLessFromEachExperienceSection(dom.document)
-      LinkedinProfileHighlighter.highlight(dom.document, selectedTechnologies)
+      LinkedinProfileHighlighter.highlight(dom.document, selectedTech)
     }
   }
 }

@@ -1,5 +1,6 @@
 package com.lcampos.linkedin
 
+import com.lcampos.duration_per_tech.Tech
 import com.lcampos.model.{LinkedinProfileManipulator, LinkedinProfileManipulatorBasic, LinkedinProfileManipulatorPremium}
 import com.lcampos.util.{ElementUtil, SearchAndReplace}
 import org.scalajs.dom.{Document, Element}
@@ -18,16 +19,16 @@ object LinkedinProfileHighlighter {
     "#89C35C", // Green Peas
   )
 
-  def highlight(doc: Document, techNamesToHighlight: List[String]): Unit = {
+  def highlight(doc: Document, techToHighlight: List[Tech]): Unit = {
     val elementsToHighlight = getElementsToHighlight(doc)
-    techNamesToHighlight.zip(HighlightingColors).foreach { case (name, color) =>
-      highlight(name, elementsToHighlight, color)
+    techToHighlight.zip(HighlightingColors).foreach { case (tech, color) =>
+      tech.aliases.foreach(alias => highlight(alias, elementsToHighlight, color))
     }
   }
 
   private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit =
     SearchAndReplace.replace(
-      techNameToHighlight,
+      s"\\b$techNameToHighlight\\b",
       s"<span class='highlighted' style='background-color: $color'>$techNameToHighlight</span>",
       elementsToHighlight
     )
