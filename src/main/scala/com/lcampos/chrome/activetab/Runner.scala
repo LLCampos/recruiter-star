@@ -32,28 +32,25 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   }
 
   private def onExtensionActive(userConfig: UserConfig, msgValue: String) = {
-    val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
-    for {
-      _ <- addTechExperienceSummaryBoxWithRetries(msgValue, techList)
-      _ <- Future(LinkedinProfileHighlighter.highlight(dom.document, userConfig.selectedTechnologies))
-    } yield ()
+    LinkedinProfileManipulator.fromUrl(msgValue) match {
+      case Some(manipulator) =>
+        val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
+        for {
+          _ <- addTechExperienceSummaryBoxWithRetries(manipulator, techList)
+          _ <- Future(LinkedinProfileHighlighter.highlight(dom.document, userConfig.selectedTechnologies))
+        } yield ()
+      case None => Future.unit
+    }
   }
 
-  private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
+  private def addTechExperienceSummaryBoxWithRetries(linkedinProfileManipulator: LinkedinProfileManipulator, baseTechs: List[Tech]) =
     retry.Pause(100, 100.milli)(timer) { () =>
       Future {
-        addTechExperienceSummaryBox(msg, baseTechs)
+        linkedinProfileManipulator.addDurationPerTech(dom.document, baseTechs)
       }
     }.map {
       case Right(_) => ()
       case Left(err) => println(err)
-    }
-
-  private def addTechExperienceSummaryBox(msg: String, baseTechs: List[Tech]) =
-    LinkedinProfileManipulator.fromUrl(msg) match {
-      case Some(manipulator) =>
-        manipulator.addDurationPerTech(dom.document, baseTechs)
-      case None => Right(())
     }
 }
 
