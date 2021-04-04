@@ -30,7 +30,7 @@ trait LinkedinProfileManipulator {
   // Expand each experience
   def expandEachExperience(doc: Document): Unit
 
-  //protected def removeSeeMoreFromExperienceSection(experienceSection: Element): Unit
+  def removeSeeLessFromEachExperienceSection(doc: Document): Unit
 }
 
 object LinkedinProfileManipulator {

@@ -117,4 +117,11 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
     ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__button").foreach(
       _.click()
     )
+
+  def removeSeeLessFromEachExperienceSection(doc: Document): Unit = {
+    // Note: This remove from whole page. If this is problematic, fix it.
+    ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__link-container-expanded").foreach(elem =>
+      elem.parentElement.removeChild(elem)
+    )
+  }
 }

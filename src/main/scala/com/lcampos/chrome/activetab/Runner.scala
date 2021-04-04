@@ -43,6 +43,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     for {
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techList)
       _ <- Future(profileManipulator.expandEachExperience(dom.document))
+      _ <- Future(profileManipulator.removeSeeLessFromEachExperienceSection(dom.document))
       _ <- Future(LinkedinProfileHighlighter.highlight(dom.document, userConfig.selectedTechnologies))
     } yield ()
   }
