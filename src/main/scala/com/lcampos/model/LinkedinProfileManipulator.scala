@@ -6,7 +6,6 @@ import org.scalajs.dom.{Document, Element}
 
 trait LinkedinProfileManipulator {
   val urlSignature: String
-  val TechExperienceSummaryId = "tech-experience-summary"
 
   def addDurationPerTech(document: Document, baseTechs: List[Tech] = Tech.all): Either[String, Unit] = {
     removeTechExperienceSummaryElem(document)
@@ -23,10 +22,22 @@ trait LinkedinProfileManipulator {
   protected def getExperienceSection(document: Document): Either[String, Element]
   protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit]
   protected def removeTechExperienceSummaryElem(doc: Document): Unit
+
+  // Expand the whole Experience section
   protected def showAllExperiences(doc: Document): Unit
+
+  // Expand each experience
+  def expandEachExperience(doc: Document): Unit
+
+  def removeSeeLessFromEachExperienceSection(doc: Document): Unit
+
+  def getAllExperienceItemsTitlesSections(doc: Document): List[Element]
 }
 
 object LinkedinProfileManipulator {
+  val TechExperienceSummaryId = "tech-experience-summary"
+  val TechExperienceSummaryContentId = "tech-experience-summary-content"
+
   def fromUrl(url: String): Option[LinkedinProfileManipulator] =
     if (url.contains(LinkedinProfileManipulatorBasic.urlSignature))
       Some(LinkedinProfileManipulatorBasic)

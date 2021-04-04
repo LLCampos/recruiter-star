@@ -3,6 +3,7 @@ package com.lcampos.model
 import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
+import com.lcampos.model.LinkedinProfileManipulator.{TechExperienceSummaryContentId, TechExperienceSummaryId}
 import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.{HTMLElement, HTMLLIElement}
@@ -13,6 +14,9 @@ import scala.concurrent.duration.DurationInt
 import scala.scalajs.js.timers.setTimeout
 
 object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
+
+  val ExperienceDescriptionClass = "pv-entity__description"
+  val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
 
   val urlSignature: String = "www.linkedin.com/in/"
 
@@ -55,7 +59,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
           <section class="pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view"><header class="pv-profile-section__card-header">
               <h2 class="pv-profile-section__card-heading">Tech Experience Summary</h2>
               <!----></header>
-              <p class="pv-about__summary-text mt4 t-14 ember-view">
+              <p class="pv-about__summary-text mt4 t-14 ember-view" id="$TechExperienceSummaryContentId">
               </p>
           </section>
       </div>
@@ -109,7 +113,24 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
   private def getDescription(elem: HTMLLIElement): String =
     ElementUtil
-      .getFirstElementByClassNameSafe(elem, "pv-entity__description")
+      .getFirstElementByClassNameSafe(elem, ExperienceDescriptionClass)
       .map(ElementUtil.removeBreakTags)
       .map(_.textContent.trim()).getOrElse("")
+
+  def expandEachExperience(doc: Document): Unit =
+    ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__button").foreach(
+      _.click()
+    )
+
+  def removeSeeLessFromEachExperienceSection(doc: Document): Unit = {
+    // Note: This remove from whole page. If this is problematic, fix it.
+    ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__link-container-expanded").foreach(elem =>
+      elem.parentElement.removeChild(elem)
+    )
+  }
+
+  def getAllExperienceItemsTitlesSections(doc: Document): List[Element] =
+    ElementUtil.getElementsByClassName[Element](doc.documentElement, "pv-entity__summary-info--background-section").flatMap(elem => {
+      ElementUtil.getFirstElementByTagNameSafe(elem, "h3").toOption
+    })
 }

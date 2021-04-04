@@ -3,6 +3,7 @@ package com.lcampos.model
 import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
+import com.lcampos.model.LinkedinProfileManipulator.{TechExperienceSummaryContentId, TechExperienceSummaryId}
 import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.HTMLElement
@@ -12,6 +13,8 @@ import java.time.format.DateTimeFormatter
 import scala.scalajs.js.Object.entries
 
 object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
+
+  val ExperienceDescriptionClass = "description"
   val urlSignature: String = "www.linkedin.com/recruiter/profile/"
 
   protected def getExperienceSection(document: Document): Either[String, Element] =
@@ -42,7 +45,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   private def getDescription(positionElem: Element): String =
     ElementUtil
-      .getFirstElementByClassNameSafe(positionElem, "description")
+      .getFirstElementByClassNameSafe(positionElem, ExperienceDescriptionClass)
       .map(ElementUtil.removeBreakTags)
       .map(_.textContent)
       .getOrElse("")
@@ -84,11 +87,20 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
         </div>
         <div class="module primary-module">
           <div class="module-header"/>
-          <div class="module-body searchable"></div>
+          <div class="module-body searchable" id='$TechExperienceSummaryContentId'></div>
         </div>
       </div>
       """)
 
   protected def removeTechExperienceSummaryElem(doc: Document): Unit = ()
   protected def showAllExperiences(doc: Document): Unit = ()
+
+  def expandEachExperience(doc: Document): Unit = ()
+  def removeSeeLessFromEachExperienceSection(doc: Document): Unit = ()
+
+  def getAllExperienceItemsTitlesSections(doc: Document): List[Element] =
+    ElementUtil.getElementsByClassName[Element](doc.documentElement, "position").flatMap(elem => {
+      ElementUtil.getFirstElementByTagNameSafe(elem, "h4").toOption
+    })
+
 }

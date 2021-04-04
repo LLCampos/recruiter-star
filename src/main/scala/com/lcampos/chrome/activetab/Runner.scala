@@ -4,6 +4,7 @@ import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
+import com.lcampos.linkedin.LinkedinProfileHighlighter
 import com.lcampos.model.{LinkedinProfileManipulator, UserConfig}
 import odelay.Timer
 import org.scalajs.dom
@@ -19,11 +20,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") =>
           UserConfig.load.flatMap { userConf =>
-            if (!userConf.isExtensionActive) {
-              Future.unit
+            if (userConf.isExtensionActive) {
+              onExtensionActive(userConf, v)
             } else {
-              val techList = if (userConf.selectedTechnologies.isEmpty) Tech.all else userConf.selectedTechnologies.flatMap(Tech.fromName)
-              addTechExperienceSummaryBoxWithRetries(v, techList)
+              Future.unit
             }
           }
         case _ => ()
@@ -31,22 +31,39 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     }
   }
 
-  private def addTechExperienceSummaryBoxWithRetries(msg: String, baseTechs: List[Tech]) =
+  private def onExtensionActive(userConfig: UserConfig, msgValue: String): Future[Unit] = {
+    LinkedinProfileManipulator.fromUrl(msgValue) match {
+      case Some(manipulator) => onExtensionActive(userConfig, manipulator)
+      case None => Future.unit
+    }
+  }
+
+  private def onExtensionActive(userConfig: UserConfig, profileManipulator: LinkedinProfileManipulator): Future[Unit] = {
+    val selectedTech = userConfig.selectedTechnologies.flatMap(Tech.fromName)
+    val techToShow = if (userConfig.selectedTechnologies.isEmpty) Tech.all else selectedTech
+    for {
+      _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
+      _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
+    } yield ()
+  }
+
+  private def addTechExperienceSummaryBoxWithRetries(linkedinProfileManipulator: LinkedinProfileManipulator, baseTechs: List[Tech]): Future[Unit] =
     retry.Pause(100, 100.milli)(timer) { () =>
       Future {
-        addTechExperienceSummaryBox(msg, baseTechs)
+        linkedinProfileManipulator.addDurationPerTech(dom.document, baseTechs)
       }
     }.map {
       case Right(_) => ()
       case Left(err) => println(err)
     }
 
-  private def addTechExperienceSummaryBox(msg: String, baseTechs: List[Tech]) =
-    LinkedinProfileManipulator.fromUrl(msg) match {
-      case Some(manipulator) =>
-        manipulator.addDurationPerTech(dom.document, baseTechs)
-      case None => Right(())
+  private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTech: List[Tech]) = Future {
+    if (selectedTech.nonEmpty) {
+      profileManipulator.expandEachExperience(dom.document)
+      profileManipulator.removeSeeLessFromEachExperienceSection(dom.document)
+      LinkedinProfileHighlighter.highlight(dom.document, selectedTech)
     }
+  }
 }
 
 object Runner {

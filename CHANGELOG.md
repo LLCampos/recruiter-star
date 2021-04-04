@@ -5,6 +5,7 @@
 ### Added
 * Possible to activate and deactivate extension
 * Possible to select which technologies to see
+* Highlight selected technologies
 
 ### Changed
 * Increase times it tries to create the tech box
