@@ -42,9 +42,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val techList = if (userConfig.selectedTechnologies.isEmpty) Tech.all else userConfig.selectedTechnologies.flatMap(Tech.fromName)
     for {
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techList)
-      _ <- Future(profileManipulator.expandEachExperience(dom.document))
-      _ <- Future(profileManipulator.removeSeeLessFromEachExperienceSection(dom.document))
-      _ <- Future(LinkedinProfileHighlighter.highlight(dom.document, userConfig.selectedTechnologies))
+      _ <- highlightSelectedTechnologies(profileManipulator, userConfig.selectedTechnologies)
     } yield ()
   }
 
@@ -57,6 +55,14 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       case Right(_) => ()
       case Left(err) => println(err)
     }
+
+  private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTechnologies: List[String]) = Future {
+    if (selectedTechnologies.nonEmpty) {
+      profileManipulator.expandEachExperience(dom.document)
+      profileManipulator.removeSeeLessFromEachExperienceSection(dom.document)
+      LinkedinProfileHighlighter.highlight(dom.document, selectedTechnologies)
+    }
+  }
 }
 
 object Runner {
