@@ -36,7 +36,7 @@ trait LinkedinProfileManipulator {
 
 object LinkedinProfileManipulator {
   val TechExperienceSummaryId = "tech-experience-summary"
-  val TechExperienceSummaryContentId = "tech-experience-summary"
+  val TechExperienceSummaryContentId = "tech-experience-summary-content"
 
   def fromUrl(url: String): Option[LinkedinProfileManipulator] =
     if (url.contains(LinkedinProfileManipulatorBasic.urlSignature))
