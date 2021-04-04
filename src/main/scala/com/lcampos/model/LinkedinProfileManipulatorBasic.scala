@@ -112,4 +112,9 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       .getFirstElementByClassNameSafe(elem, "pv-entity__description")
       .map(ElementUtil.removeBreakTags)
       .map(_.textContent.trim()).getOrElse("")
+
+  def expandEachExperience(doc: Document): Unit =
+    ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__button").foreach(
+      _.click()
+    )
 }

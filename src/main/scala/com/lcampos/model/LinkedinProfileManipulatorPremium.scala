@@ -91,4 +91,6 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   protected def removeTechExperienceSummaryElem(doc: Document): Unit = ()
   protected def showAllExperiences(doc: Document): Unit = ()
+
+  def expandEachExperience(doc: Document): Unit = ()
 }

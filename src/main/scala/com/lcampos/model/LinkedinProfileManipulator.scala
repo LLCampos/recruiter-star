@@ -23,7 +23,14 @@ trait LinkedinProfileManipulator {
   protected def getExperienceSection(document: Document): Either[String, Element]
   protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit]
   protected def removeTechExperienceSummaryElem(doc: Document): Unit
+
+  // Expand the whole Experience section
   protected def showAllExperiences(doc: Document): Unit
+
+  // Expand each experience
+  def expandEachExperience(doc: Document): Unit
+
+  //protected def removeSeeMoreFromExperienceSection(experienceSection: Element): Unit
 }
 
 object LinkedinProfileManipulator {
