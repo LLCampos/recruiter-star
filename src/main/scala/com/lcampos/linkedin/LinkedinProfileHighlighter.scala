@@ -32,14 +32,16 @@ object LinkedinProfileHighlighter {
       elementsToHighlight
     )
 
-  private def getElementsToHighlight(doc: Document): List[Element] =
+  private def getElementsToHighlight(doc: Document): List[Element] = {
     getElementsToHighlightByClass(doc, List(
       LinkedinProfileManipulatorBasic.ExperienceDescriptionClass,
       LinkedinProfileManipulatorPremium.ExperienceDescriptionClass,
       LinkedinProfileManipulatorBasic.PeopleAlsoViewedTitleClass
     )) ++ getElementsToHighlightByIds(doc, List(
       LinkedinProfileManipulator.TechExperienceSummaryContentId
-    )) ++ LinkedinProfileManipulatorBasic.getAllExperienceItemsTitlesSections(doc)
+    )) ++ LinkedinProfileManipulatorBasic.getAllExperienceItemsTitlesSections(doc) ++
+      LinkedinProfileManipulatorPremium.getAllExperienceItemsTitlesSections(doc)
+  }
 
 
   private def getElementsToHighlightByClass(doc: Document, classes: List[String]): List[Element] =
