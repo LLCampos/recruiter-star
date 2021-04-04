@@ -889,7 +889,7 @@ object Tech {
     Tech("Prometheus", Set("Prometheus"), Tool),
     Tech("Thanos", Set("Thanos"), Tool),
     Tech("Loki", Set("Loki"), Tool),
-    Tech("Elasticserch", Set("Elasticserch"), Tool),
+    Tech("Elasticsearch", Set("Elasticsearch", "Elastic Search"), Tool),
     Tech("Kibana", Set("Kibana"), Tool),
     Tech("Graylog", Set("Graylog"), Tool),
     Tech("ReportPortal", Set("ReportPortal"), Tool),

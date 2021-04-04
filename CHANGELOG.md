@@ -13,6 +13,9 @@
 ### Removed
 * Remove minor technologies
 
+### Fixed
+* Fix Elasticsearch name
+
 ## [1.0.0]
 
 ### Fixed
