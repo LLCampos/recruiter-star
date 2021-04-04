@@ -38,7 +38,7 @@ object LinkedinProfileHighlighter {
       LinkedinProfileManipulatorBasic.PeopleAlsoViewedTitleClass
     )) ++ getElementsToHighlightByIds(doc, List(
       LinkedinProfileManipulator.TechExperienceSummaryContentId
-    ))
+    )) ++ LinkedinProfileManipulatorBasic.getAllExperienceItemsTitlesSections(doc)
 
 
   private def getElementsToHighlightByClass(doc: Document, classes: List[String]): List[Element] =

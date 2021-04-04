@@ -95,4 +95,6 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
 
   def expandEachExperience(doc: Document): Unit = ()
   def removeSeeLessFromEachExperienceSection(doc: Document): Unit = ()
+
+  def getAllExperienceItemsTitlesSections(doc: Document): List[Element] = ???
 }

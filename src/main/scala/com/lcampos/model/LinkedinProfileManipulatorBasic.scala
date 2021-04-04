@@ -128,4 +128,9 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       elem.parentElement.removeChild(elem)
     )
   }
+
+  def getAllExperienceItemsTitlesSections(doc: Document): List[Element] =
+    ElementUtil.getElementsByClassName[Element](doc.documentElement, "pv-entity__summary-info--background-section").flatMap(elem => {
+      ElementUtil.getFirstElementByTagNameSafe(elem, "h3").toOption
+    })
 }
