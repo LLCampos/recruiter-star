@@ -16,6 +16,7 @@ import scala.scalajs.js.timers.setTimeout
 object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
   val ExperienceDescriptionClass = "pv-entity__description"
+  val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
 
   val urlSignature: String = "www.linkedin.com/in/"
 
