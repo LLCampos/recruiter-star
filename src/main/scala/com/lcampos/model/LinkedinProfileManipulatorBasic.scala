@@ -15,6 +15,8 @@ import scala.scalajs.js.timers.setTimeout
 
 object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
+  val ExperienceDescriptionClass = "pv-entity__description"
+
   val urlSignature: String = "www.linkedin.com/in/"
 
   protected def getExperienceSection(document: Document): Either[String, Element] =
@@ -110,7 +112,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
   private def getDescription(elem: HTMLLIElement): String =
     ElementUtil
-      .getFirstElementByClassNameSafe(elem, "pv-entity__description")
+      .getFirstElementByClassNameSafe(elem, ExperienceDescriptionClass)
       .map(ElementUtil.removeBreakTags)
       .map(_.textContent.trim()).getOrElse("")
 
