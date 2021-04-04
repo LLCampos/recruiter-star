@@ -73,9 +73,14 @@ object TechCategory {
     val priorityInOrdering: Int = 13
   }
 
+  case object OperatingSystem extends TechCategory {
+    val uiRepresentation: String = "Operating System"
+    val priorityInOrdering: Int = 14
+  }
+
   case object Other extends TechCategory {
     val uiRepresentation: String = "Other"
-    val priorityInOrdering: Int = 14
+    val priorityInOrdering: Int = 15
   }
 
   implicit def techCategoryOrdering: Ordering[TechCategory] = (x: TechCategory, y: TechCategory) =>
@@ -623,7 +628,6 @@ object Tech {
     Tech("WATFOR", Set("WATFOR"), ProgrammingLanguage),
     Tech("WebDNA", Set("WebDNA"), ProgrammingLanguage),
     Tech("WebQL", Set("WebQL"), ProgrammingLanguage),
-    Tech("Windows PowerShell", Set("Windows Powershell"), ProgrammingLanguage),
     Tech("Winbatch", Set("Winbatch"), ProgrammingLanguage),
     Tech("Wolfram", Set("Wolfram"), ProgrammingLanguage),
     Tech("Wyvern", Set("Wyvern"), ProgrammingLanguage),
@@ -666,6 +670,7 @@ object Tech {
     Tech("Chef", Set("Chef"), InfrastructureTool),
     Tech("Puppet", Set("Puppet"), InfrastructureTool),
     Tech("Ansible", Set("Ansible"), InfrastructureTool),
+    Tech("VMware", Set("VMWare", "VMware"), InfrastructureTool),
     // ################# Mobile #################
     Tech("iOS", Set("iOS"), Mobile),
     Tech("Android", Set("Android"), Mobile),
@@ -902,6 +907,10 @@ object Tech {
     Tech("ActiveMQ", Set("ActiveMQ", "AMQ"), Tool),
     Tech("TIBCO StreamBase", Set("StreamBase", "Streambase", "TIBCO StreamBase"), Tool),
     Tech("Grafana", Set("Grafana"), Tool),
+    // ################# Operating Systems #################
+    Tech("Windows", Set("Windows"), OperatingSystem),
+    Tech("Linux", Set("Linux"), OperatingSystem),
+    Tech("Red Hat", Set("Red Hat"), OperatingSystem),
   )
 
   def fromName(name: String): Option[Tech] =
