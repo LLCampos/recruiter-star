@@ -103,4 +103,5 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       ElementUtil.getFirstElementByTagNameSafe(elem, "h4").toOption
     })
 
+  def expandAbout(doc: Document): Unit = ()
 }

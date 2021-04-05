@@ -65,6 +65,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     if (selectedTech.nonEmpty) {
       profileManipulator.expandEachExperience(dom.document)
       profileManipulator.removeSeeLessFromEachExperienceSection(dom.document)
+      profileManipulator.expandAbout(dom.document)
       LinkedinProfileHighlighter.highlight(dom.document, selectedTech)
     }
   }

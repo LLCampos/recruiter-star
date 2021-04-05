@@ -26,8 +26,8 @@ trait LinkedinProfileManipulator {
   // Expand the whole Experience section
   protected def showAllExperiences(doc: Document): Unit
 
-  // Expand each experience
   def expandEachExperience(doc: Document): Unit
+  def expandAbout(doc: Document): Unit
 
   def removeSeeLessFromEachExperienceSection(doc: Document): Unit
 

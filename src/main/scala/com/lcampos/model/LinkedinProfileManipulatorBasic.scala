@@ -18,6 +18,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
   val ExperienceDescriptionClass = "pv-entity__description"
   val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
   val ProfileInfoBelowPicClass = "pv-top-card__list-container"
+  val AboutClass = "pv-about__summary-text"
 
   val urlSignature: String = "www.linkedin.com/in/"
 
@@ -134,4 +135,10 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
     ElementUtil.getElementsByClassName[Element](doc.documentElement, "pv-entity__summary-info--background-section").flatMap(elem => {
       ElementUtil.getFirstElementByTagNameSafe(elem, "h3").toOption
     })
+
+  def expandAbout(doc: Document): Unit =
+    ElementUtil.getElementByIdSafeAs[HTMLElement](doc, "line-clamp-show-more-button") match {
+      case Right(button) => button.click()
+      case Left(err) => ()
+    }
 }
