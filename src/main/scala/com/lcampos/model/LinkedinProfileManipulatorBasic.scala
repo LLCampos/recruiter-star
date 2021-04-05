@@ -13,19 +13,21 @@ import java.time.format.DateTimeFormatter
 import scala.concurrent.duration.DurationInt
 import scala.scalajs.js.timers.setTimeout
 
-object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
+object LinkedinProfileManipulatorBasic {
+  val UrlSignature: String = "www.linkedin.com/in/"
+}
+
+case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinProfileManipulator {
 
   val ExperienceDescriptionClass = "pv-entity__description"
   val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
   val ProfileInfoBelowPicClass = "pv-top-card__list-container"
   val AboutClass = "pv-about__summary-text"
 
-  val urlSignature: String = "www.linkedin.com/in/"
-
-  protected def getExperienceSection(document: Document): Either[String, Element] =
+  protected def getExperienceSection: Either[String, Element] =
     ElementUtil.getElementByIdSafeCloned(document, "experience-section")
 
-  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
+  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory): Either[String, Unit] = for {
     profileDetail <- ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "profile-detail")
     durationPerTechSection <- generateYearsPerTechElement(durationPerTechPerCat)
     _ = profileDetail.insertBefore(durationPerTechSection, profileDetail.firstElementChild)
@@ -52,8 +54,8 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
     elem.appendChild(span)
   }
 
-  def removeTechExperienceSummaryElem(doc: Document): Unit =
-    ElementUtil.getElementByIdSafe(doc, TechExperienceSummaryId).map(el => el.parentNode.removeChild(el))
+  def removeTechExperienceSummaryElem(): Unit =
+    ElementUtil.getElementByIdSafe(document, TechExperienceSummaryId).map(el => el.parentNode.removeChild(el))
 
   private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(
     s"""
@@ -69,8 +71,8 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
   private def durationPerTechSpanTemplate: Element = ElementUtil.elementFromString("""<span class="lt-line-clamp__line"></span>""")
 
-  protected def showAllExperiences(doc: Document): Unit = {
-    ElementUtil.getFirstElementByClassNameSafe(doc.documentElement, "pv-profile-section__see-more-inline").map(elem => {
+  protected def showAllExperiences(): Unit = {
+    ElementUtil.getFirstElementByClassNameSafe(document.documentElement, "pv-profile-section__see-more-inline").map(elem => {
       elem.asInstanceOf[HTMLElement].click()
       setTimeout(1.milli) {
         window.scroll(0, 0)
@@ -119,26 +121,26 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
       .map(ElementUtil.removeBreakTags)
       .map(_.textContent.trim()).getOrElse("")
 
-  def expandEachExperience(doc: Document): Unit =
-    ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__button").foreach(
+  def expandEachExperience(): Unit =
+    ElementUtil.getElementsByClassName[HTMLElement](document.documentElement, "inline-show-more-text__button").foreach(
       _.click()
     )
 
-  def removeSeeLessFromEachExperienceSection(doc: Document): Unit = {
+  def removeSeeLessFromEachExperienceSection(): Unit = {
     // Note: This remove from whole page. If this is problematic, fix it.
-    ElementUtil.getElementsByClassName[HTMLElement](doc.documentElement, "inline-show-more-text__link-container-expanded").foreach(elem =>
+    ElementUtil.getElementsByClassName[HTMLElement](document.documentElement, "inline-show-more-text__link-container-expanded").foreach(elem =>
       elem.parentElement.removeChild(elem)
     )
   }
 
-  def getAllExperienceItemsTitlesSections(doc: Document): List[Element] =
-    ElementUtil.getElementsByClassName[Element](doc.documentElement, "pv-entity__summary-info--background-section").flatMap(elem => {
+  def getAllExperienceItemsTitlesSections: List[Element] =
+    ElementUtil.getElementsByClassName[Element](document.documentElement, "pv-entity__summary-info--background-section").flatMap(elem => {
       ElementUtil.getFirstElementByTagNameSafe(elem, "h3").toOption
     })
 
-  def expandAbout(doc: Document): Unit =
-    ElementUtil.getElementByIdSafeAs[HTMLElement](doc, "line-clamp-show-more-button") match {
+  def expandAbout(): Unit =
+    ElementUtil.getElementByIdSafeAs[HTMLElement](document, "line-clamp-show-more-button") match {
       case Right(button) => button.click()
-      case Left(err) => ()
+      case Left(_) => ()
     }
 }

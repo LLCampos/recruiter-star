@@ -12,12 +12,18 @@ import org.scalajs.dom.{Document, Element}
 import java.time.format.DateTimeFormatter
 import scala.scalajs.js.Object.entries
 
-object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
+object LinkedinProfileManipulatorPremium {
+  val UrlSignature: String = "www.linkedin.com/recruiter/profile/"
+}
+
+case class LinkedinProfileManipulatorPremium(document: Document) extends LinkedinProfileManipulator {
 
   val ExperienceDescriptionClass = "description"
-  val urlSignature: String = "www.linkedin.com/recruiter/profile/"
+  val PeopleAlsoViewedTitleClass = ""
+  val ProfileInfoBelowPicClass = ""
+  val AboutClass = ""
 
-  protected def getExperienceSection(document: Document): Either[String, Element] =
+  protected def getExperienceSection: Either[String, Element] =
     ElementUtil.getElementByIdSafe(document, "profile-experience")
 
   def getExperienceItems(experienceSectionElem: Element): Either[String, List[ExperienceItem]] =
@@ -51,7 +57,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       .getOrElse("")
       .trim
 
-  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit] = for {
+  protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory): Either[String, Unit] = for {
     durationPerTechSection <- generateYearsPerTechElement(durationPerTechPerCat)
     primaryContent <- ElementUtil.getElementByIdSafe(document, "primary-content")
     _ = primaryContent.insertBefore(durationPerTechSection, primaryContent.children.item(2))
@@ -92,16 +98,16 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       </div>
       """)
 
-  def removeTechExperienceSummaryElem(doc: Document): Unit = ()
-  protected def showAllExperiences(doc: Document): Unit = ()
+  def removeTechExperienceSummaryElem(): Unit = ()
+  protected def showAllExperiences(): Unit = ()
 
-  def expandEachExperience(doc: Document): Unit = ()
-  def removeSeeLessFromEachExperienceSection(doc: Document): Unit = ()
+  def expandEachExperience(): Unit = ()
+  def removeSeeLessFromEachExperienceSection(): Unit = ()
 
-  def getAllExperienceItemsTitlesSections(doc: Document): List[Element] =
-    ElementUtil.getElementsByClassName[Element](doc.documentElement, "position").flatMap(elem => {
+  def getAllExperienceItemsTitlesSections: List[Element] =
+    ElementUtil.getElementsByClassName[Element](document.documentElement, "position").flatMap(elem => {
       ElementUtil.getFirstElementByTagNameSafe(elem, "h4").toOption
     })
 
-  def expandAbout(doc: Document): Unit = ()
+  def expandAbout(): Unit = ()
 }

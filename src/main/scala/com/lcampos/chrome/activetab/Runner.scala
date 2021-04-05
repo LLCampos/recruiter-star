@@ -4,7 +4,6 @@ import com.lcampos.chrome.Config
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
-import com.lcampos.linkedin.LinkedinProfileHighlighter
 import com.lcampos.model.{InternalMessages, LinkedinProfileManipulator, UserConfig}
 import com.lcampos.util.FutureUtil
 import odelay.Timer
@@ -17,7 +16,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   (implicit ec: ExecutionContext, timer: Timer) {
 
   def run(): Unit =
-    LinkedinProfileManipulator.fromUrl(dom.window.location.href) match {
+    LinkedinProfileManipulator.apply(dom.window.location.href, dom.document) match {
       case Some(manipulator) => onSupportedPage(manipulator)
       case None => ()
     }
@@ -28,7 +27,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         case Some(v: String) if v.contains("page was reloaded") || v == InternalMessages.RefreshApp =>
           UserConfig.load.flatMap { userConf =>
             if (userConf.isExtensionActive) {
-              if (userConf.selectedTechnologies.isEmpty) LinkedinProfileHighlighter.removePreviousHighlights(dom.document)
+              if (userConf.selectedTechnologies.isEmpty) manipulator.removePreviousHighlights()
               val waitTime = if (v == InternalMessages.RefreshApp) 0.millis else 500.millis
               onExtensionActive(userConf, manipulator, waitTime)
             } else {
@@ -40,8 +39,8 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     }
 
   private def onExtensionInactive(manipulator: LinkedinProfileManipulator): Unit = {
-    manipulator.removeTechExperienceSummaryElem(dom.document)
-    LinkedinProfileHighlighter.removePreviousHighlights(dom.document)
+    manipulator.removeTechExperienceSummaryElem()
+    manipulator.removePreviousHighlights()
   }
 
   private def onExtensionActive(userConfig: UserConfig, profileManipulator: LinkedinProfileManipulator, waitTime: FiniteDuration): Future[Unit] = {
@@ -57,7 +56,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   private def addTechExperienceSummaryBoxWithRetries(linkedinProfileManipulator: LinkedinProfileManipulator, baseTechs: List[Tech]): Future[Unit] =
     retry.Pause(100, 100.milli)(timer) { () =>
       Future {
-        linkedinProfileManipulator.addDurationPerTech(dom.document, baseTechs)
+        linkedinProfileManipulator.addDurationPerTech(baseTechs)
       }
     }.map {
       case Right(_) => ()
@@ -66,10 +65,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTech: List[Tech]) = Future {
     if (selectedTech.nonEmpty) {
-      profileManipulator.expandEachExperience(dom.document)
-      profileManipulator.removeSeeLessFromEachExperienceSection(dom.document)
-      profileManipulator.expandAbout(dom.document)
-      LinkedinProfileHighlighter.highlight(dom.document, selectedTech)
+      profileManipulator.expandEachExperience()
+      profileManipulator.removeSeeLessFromEachExperienceSection()
+      profileManipulator.expandAbout()
+      profileManipulator.highlight(selectedTech)
     }
   }
 }

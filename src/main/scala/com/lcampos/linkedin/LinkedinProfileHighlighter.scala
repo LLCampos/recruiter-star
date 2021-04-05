@@ -1,7 +1,7 @@
 package com.lcampos.linkedin
 
 import com.lcampos.duration_per_tech.Tech
-import com.lcampos.model.{LinkedinProfileManipulator, LinkedinProfileManipulatorBasic, LinkedinProfileManipulatorPremium}
+import com.lcampos.model.LinkedinProfileManipulator
 import com.lcampos.util.{ElementUtil, SearchAndReplace}
 import org.scalajs.dom.{Document, Element}
 
@@ -19,16 +19,16 @@ object LinkedinProfileHighlighter {
     "#89C35C", // Green Peas
   )
 
-  def highlight(doc: Document, techToHighlight: List[Tech]): Unit = {
-    val elementsToHighlight = getElementsToHighlight(doc)
-    removePreviousHighlights(doc)
+  def highlight(doc: Document, manipulator: LinkedinProfileManipulator, techToHighlight: List[Tech]): Unit = {
+    val elementsToHighlight = getElementsToHighlight(doc, manipulator)
+    removePreviousHighlights(doc, manipulator)
     techToHighlight.zip(HighlightingColors).foreach { case (tech, color) =>
       tech.aliases.foreach(alias => highlight(alias, elementsToHighlight, color))
     }
   }
 
-  def removePreviousHighlights(doc: Document): Unit = {
-    val elementsToRemoveHighlight = getElementsToHighlight(doc)
+  def removePreviousHighlights(doc: Document, manipulator: LinkedinProfileManipulator): Unit = {
+    val elementsToRemoveHighlight = getElementsToHighlight(doc, manipulator)
     SearchAndReplace.replace(
       "<span class=\"highlighted\" style=\"background-color: .*?\">(.*?)</span>",
       "$1",
@@ -43,17 +43,15 @@ object LinkedinProfileHighlighter {
       elementsToHighlight
     )
 
-  private def getElementsToHighlight(doc: Document): List[Element] = {
+  private def getElementsToHighlight(doc: Document, manipulator: LinkedinProfileManipulator): List[Element] = {
     getElementsToHighlightByClass(doc, List(
-      LinkedinProfileManipulatorBasic.ExperienceDescriptionClass,
-      LinkedinProfileManipulatorBasic.PeopleAlsoViewedTitleClass,
-      LinkedinProfileManipulatorBasic.ProfileInfoBelowPicClass,
-      LinkedinProfileManipulatorBasic.AboutClass,
-      LinkedinProfileManipulatorPremium.ExperienceDescriptionClass,
+      manipulator.ExperienceDescriptionClass,
+      manipulator.PeopleAlsoViewedTitleClass,
+      manipulator.ProfileInfoBelowPicClass,
+      manipulator.AboutClass,
     )) ++ getElementsToHighlightByIds(doc, List(
       LinkedinProfileManipulator.TechExperienceSummaryContentId
-    )) ++ LinkedinProfileManipulatorBasic.getAllExperienceItemsTitlesSections(doc) ++
-      LinkedinProfileManipulatorPremium.getAllExperienceItemsTitlesSections(doc)
+    )) ++ manipulator.getAllExperienceItemsTitlesSections
   }
 
 

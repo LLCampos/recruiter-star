@@ -15,28 +15,28 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
     "addDurationPerTech" should {
       "return error if no experience section" in {
         val doc = ElementUtil.documentFromString(Example1_NoExperienceSection.example)
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element with id 'experience-section' not found")
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beLeft("Element with id 'experience-section' not found")
       }
 
       "return error on empty experience section" in {
         val doc = ElementUtil.documentFromString(Example2_EmptyExperienceSection.example)
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("No <li> elements in the experience section")
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beLeft("No <li> elements in the experience section")
       }
 
       "return error on empty experience items" in {
         val doc = ElementUtil.documentFromString(Example3_EmptyExperienceItems.example)
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element with class 'pv-entity__summary-info-v2' not found")
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beLeft("Element with class 'pv-entity__summary-info-v2' not found")
       }
 
       "return error on empty summary" in {
         val doc = ElementUtil.documentFromString(Example4_EmptySummary.example)
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beLeft("Element for selector 'h3' not found")
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beLeft("Element for selector 'h3' not found")
       }
 
       "add tech experience section to valid document" in {
         val doc = ElementUtil.documentFromString(Example6_ValidPage.example)
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beRight
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
           elem.textContent.contains("Python -  3 years and 3 months") &&
           elem.textContent.contains("Programming Languages")
@@ -50,7 +50,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
         })
         doc.documentElement.textContent.contains("4 years and 4 months") must beFalse
 
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beRight
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
           elem.textContent.contains("Java -  4 years and 4 months")
         })
@@ -60,14 +60,14 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
       "if page with no reference to technologies has a tech experience summary section from previous profile, remove it" in {
         val doc = ElementUtil.documentFromString(Example9_PageAlreadyWithTechExperienceSummaryAndNoTech.example)
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beRight
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
       }
 
       "if experience section doesn't reference any technologies, don't add tech experience summary" in {
         val doc = ElementUtil.documentFromString(Example8_NoReferenceToTechnologies.example)
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
-        LinkedinProfileManipulatorBasic.addDurationPerTech(doc) must beRight
+        LinkedinProfileManipulatorBasic(doc).addDurationPerTech() must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
       }
     }
@@ -95,7 +95,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ),
         )
 
-        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
+        LinkedinProfileManipulatorBasic(elem.ownerDocument).getExperienceItems(elem) must beRight(expected)
       }
 
       "deal correctly with break tags" in {
@@ -112,12 +112,12 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           )
         )
 
-        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
+        LinkedinProfileManipulatorBasic(elem.ownerDocument).getExperienceItems(elem) must beRight(expected)
       }
 
       "deal with multi-sections experience items" in {
         val elem = ElementUtil.elementFromString(ExampleMultiSectionExperience.example)
-        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight((experienceItems: List[ExperienceItem]) => {
+        LinkedinProfileManipulatorBasic(elem.ownerDocument).getExperienceItems(elem) must beRight((experienceItems: List[ExperienceItem]) => {
           experienceItems.size must be equalTo 3
         })
       }
@@ -136,7 +136,7 @@ class LinkedinProfileManipulatorBasicTest extends Specification {
           ),
         )
 
-        LinkedinProfileManipulatorBasic.getExperienceItems(elem) must beRight(expected)
+        LinkedinProfileManipulatorBasic(elem.ownerDocument).getExperienceItems(elem) must beRight(expected)
       }
     }
   }

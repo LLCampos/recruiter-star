@@ -42,7 +42,7 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           ),
         )
 
-        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
+        LinkedinProfileManipulatorPremium(elem.ownerDocument).getExperienceItems(elem) must beRight(expected)
       }
 
       "correctly deal with break tags" in {
@@ -59,7 +59,7 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           )
         )
 
-        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
+        LinkedinProfileManipulatorPremium(elem.ownerDocument).getExperienceItems(elem) must beRight(expected)
       }
 
       "deal with experience duration range only having years, not months" in {
@@ -76,7 +76,7 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
           )
         )
 
-        LinkedinProfileManipulatorPremium.getExperienceItems(elem) must beRight(expected)
+        LinkedinProfileManipulatorPremium(elem.ownerDocument).getExperienceItems(elem) must beRight(expected)
       }
     }
 
@@ -84,7 +84,7 @@ class LinkedinProfileManipulatorPremiumTest extends Specification {
       "add tech experience section to valid document" in {
         val doc = ElementUtil.documentFromString(full_profile.ExampleBasic.example)
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beLeft
-        LinkedinProfileManipulatorPremium.addDurationPerTech(doc) must beRight
+        LinkedinProfileManipulatorPremium(doc).addDurationPerTech() must beRight
         ElementUtil.getElementByIdSafe(doc, "tech-experience-summary") must beRight((elem: Element) => {
           elem.textContent.contains("Java - 3 years and 7 months") &&
             elem.textContent.contains("Programming Languages")
