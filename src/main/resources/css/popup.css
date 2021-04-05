@@ -15,8 +15,18 @@ body {
     font-size: 0.8em;
 }
 
-#selectedTechnologiesClean {
-    margin-top: 1em;
+/*https://stackoverflow.com/a/1368286/5082718*/
+#selectedTechnologiesCleanButton {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.8em;
 }
 
 .sectionTitle {
