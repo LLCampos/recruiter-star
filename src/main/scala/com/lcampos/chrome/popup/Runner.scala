@@ -3,10 +3,10 @@ package com.lcampos.chrome.popup
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
-import com.lcampos.model.{UserConfigKeys, UserConfig}
+import com.lcampos.model.{UserConfig, UserConfigKeys}
 import com.lcampos.util.{ElementUtil, StorageSyncUtil}
 import org.scalajs.dom._
-import org.scalajs.dom.raw.{HTMLInputElement, HTMLSelectElement}
+import org.scalajs.dom.raw.{HTMLElement, HTMLInputElement, HTMLSelectElement}
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.JSConverters.JSRichIterableOnce
@@ -17,6 +17,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
   def run(): Unit = {
     document.onreadystatechange = _ => {
       if (document.readyState == "complete") {
+        doneButtonHandling()
         UserConfig.load.onComplete {
           case Success(userConfig: UserConfig) =>
             extensionActiveHandling(userConfig.isExtensionActive)
@@ -44,6 +45,12 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
           UserConfigKeys.selectedTechnologies,
           ElementUtil.getAllSelected(selectElem).toJSArray
         )
+      case Left(err) => println(err)
+    }
+
+  private def doneButtonHandling(): Unit =
+    ElementUtil.getElementByIdSafeAs[HTMLElement](document, "doneButton") match {
+      case Right(button) => button.onclick = (_: Event) => window.close()
       case Left(err) => println(err)
     }
 }
