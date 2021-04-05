@@ -4,7 +4,7 @@ import chrome.tabs.bindings.TabQuery
 import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
-import com.lcampos.model.{UserConfig, UserConfigKeys}
+import com.lcampos.model.{InternalMessages, UserConfig, UserConfigKeys}
 import com.lcampos.util.{ElementUtil, StorageSyncUtil}
 import org.scalajs.dom._
 import org.scalajs.dom.raw.{HTMLElement, HTMLInputElement, HTMLSelectElement}
@@ -64,7 +64,7 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
     }
 
   private def sendRefreshExtensionMsgToCurrentTab(): Unit =
-    sendMsgToCurrentTab("recruiter-star-refresh")
+    sendMsgToCurrentTab(InternalMessages.RefreshApp)
 
   private def sendMsgToCurrentTab(msg: String): Unit =
     chrome.tabs.Tabs.query(TabQuery(active = true, currentWindow = true)).onComplete {

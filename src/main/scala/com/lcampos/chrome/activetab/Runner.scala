@@ -5,7 +5,7 @@ import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
 import com.lcampos.linkedin.LinkedinProfileHighlighter
-import com.lcampos.model.{LinkedinProfileManipulator, UserConfig}
+import com.lcampos.model.{InternalMessages, LinkedinProfileManipulator, UserConfig}
 import com.lcampos.util.FutureUtil
 import odelay.Timer
 import org.scalajs.dom
@@ -25,7 +25,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   private def onSupportedPage(manipulator: LinkedinProfileManipulator): Unit =
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
-        case Some(v: String) if v.contains("page was reloaded") || v == "recruiter-star-refresh" =>
+        case Some(v: String) if v.contains("page was reloaded") || v == InternalMessages.RefreshApp =>
           UserConfig.load.flatMap { userConf =>
             if (userConf.isExtensionActive) {
               onExtensionActive(userConf, manipulator)
