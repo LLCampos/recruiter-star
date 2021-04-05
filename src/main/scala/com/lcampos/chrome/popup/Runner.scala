@@ -35,7 +35,10 @@ class Runner(messages: I18NMessages, backgroundAPI: BackgroundAPI)(implicit ec: 
       .getElementById("isExtensionActiveCheckbox")
       .asInstanceOf[HTMLInputElement]
     isActiveCheckbox.checked = isExtensionActive
-    isActiveCheckbox.onclick = (_: Event) => StorageSyncUtil.add(UserConfigKeys.isExtensionActive, isActiveCheckbox.checked)
+    isActiveCheckbox.onclick = (_: Event) => {
+      StorageSyncUtil.add(UserConfigKeys.isExtensionActive, isActiveCheckbox.checked)
+      sendRefreshExtensionMsgToCurrentTab()
+    }
   }
 
   private def whichTechnologiesToSeeHandling(selectedTechnologies: List[String]): Unit =

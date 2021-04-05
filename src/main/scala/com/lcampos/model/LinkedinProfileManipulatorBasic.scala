@@ -50,7 +50,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
     elem.appendChild(span)
   }
 
-  protected def removeTechExperienceSummaryElem(doc: Document): Unit =
+  def removeTechExperienceSummaryElem(doc: Document): Unit =
     ElementUtil.getElementByIdSafe(doc, TechExperienceSummaryId).map(el => el.parentNode.removeChild(el))
 
   private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(

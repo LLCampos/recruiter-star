@@ -21,7 +21,7 @@ trait LinkedinProfileManipulator {
   protected def getExperienceItems(experienceSectionElem: Element): Either[String, List[ExperienceItem]]
   protected def getExperienceSection(document: Document): Either[String, Element]
   protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory, document: Document): Either[String, Unit]
-  protected def removeTechExperienceSummaryElem(doc: Document): Unit
+  def removeTechExperienceSummaryElem(doc: Document): Unit
 
   // Expand the whole Experience section
   protected def showAllExperiences(doc: Document): Unit

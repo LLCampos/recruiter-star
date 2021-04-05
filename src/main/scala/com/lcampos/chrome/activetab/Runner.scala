@@ -24,7 +24,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
             if (userConf.isExtensionActive) {
               onExtensionActive(userConf, dom.window.location.href)
             } else {
-              Future.unit
+              Future(onExtensionInactive(dom.window.location.href))
             }
           }
         case _ => ()
@@ -32,8 +32,14 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     }
   }
 
-  private def onExtensionActive(userConfig: UserConfig, msgValue: String): Future[Unit] = {
-    LinkedinProfileManipulator.fromUrl(msgValue) match {
+  private def onExtensionInactive(pageUrl: String): Unit =
+    LinkedinProfileManipulator.fromUrl(pageUrl) match {
+      case Some(manipulator) => manipulator.removeTechExperienceSummaryElem(dom.document)
+      case None => ()
+    }
+
+  private def onExtensionActive(userConfig: UserConfig, pageUrl: String): Future[Unit] = {
+    LinkedinProfileManipulator.fromUrl(pageUrl) match {
       case Some(manipulator) => onExtensionActive(userConfig, manipulator)
       case None => Future.unit
     }

@@ -92,7 +92,7 @@ object LinkedinProfileManipulatorPremium extends LinkedinProfileManipulator {
       </div>
       """)
 
-  protected def removeTechExperienceSummaryElem(doc: Document): Unit = ()
+  def removeTechExperienceSummaryElem(doc: Document): Unit = ()
   protected def showAllExperiences(doc: Document): Unit = ()
 
   def expandEachExperience(doc: Document): Unit = ()
