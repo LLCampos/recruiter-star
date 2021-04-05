@@ -78,9 +78,14 @@ object TechCategory {
     val priorityInOrdering: Int = 14
   }
 
+  case object Methodology extends TechCategory {
+    val uiRepresentation: String = "Methodologies"
+    val priorityInOrdering: Int = 15
+  }
+
   case object Other extends TechCategory {
     val uiRepresentation: String = "Other"
-    val priorityInOrdering: Int = 15
+    val priorityInOrdering: Int = 16
   }
 
   implicit def techCategoryOrdering: Ordering[TechCategory] = (x: TechCategory, y: TechCategory) =>
@@ -219,7 +224,6 @@ object Tech {
     Tech("Euclid", Set("Euclid"), ProgrammingLanguage),
     Tech("Euler", Set("Euler"), ProgrammingLanguage),
     Tech("Euphoria", Set("Euphoria"), ProgrammingLanguage),
-    Tech("EusLisp", Set("EusLisp"), ProgrammingLanguage),
     Tech("CMS EXEC", Set("CMS EXEC"), ProgrammingLanguage),
     Tech("EXEC 2", Set("EXEC 2"), ProgrammingLanguage),
     Tech("Executable UML", Set("Executable UML"), ProgrammingLanguage),
@@ -592,7 +596,6 @@ object Tech {
     Tech("Tom", Set("Tom"), ProgrammingLanguage),
     Tech("TOM", Set("TOM"), ProgrammingLanguage),
     Tech("Topspeed", Set("Topspeed"), ProgrammingLanguage),
-    Tech("TPU", Set("TPU"), ProgrammingLanguage),
     Tech("Trac", Set("Trac"), ProgrammingLanguage),
     Tech("TTM", Set("TTM"), ProgrammingLanguage),
     Tech("T-SQL", Set("T-SQL"), ProgrammingLanguage),
@@ -624,8 +627,6 @@ object Tech {
     Tech("Visual Prolog", Set("Visual Prolog"), ProgrammingLanguage),
     Tech("VSXu", Set("VSXu"), ProgrammingLanguage),
     Tech("Vvvv", Set("Vvvv"), ProgrammingLanguage),
-    Tech("WATFIV", Set("WATFIV"), ProgrammingLanguage),
-    Tech("WATFOR", Set("WATFOR"), ProgrammingLanguage),
     Tech("WebDNA", Set("WebDNA"), ProgrammingLanguage),
     Tech("WebQL", Set("WebQL"), ProgrammingLanguage),
     Tech("Winbatch", Set("Winbatch"), ProgrammingLanguage),
@@ -639,7 +640,6 @@ object Tech {
     Tech("XMOS architecture", Set("XMOS architecture"), ProgrammingLanguage),
     Tech("xHarbour", Set("xHarbour"), ProgrammingLanguage),
     Tech("Xojo", Set("Xojo"), ProgrammingLanguage),
-    Tech("XOTcl", Set("XOTcl"), ProgrammingLanguage),
     Tech("XPL", Set("XPL"), ProgrammingLanguage),
     Tech("XPL0", Set("XPL0"), ProgrammingLanguage),
     Tech("XQuery", Set("XQuery"), ProgrammingLanguage),
@@ -649,8 +649,7 @@ object Tech {
     Tech("Yorick", Set("Yorick"), ProgrammingLanguage),
     Tech("YQL", Set("YQL"), ProgrammingLanguage),
     Tech("Zeno", Set("Zeno"), ProgrammingLanguage),
-    Tech("ZOPL", Set("ZOPL"), ProgrammingLanguage),
-    Tech("ZPL", Set("ZPL"), ProgrammingLanguage),
+    Tech("Zebra Programming Language", Set("ZPL", "Zebra Programming Language"), ProgrammingLanguage),
     Tech("Flutter", Set("Flutter"), ProgrammingLanguage),
     Tech("HTML", Set("HTML5", "HTML"), ProgrammingLanguage),
     Tech("CSS", Set("CSS"), ProgrammingLanguage),
@@ -939,6 +938,36 @@ object Tech {
     Tech("Windows", Set("Windows"), OperatingSystem),
     Tech("Linux", Set("Linux"), OperatingSystem),
     Tech("Red Hat", Set("Red Hat"), OperatingSystem),
+    // ################# Methodologies #################
+    Tech(
+      "Test-driven development (TDD)",
+      Set("tdd", "TDD", "Test Driven Development", "Test-driven Development", "Test-Driven Development",
+        "Test Driven development", "Test-driven development", "Test-Driven development"),
+      Methodology
+    ),
+    Tech(
+      "Behavior-driven development (BDD)",
+      Set("bdd", "BDD", "Behavior Driven Development", "Behavior-driven Development", "Behavior-Driven Development",
+        "Behavior Driven development", "Behavior-driven development", "Behavior-Driven development"),
+      Methodology
+    ),
+    Tech(
+      "Domain-driven development (DDD)",
+      Set("ddd", "DDD", "Domain Driven Development", "Domain-driven Development", "Domain-Driven Development",
+        "Domain Driven development", "Domain-driven development", "Domain-Driven development"),
+      Methodology
+    ),
+    Tech(
+      "Feature-driven development (FDD)",
+      Set("fdd", "FDD", "Feature Driven Development", "Feature-driven Development", "Feature-Driven Development",
+        "Feature Driven development", "Feature-driven development", "Feature-Driven development"),
+      Methodology
+    ),
+    Tech("Agile", Set("Agile"), Methodology),
+    Tech("Scrum", Set("Scrum"), Methodology),
+    Tech("Extreme Programming", Set("Extreme Programming", "extreme programming"), Methodology),
+    Tech("Pair programming", Set("Pair programming"), Methodology),
+
   )
 
   def fromName(name: String): Option[Tech] =
