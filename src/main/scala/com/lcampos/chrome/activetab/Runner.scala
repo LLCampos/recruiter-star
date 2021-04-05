@@ -6,6 +6,7 @@ import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
 import com.lcampos.linkedin.LinkedinProfileHighlighter
 import com.lcampos.model.{LinkedinProfileManipulator, UserConfig}
+import com.lcampos.util.FutureUtil
 import odelay.Timer
 import org.scalajs.dom
 
@@ -42,6 +43,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val selectedTech = userConfig.selectedTechnologies.flatMap(Tech.fromName)
     val techToShow = if (userConfig.selectedTechnologies.isEmpty) Tech.all else selectedTech
     for {
+      _ <- FutureUtil.delay(500.millis)
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
       _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
     } yield ()
