@@ -16,6 +16,7 @@
 
 ### Fixed
 * Fix Elasticsearch name
+* Don't use previous profile information when navigating using the browser history ("go back", "go forward")
 
 ## [1.0.0]
 
