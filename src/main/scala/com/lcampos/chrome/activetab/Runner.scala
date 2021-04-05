@@ -19,10 +19,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   def run(): Unit = {
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
-        case Some(v: String) if v.contains("page was reloaded") =>
+        case Some(v: String) if v.contains("page was reloaded") || v == "recruiter-star-refresh" =>
           UserConfig.load.flatMap { userConf =>
             if (userConf.isExtensionActive) {
-              onExtensionActive(userConf, v)
+              onExtensionActive(userConf, dom.window.location.href)
             } else {
               Future.unit
             }
