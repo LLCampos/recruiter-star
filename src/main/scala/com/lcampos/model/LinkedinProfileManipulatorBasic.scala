@@ -58,10 +58,10 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
   private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(
     s"""
       <div class="pv-oc ember-view" id="$TechExperienceSummaryId">
-          <section class="pv-profile-section pv-about-section artdeco-card p5 mt4 ember-view"><header class="pv-profile-section__card-header">
+          <section class="pv-profile-section artdeco-card p5 mt4 ember-view"><header class="pv-profile-section__card-header">
               <h2 class="pv-profile-section__card-heading">Tech Experience Summary</h2>
               <!----></header>
-              <p class="pv-about__summary-text mt4 t-14 ember-view" id="$TechExperienceSummaryContentId">
+              <p class="mt4 t-14 ember-view" id="$TechExperienceSummaryContentId">
               </p>
           </section>
       </div>
