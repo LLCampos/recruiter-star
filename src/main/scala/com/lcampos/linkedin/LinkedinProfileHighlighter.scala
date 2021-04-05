@@ -21,10 +21,19 @@ object LinkedinProfileHighlighter {
 
   def highlight(doc: Document, techToHighlight: List[Tech]): Unit = {
     val elementsToHighlight = getElementsToHighlight(doc)
-    removePreviousHighlights(elementsToHighlight)
+    removePreviousHighlights(doc)
     techToHighlight.zip(HighlightingColors).foreach { case (tech, color) =>
       tech.aliases.foreach(alias => highlight(alias, elementsToHighlight, color))
     }
+  }
+
+  def removePreviousHighlights(doc: Document): Unit = {
+    val elementsToRemoveHighlight = getElementsToHighlight(doc)
+    SearchAndReplace.replace(
+      "<span class=\"highlighted\" style=\"background-color: .*?\">(.*?)</span>",
+      "$1",
+      elementsToRemoveHighlight
+    )
   }
 
   private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit =
@@ -32,13 +41,6 @@ object LinkedinProfileHighlighter {
       s"\\b$techNameToHighlight\\b",
       s"<span class='highlighted' style='background-color: $color'>$techNameToHighlight</span>",
       elementsToHighlight
-    )
-
-  private def removePreviousHighlights(elems: List[Element]): Unit =
-    SearchAndReplace.replace(
-      "<span class=\"highlighted\" style=\"background-color: .*?\">(.*?)</span>",
-      "$1",
-      elems
     )
 
   private def getElementsToHighlight(doc: Document): List[Element] = {

@@ -28,6 +28,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         case Some(v: String) if v.contains("page was reloaded") || v == InternalMessages.RefreshApp =>
           UserConfig.load.flatMap { userConf =>
             if (userConf.isExtensionActive) {
+              if (userConf.selectedTechnologies.isEmpty) LinkedinProfileHighlighter.removePreviousHighlights(dom.document)
               val waitTime = if (v == InternalMessages.RefreshApp) 0.millis else 500.millis
               onExtensionActive(userConf, manipulator, waitTime)
             } else {
@@ -38,8 +39,10 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       }
     }
 
-  private def onExtensionInactive(manipulator: LinkedinProfileManipulator): Unit =
-      manipulator.removeTechExperienceSummaryElem(dom.document)
+  private def onExtensionInactive(manipulator: LinkedinProfileManipulator): Unit = {
+    manipulator.removeTechExperienceSummaryElem(dom.document)
+    LinkedinProfileHighlighter.removePreviousHighlights(dom.document)
+  }
 
   private def onExtensionActive(userConfig: UserConfig, profileManipulator: LinkedinProfileManipulator, waitTime: FiniteDuration): Future[Unit] = {
     val selectedTech = userConfig.selectedTechnologies.flatMap(Tech.fromName)
