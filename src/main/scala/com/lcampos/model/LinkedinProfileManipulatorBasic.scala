@@ -23,6 +23,7 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
   val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
   val ProfileInfoBelowPicClass = "pv-top-card__list-container"
   val AboutClass = "pv-about__summary-text"
+  val SkillEndorsementTitleClass = "pv-skill-category-entity__name-text"
 
   protected def getExperienceSection: Either[String, Element] =
     ElementUtil.getElementByIdSafeCloned(document, "experience-section")

@@ -22,6 +22,7 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
   val PeopleAlsoViewedTitleClass = ""
   val ProfileInfoBelowPicClass = ""
   val AboutClass = ""
+  val SkillEndorsementTitleClass = ""
 
   protected def getExperienceSection: Either[String, Element] =
     ElementUtil.getElementByIdSafe(document, "profile-experience")

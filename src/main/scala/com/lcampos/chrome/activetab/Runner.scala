@@ -5,7 +5,7 @@ import com.lcampos.chrome.background.BackgroundAPI
 import com.lcampos.chrome.common.I18NMessages
 import com.lcampos.duration_per_tech.Tech
 import com.lcampos.model.{InternalMessages, LinkedinProfileManipulator, UserConfig}
-import com.lcampos.util.FutureUtil
+import com.lcampos.util.{FutureUtil, Repeat}
 import odelay.Timer
 import org.scalajs.dom
 
@@ -68,7 +68,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
       profileManipulator.expandEachExperience()
       profileManipulator.removeSeeLessFromEachExperienceSection()
       profileManipulator.expandAbout()
-      profileManipulator.highlight(selectedTech)
+      Repeat.repeat(10, 1.second)(profileManipulator.highlight(selectedTech))
     }
   }
 }
