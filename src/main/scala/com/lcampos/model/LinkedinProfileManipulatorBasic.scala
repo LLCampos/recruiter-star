@@ -17,6 +17,7 @@ object LinkedinProfileManipulatorBasic extends LinkedinProfileManipulator {
 
   val ExperienceDescriptionClass = "pv-entity__description"
   val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
+  val ProfileInfoBelowPicClass = "pv-top-card__list-container"
 
   val urlSignature: String = "www.linkedin.com/in/"
 
