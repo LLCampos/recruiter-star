@@ -16,34 +16,29 @@ import scala.concurrent.{ExecutionContext, Future}
 class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I18NMessages)
   (implicit ec: ExecutionContext, timer: Timer) {
 
-  def run(): Unit = {
+  def run(): Unit =
+    LinkedinProfileManipulator.fromUrl(dom.window.location.href) match {
+      case Some(manipulator) => onSupportedPage(manipulator)
+      case None => ()
+    }
+
+  private def onSupportedPage(manipulator: LinkedinProfileManipulator): Unit =
     chrome.runtime.Runtime.onMessage.listen { msg =>
       msg.value match {
         case Some(v: String) if v.contains("page was reloaded") || v == "recruiter-star-refresh" =>
           UserConfig.load.flatMap { userConf =>
             if (userConf.isExtensionActive) {
-              onExtensionActive(userConf, dom.window.location.href)
+              onExtensionActive(userConf, manipulator)
             } else {
-              Future(onExtensionInactive(dom.window.location.href))
+              Future(onExtensionInactive(manipulator))
             }
           }
         case _ => ()
       }
     }
-  }
 
-  private def onExtensionInactive(pageUrl: String): Unit =
-    LinkedinProfileManipulator.fromUrl(pageUrl) match {
-      case Some(manipulator) => manipulator.removeTechExperienceSummaryElem(dom.document)
-      case None => ()
-    }
-
-  private def onExtensionActive(userConfig: UserConfig, pageUrl: String): Future[Unit] = {
-    LinkedinProfileManipulator.fromUrl(pageUrl) match {
-      case Some(manipulator) => onExtensionActive(userConfig, manipulator)
-      case None => Future.unit
-    }
-  }
+  private def onExtensionInactive(manipulator: LinkedinProfileManipulator): Unit =
+      manipulator.removeTechExperienceSummaryElem(dom.document)
 
   private def onExtensionActive(userConfig: UserConfig, profileManipulator: LinkedinProfileManipulator): Future[Unit] = {
     val selectedTech = userConfig.selectedTechnologies.flatMap(Tech.fromName)
