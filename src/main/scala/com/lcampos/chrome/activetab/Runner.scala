@@ -48,6 +48,8 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val techToShow = if (userConfig.selectedTechnologies.isEmpty) Tech.all else selectedTech
     for {
       _ <- FutureUtil.delay(waitTime)
+      _ <- Future(profileManipulator.expandEachExperience())
+      _ <- Future(profileManipulator.removeSeeLessFromEachExperienceSection())
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
       _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
     } yield ()
@@ -65,8 +67,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTech: List[Tech]) = Future {
     if (selectedTech.nonEmpty) {
-      profileManipulator.expandEachExperience()
-      profileManipulator.removeSeeLessFromEachExperienceSection()
       profileManipulator.expandAbout()
       Repeat.repeat(10, 1.second)(profileManipulator.highlight(selectedTech))
     }
