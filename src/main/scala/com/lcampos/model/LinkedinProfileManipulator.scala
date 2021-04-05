@@ -10,7 +10,6 @@ trait LinkedinProfileManipulator {
 
   val ExperienceDescriptionClass: String
   val PeopleAlsoViewedTitleClass: String
-  val ProfileInfoBelowPicClass: String
   val SkillEndorsementTitleClass: String
   val AboutClass: String
 

@@ -47,7 +47,6 @@ object LinkedinProfileHighlighter {
     getElementsToHighlightByClass(doc, List(
       manipulator.ExperienceDescriptionClass,
       manipulator.PeopleAlsoViewedTitleClass,
-      manipulator.ProfileInfoBelowPicClass,
       manipulator.SkillEndorsementTitleClass,
       manipulator.AboutClass,
     )) ++ getElementsToHighlightByIds(doc, List(

@@ -20,7 +20,6 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
 
   val ExperienceDescriptionClass = "description"
   val PeopleAlsoViewedTitleClass = ""
-  val ProfileInfoBelowPicClass = ""
   val AboutClass = ""
   val SkillEndorsementTitleClass = ""
 

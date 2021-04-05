@@ -21,7 +21,6 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
 
   val ExperienceDescriptionClass = "pv-entity__description"
   val PeopleAlsoViewedTitleClass = "pv-browsemap-section__member-headline"
-  val ProfileInfoBelowPicClass = "pv-top-card__list-container"
   val AboutClass = "pv-about__summary-text"
   val SkillEndorsementTitleClass = "pv-skill-category-entity__name-text"
 
