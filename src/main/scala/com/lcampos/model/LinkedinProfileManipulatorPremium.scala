@@ -109,7 +109,8 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
   protected def getProfileSpecificElementsToHighlight: List[Element] = ElementUtil.getElementsForIds(document, List(
     ProfileSummarySectionId
   )) ++ ElementUtil.getElementsForClasses(document, List(
-    "headline"
+    "headline",
+    "skill"
   ))
 
 }
