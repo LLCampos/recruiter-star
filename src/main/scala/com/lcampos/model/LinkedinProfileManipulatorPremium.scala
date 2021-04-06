@@ -20,6 +20,7 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
 
   val ExperienceDescriptionClass = "description"
   val PeopleAlsoViewedTitleClass = ""
+  val ProfileSummarySectionId = "profile-summary"
 
   protected def getExperienceSection: Either[String, Element] =
     ElementUtil.getElementByIdSafe(document, "profile-experience")
@@ -108,5 +109,7 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
 
   def expandAbout(): Unit = ()
 
-  protected def getProfileSpecificElementsToHighlight: List[Element] = List()
+  protected def getProfileSpecificElementsToHighlight: List[Element] = ElementUtil.getElementsForIds(document, List(
+    ProfileSummarySectionId
+  ))
 }
