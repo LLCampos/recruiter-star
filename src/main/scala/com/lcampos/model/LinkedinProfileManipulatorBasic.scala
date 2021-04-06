@@ -140,4 +140,9 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
       case Right(button) => button.click()
       case Left(_) => ()
     }
+
+  protected def getProfileSpecificElementsToHighlight: List[Element] =
+    ElementUtil.getElementsForClasses(document, List(
+      SkillEndorsementTitleClass,
+    ))
 }
