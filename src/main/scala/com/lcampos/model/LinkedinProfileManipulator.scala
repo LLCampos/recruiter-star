@@ -56,7 +56,7 @@ trait LinkedinProfileManipulator {
       PeopleAlsoViewedTitleClass,
     )) ++ ElementUtil.getElementsForIds(document, List(
       LinkedinProfileManipulator.TechExperienceSummaryContentId
-    )) ++ getAllExperienceItemsTitlesSections ::: getProfileSpecificElementsToHighlight
+    )) ++ getAllExperienceItemsTitlesSections ++ getProfileSpecificElementsToHighlight
 
   protected def getProfileSpecificElementsToHighlight: List[Element]
 }
