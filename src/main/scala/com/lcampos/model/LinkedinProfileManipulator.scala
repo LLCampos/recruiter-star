@@ -3,6 +3,8 @@ package com.lcampos.model
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.{DurationPerTechGenerator, ExperienceItem, Tech}
 import com.lcampos.linkedin.LinkedinProfileHighlighter
+import com.lcampos.model.LinkedinProfileManipulator.TechExperienceSummaryId
+import com.lcampos.util.ElementUtil
 import org.scalajs.dom.{Document, Element}
 
 trait LinkedinProfileManipulator {
@@ -33,7 +35,9 @@ trait LinkedinProfileManipulator {
   protected def getExperienceItems(experienceSectionElem: Element): Either[String, List[ExperienceItem]]
   protected def getExperienceSection: Either[String, Element]
   protected def addYearsPerTechElem(durationPerTechPerCat: DurationPerTechPerCategory): Either[String, Unit]
-  def removeTechExperienceSummaryElem(): Unit
+
+  def removeTechExperienceSummaryElem(): Unit =
+    ElementUtil.getElementByIdSafe(document, TechExperienceSummaryId).map(el => el.parentNode.removeChild(el))
 
   // Expand the whole Experience section
   protected def showAllExperiences(): Unit

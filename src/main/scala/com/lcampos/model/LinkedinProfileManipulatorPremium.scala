@@ -98,7 +98,6 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
       </div>
       """)
 
-  def removeTechExperienceSummaryElem(): Unit = ()
   protected def showAllExperiences(): Unit = ()
 
   def expandEachExperience(): Unit = ()

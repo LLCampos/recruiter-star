@@ -54,9 +54,6 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
     elem.appendChild(span)
   }
 
-  def removeTechExperienceSummaryElem(): Unit =
-    ElementUtil.getElementByIdSafe(document, TechExperienceSummaryId).map(el => el.parentNode.removeChild(el))
-
   private def durationPerTechElemTemplate: Element = ElementUtil.elementFromString(
     s"""
       <div class="pv-oc ember-view" id="$TechExperienceSummaryId">
