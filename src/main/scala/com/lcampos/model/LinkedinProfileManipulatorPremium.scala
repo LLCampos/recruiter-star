@@ -110,7 +110,8 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
     ProfileSummarySectionId
   )) ++ ElementUtil.getElementsForClasses(document, List(
     "headline",
-    "skill"
+    "skill",
+    "profile-info"
   ))
 
 }
