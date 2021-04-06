@@ -134,12 +134,6 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
       ElementUtil.getFirstElementByTagNameSafe(elem, "h3").toOption
     })
 
-  def expandAbout(): Unit =
-    ElementUtil.getElementByIdSafeAs[HTMLElement](document, "line-clamp-show-more-button") match {
-      case Right(button) => button.click()
-      case Left(_) => ()
-    }
-
   protected def getProfileSpecificElementsToHighlight: List[Element] =
     ElementUtil.getElementsForClasses(document, List(
       SkillEndorsementTitleClass,

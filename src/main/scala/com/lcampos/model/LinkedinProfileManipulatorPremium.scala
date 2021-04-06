@@ -107,8 +107,6 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
       ElementUtil.getFirstElementByTagNameSafe(elem, "h4").toOption
     })
 
-  def expandAbout(): Unit = ()
-
   protected def getProfileSpecificElementsToHighlight: List[Element] = ElementUtil.getElementsForIds(document, List(
     ProfileSummarySectionId
   ))

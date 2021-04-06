@@ -48,8 +48,6 @@ trait LinkedinProfileManipulator {
     removeSeeLessFromEachExperienceSection()
   }
 
-  def expandAbout(): Unit
-
   def getAllExperienceItemsTitlesSections: List[Element]
 
   private def getElementsToHighlight: List[Element] =
