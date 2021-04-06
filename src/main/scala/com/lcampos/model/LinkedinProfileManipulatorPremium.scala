@@ -19,7 +19,6 @@ object LinkedinProfileManipulatorPremium {
 case class LinkedinProfileManipulatorPremium(document: Document) extends LinkedinProfileManipulator {
 
   val ExperienceDescriptionClass = "description"
-  val PeopleAlsoViewedTitleClass = ""
   val ProfileSummarySectionId = "profile-summary"
 
   protected def getExperienceSection: Either[String, Element] =

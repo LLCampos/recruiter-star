@@ -11,7 +11,6 @@ trait LinkedinProfileManipulator {
   val document: Document
 
   val ExperienceDescriptionClass: String
-  val PeopleAlsoViewedTitleClass: String
 
   def highlight(techToHighlight: List[Tech]): Unit =
     LinkedinProfileHighlighter.highlight(techToHighlight, getElementsToHighlight)
@@ -53,7 +52,6 @@ trait LinkedinProfileManipulator {
   private def getElementsToHighlight: List[Element] =
     ElementUtil.getElementsForClasses(document, List(
       ExperienceDescriptionClass,
-      PeopleAlsoViewedTitleClass,
     )) ++ ElementUtil.getElementsForIds(document, List(
       LinkedinProfileManipulator.TechExperienceSummaryContentId
     )) ++ getAllExperienceItemsTitlesSections ++ getProfileSpecificElementsToHighlight

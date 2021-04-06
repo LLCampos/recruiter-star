@@ -137,5 +137,6 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
   protected def getProfileSpecificElementsToHighlight: List[Element] =
     ElementUtil.getElementsForClasses(document, List(
       SkillEndorsementTitleClass,
+      PeopleAlsoViewedTitleClass
     ))
 }
