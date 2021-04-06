@@ -66,7 +66,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
 
   private def highlightSelectedTechnologies(profileManipulator: LinkedinProfileManipulator, selectedTech: List[Tech]) = Future {
     if (selectedTech.nonEmpty) {
-      profileManipulator.expandAbout()
       Repeat.repeat(10, 1.second)(profileManipulator.highlight(selectedTech))
     }
   }
