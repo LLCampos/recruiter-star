@@ -105,4 +105,10 @@ object ElementUtil {
 
   def querySelectorAll(elem: Element, selectors: String): List[Node] =
     toListOf(elem.querySelectorAll(selectors))
+
+  def getElementsForClasses(doc: Document, classes: List[String]): List[Element] =
+    classes.flatMap(className => ElementUtil.getElementsByClassName(doc.documentElement, className))
+
+  def getElementsForIds(doc: Document, ids: List[String]): List[Element] =
+    ids.flatMap(id => ElementUtil.getElementByIdSafe(doc, id).toOption)
 }

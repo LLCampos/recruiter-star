@@ -55,20 +55,14 @@ trait LinkedinProfileManipulator {
   def getAllExperienceItemsTitlesSections: List[Element]
 
   private def getElementsToHighlight: List[Element] = {
-    getElementsToHighlightByClass(document, List(
+    ElementUtil.getElementsForClasses(document, List(
       ExperienceDescriptionClass,
       PeopleAlsoViewedTitleClass,
       SkillEndorsementTitleClass,
-    )) ++ getElementsToHighlightByIds(document, List(
+    )) ++ ElementUtil.getElementsForIds(document, List(
       LinkedinProfileManipulator.TechExperienceSummaryContentId
     )) ++ getAllExperienceItemsTitlesSections
   }
-
-  private def getElementsToHighlightByClass(doc: Document, classes: List[String]): List[Element] =
-    classes.flatMap(className => ElementUtil.getElementsByClassName(doc.documentElement, className))
-
-  private def getElementsToHighlightByIds(doc: Document, ids: List[String]): List[Element] =
-    ids.flatMap(id => ElementUtil.getElementByIdSafe(doc, id).toOption)
 }
 
 object LinkedinProfileManipulator {
