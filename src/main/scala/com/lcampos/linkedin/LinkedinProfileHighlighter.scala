@@ -4,6 +4,8 @@ import com.lcampos.duration_per_tech.Tech
 import com.lcampos.util.SearchAndReplace
 import org.scalajs.dom.Element
 
+import scala.util.matching.Regex
+
 object LinkedinProfileHighlighter {
 
   private val HighlightingColors = List(
@@ -32,10 +34,12 @@ object LinkedinProfileHighlighter {
       elementsToRemoveHighlightFrom
     )
 
-  private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit =
+  private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit = {
+    val escapedTechName = Regex.quote(techNameToHighlight)
     SearchAndReplace.replace(
-      s"\\b$techNameToHighlight\\b",
+      s"\\b$escapedTechName\\b",
       s"<span class='highlighted' style='background-color: $color'>$techNameToHighlight</span>",
       elementsToHighlight
     )
+  }
 }
