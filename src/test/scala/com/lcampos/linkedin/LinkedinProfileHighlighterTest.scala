@@ -65,11 +65,18 @@ class LinkedinProfileHighlighterTest extends Specification {
       elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">Java</span>"
     }
 
-    "if element text matches more than one alias, only highlight using the longer alias" in {
+    "if element text matches more than one alias, only highlight using the longer alias (shorter alias in the beginning of longer alias)" in {
       val elem = ElementUtil.elementFromString("<div>Play Framework</div>")
       val techToHighlight = Tech("Play", Set("Play", "Play Framework"), ProgrammingLanguage)
       LinkedinProfileHighlighter.highlight(List(techToHighlight), List(elem))
       elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">Play Framework</span>"
     }
+
+    "if element text matches more than one alias, only highlight using the longer alias (shorter alias in the end of longer alias)" in {
+      val elem = ElementUtil.elementFromString("<div>TIBCO StreamBase</div>")
+      val techToHighlight = Tech("", Set("StreamBase", "TIBCO StreamBase"), ProgrammingLanguage)
+      LinkedinProfileHighlighter.highlight(List(techToHighlight), List(elem))
+      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">TIBCO StreamBase</span>"
+    }.pendingUntilFixed
   }
 }
