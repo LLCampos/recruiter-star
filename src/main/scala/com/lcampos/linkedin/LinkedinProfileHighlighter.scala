@@ -23,13 +23,15 @@ object LinkedinProfileHighlighter {
   def highlight(techToHighlight: List[Tech], elementsToHighlight: List[Element]): Unit = {
     removePreviousHighlights(elementsToHighlight)
     techToHighlight.zip(HighlightingColors).foreach { case (tech, color) =>
-      tech.aliases.foreach(alias => highlight(alias, elementsToHighlight, color))
+      tech.aliases.toList
+        .sortBy(_.length).reverse // Highlight the longer aliases first; otherwise, if one of the aliases is a substring of other, longer, alias, the longer alias will not be matched
+        .foreach(alias => highlight(alias, elementsToHighlight, color))
     }
   }
 
   def removePreviousHighlights(elementsToRemoveHighlightFrom: List[Element]): Unit =
     SearchAndReplace.replace(
-      "<span class=\"highlighted\" style=\"background-color: .*?\">(.*?)</span>",
+      s"$OpeningHighlightSpanMatcher(.*?)</span>",
       "$1",
       elementsToRemoveHighlightFrom
     )
@@ -37,9 +39,12 @@ object LinkedinProfileHighlighter {
   private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit = {
     val escapedTechName = Regex.quote(techNameToHighlight)
     SearchAndReplace.replace(
-      s"\\b$escapedTechName\\b",
-      s"<span class='highlighted' style='background-color: $color'>$techNameToHighlight</span>",
+      s"\\b(?<!$OpeningHighlightSpanMatcher)$escapedTechName\\b",
+      s"${openingHighlightSpan(color)}$techNameToHighlight</span>",
       elementsToHighlight
     )
   }
+
+  private def openingHighlightSpan(backgroundColor: String) = s"<span class='highlighted' style='background-color: $backgroundColor'>".replace("'", "\"")
+  private val OpeningHighlightSpanMatcher = openingHighlightSpan(".{7}")
 }
