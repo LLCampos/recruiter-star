@@ -39,7 +39,7 @@ object LinkedinProfileHighlighter {
   private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit = {
     val escapedTechName = Regex.quote(techNameToHighlight)
     SearchAndReplace.replace(
-      s"\\b(?<!$OpeningHighlightSpanMatcher)$escapedTechName\\b",
+      s"\\b(?<!$OpeningHighlightSpanMatcher)$escapedTechName(?!</span>)\\b",
       s"${openingHighlightSpan(color)}$techNameToHighlight</span>",
       elementsToHighlight
     )
