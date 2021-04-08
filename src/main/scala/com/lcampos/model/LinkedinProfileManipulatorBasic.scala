@@ -61,6 +61,11 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
               <!----></header>
               <p class="mt4 t-14 ember-view" id="$TechExperienceSummaryContentId">
               </p>
+              <p class="mt4 t-14 ember-view" style="padding-top: 20px">
+                For suggestions/issues: <a href="mailto:luis.filipe.lcampos@gmail.com">
+                  luis.filipe.lcampos@gmail.com
+                </a>
+              </p>
           </section>
       </div>
       """)
