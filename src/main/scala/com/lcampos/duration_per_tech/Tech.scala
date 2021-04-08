@@ -39,7 +39,7 @@ object TechCategory {
   }
 
   case object CICD extends TechCategory {
-    val uiRepresentation: String = "CI/CD"
+    val uiRepresentation: String = "Continuous Integration/Continuous Delivery"
     val priorityInOrdering: Int = 7
   }
 
