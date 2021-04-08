@@ -719,7 +719,7 @@ object Tech {
     Tech("Yew", Set("Yew"), Framework),
     Tech("Svelte", Set("Svelte"), Framework),
     // ## CSS
-    Tech("Boostrap", Set("Boostrap"), Framework),
+    Tech("Bootstrap", Set("Bootstrap"), Framework),
     Tech("Materialize", Set("Materialize", "materializecss", "MaterializeCSS"), Framework),
     Tech("normalize.css", Set("normalize.css"), Framework),
     Tech("sanitize.css", Set("sanitize.css"), Framework),
