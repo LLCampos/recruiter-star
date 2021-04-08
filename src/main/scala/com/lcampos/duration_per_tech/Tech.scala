@@ -900,6 +900,7 @@ object Tech {
     Tech("Travis CI", Set("Travis CI"), CICD),
     Tech("Wercker", Set("Wercker"), CICD),
     Tech("Zuul", Set("Zuul"), CICD),
+    Tech("CI/CD", Set("CI/CD", "CICD"), CICD),
     // ################# Cloud #################
     Tech("AWS", Set("Amazon Web Services", "AWS"), Cloud),
     Tech("Azure", Set("Azure"), Cloud),
