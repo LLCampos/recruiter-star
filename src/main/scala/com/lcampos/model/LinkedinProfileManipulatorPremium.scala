@@ -92,6 +92,11 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
         <div class="module primary-module">
           <div class="module-header"/>
           <div class="module-body searchable" id='$TechExperienceSummaryContentId'></div>
+          <div class="module-body" style="padding-bottom: 20px">
+            For suggestions/issues: <a href="mailto:luis.filipe.lcampos@gmail.com" style="color: #006fa6">
+              luis.filipe.lcampos@gmail.com
+            </a>
+          </div>
         </div>
       </div>
       """)
