@@ -44,7 +44,7 @@ class LinkedinProfileHighlighterTest extends Specification {
       val tech1 = Tech.fromName("Java").get
       val tech2 = Tech.fromName("Python").get
       LinkedinProfileHighlighter.highlight(List(tech1, tech2), List(elem))
-      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">Java</span> and <span class=\"highlighted\" style=\"background-color: #E77471\">Python</span>"
+      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #E77471\">Java</span> and <span class=\"highlighted\" style=\"background-color: #FFF380\">Python</span>"
     }
 
     "remove highlight from more than one word" in {
@@ -53,7 +53,7 @@ class LinkedinProfileHighlighterTest extends Specification {
       val tech1 = Tech.fromName("Java").get
       val tech2 = Tech.fromName("Python").get
       LinkedinProfileHighlighter.highlight(List(tech1, tech2), List(elem))
-      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">Java</span> and <span class=\"highlighted\" style=\"background-color: #E77471\">Python</span>"
+      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #E77471\">Java</span> and <span class=\"highlighted\" style=\"background-color: #FFF380\">Python</span>"
       LinkedinProfileHighlighter.removePreviousHighlights(List(elem))
       elem.innerHTML must be equalTo innerHtmlBefore
     }
@@ -84,6 +84,14 @@ class LinkedinProfileHighlighterTest extends Specification {
       val techToHighlight = Tech("", Set("C++"), ProgrammingLanguage)
       LinkedinProfileHighlighter.highlight(List(techToHighlight), List(elem))
       elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">C++</span>"
+    }
+
+    "highlight technologies with longer names first" in {
+      val elem = ElementUtil.elementFromString("<div>C++ and C</div>")
+      val techToHighlight1 = Tech("", Set("C"), ProgrammingLanguage)
+      val techToHighlight2 = Tech("", Set("C++"), ProgrammingLanguage)
+      LinkedinProfileHighlighter.highlight(List(techToHighlight1, techToHighlight2), List(elem))
+      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">C++</span> and <span class=\"highlighted\" style=\"background-color: #E77471\">C</span>"
     }
   }
 }

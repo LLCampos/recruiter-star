@@ -22,11 +22,14 @@ object LinkedinProfileHighlighter {
 
   def highlight(techToHighlight: List[Tech], elementsToHighlight: List[Element]): Unit = {
     removePreviousHighlights(elementsToHighlight)
-    techToHighlight.zip(HighlightingColors).foreach { case (tech, color) =>
-      tech.aliases.toList
-        .sortBy(_.length).reverse // Highlight the longer aliases first; otherwise, if one of the aliases is a substring of other, longer, alias, the longer alias will not be matched
-        .foreach(alias => highlight(alias, elementsToHighlight, color))
-    }
+    techToHighlight
+      .sortBy(_.aliases.map(_.length).max).reverse // Match technologies with the longest aliases first
+      .zip(HighlightingColors)
+      .foreach { case (tech, color) =>
+        tech.aliases.toList
+          .sortBy(_.length).reverse // Highlight the longer aliases first; otherwise, if one of the aliases is a substring of other, longer, alias, the longer alias will not be matched
+          .foreach(alias => highlight(alias, elementsToHighlight, color))
+      }
   }
 
   def removePreviousHighlights(elementsToRemoveHighlightFrom: List[Element]): Unit =
