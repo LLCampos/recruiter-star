@@ -56,8 +56,12 @@ class ExperienceItemTest extends Specification {
         ExperienceItem("Developer", "I used to work on SQL Server", defaultInstantRange).technologies(Tech.all).map(_.name) must be equalTo Set("SQL Server")
       }
 
-      "find technologies with a dot in their name" in {
+      "find technology that contains a non-alphanum character (dot)" in {
         ExperienceItem(".NET Developer", "Also worked in Node.js", defaultInstantRange).technologies(Tech.all).map(_.name) must be equalTo Set(".NET", "Node.js")
+      }
+
+      "find technology that contains a non-alphanum character (slash)" in {
+        ExperienceItem("CI/CD Developer", "Also worked", defaultInstantRange).technologies(Tech.all).map(_.name) must be equalTo Set("CI/CD")
       }
     }
   }

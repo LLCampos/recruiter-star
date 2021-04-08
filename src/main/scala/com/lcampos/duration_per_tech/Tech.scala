@@ -93,7 +93,7 @@ object TechCategory {
 }
 
 case class Tech(name: String, aliases: Set[String], category: TechCategory) {
-  lazy val aliasesWithDot: Set[String] = aliases.filter(_.contains("."))
+  lazy val aliasesWithNonAlphanumChar: Set[String] = aliases.filter(_.matches(".*\\W.*"))
   lazy val multiWordAliases: Set[String] = aliases.filter(_.split(" ").length > 1)
 }
 

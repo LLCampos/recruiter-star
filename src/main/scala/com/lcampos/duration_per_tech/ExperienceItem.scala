@@ -8,7 +8,7 @@ case class ExperienceItem(
   instantRange: InstantRange
 ) {
   def technologies(baseTechs: List[Tech]): Set[Tech] =
-    getOneWordTechnologies(baseTechs) ++ getMultiWordTechnologies(baseTechs) ++ getTechnologiesWithDot(baseTechs)
+    getOneWordTechnologies(baseTechs) ++ getMultiWordTechnologies(baseTechs) ++ getTechnologiesWithNonAlphanumChar(baseTechs)
 
   private def getMultiWordTechnologies(baseTechs: List[Tech]): Set[Tech] =
     baseTechs
@@ -22,9 +22,9 @@ case class ExperienceItem(
       .toSet
   }
 
-  private def getTechnologiesWithDot(baseTechs: List[Tech]): Set[Tech] =
+  private def getTechnologiesWithNonAlphanumChar(baseTechs: List[Tech]): Set[Tech] =
     baseTechs
-      .filter(tech => tech.aliasesWithDot.exists(allText.contains))
+      .filter(tech => tech.aliasesWithNonAlphanumChar.exists(allText.contains))
       .toSet
 
   private val allText = s"$title $description"
