@@ -70,7 +70,7 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
         val categoryText = s"</br><p style='font-size: large; font-weight: bold'>$category:</p></br>"
         addTextToElem(categoryText, durationPerTechElemModuleBody)
         durationPerTech
-          .map { case (tech, years) => s"<span style='font-weight: bold'>$tech</span> - $years</br>" }
+          .map { case (tech, years) => s"<b style='font-weight: bold'>$tech</b> - $years</br>" }
           .foreach(text => addTextToElem(text, durationPerTechElemModuleBody))
       }
       _ = ElementUtil.appendNewLine(durationPerTechElemModuleBody)
