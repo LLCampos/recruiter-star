@@ -78,5 +78,12 @@ class LinkedinProfileHighlighterTest extends Specification {
       LinkedinProfileHighlighter.highlight(List(techToHighlight), List(elem))
       elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">TIBCO StreamBase</span>"
     }
+
+    "highlights tech names with non-alphanumeric characters" in {
+      val elem = ElementUtil.elementFromString("<div>C++</div>")
+      val techToHighlight = Tech("", Set("C++"), ProgrammingLanguage)
+      LinkedinProfileHighlighter.highlight(List(techToHighlight), List(elem))
+      elem.innerHTML must be equalTo "<span class=\"highlighted\" style=\"background-color: #FFF380\">C++</span>"
+    }.pendingUntilFixed("related with the \\b used in the regex")
   }
 }
