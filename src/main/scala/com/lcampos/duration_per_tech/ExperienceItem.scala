@@ -16,7 +16,7 @@ case class ExperienceItem(
       .toSet
 
   private def getOneWordTechnologies(baseTechs: List[Tech]): Set[Tech] = {
-    val tokens = allText.split("(\\s|,|\\.|!|:|/|;|\\(|\\)|\\[|])+")
+    val tokens = allText.split("(\\s|\\W)+")
     baseTechs
       .filter(tech => tech.aliases.exists(tokens.contains))
       .toSet
