@@ -38,11 +38,21 @@ object LinkedinProfileHighlighter {
 
   private def highlight(techNameToHighlight: String, elementsToHighlight: List[Element], color: String): Unit = {
     val escapedTechName = Regex.quote(techNameToHighlight)
-    SearchAndReplace.replace(
-      s"\\b(?<!$OpeningHighlightSpanMatcher)$escapedTechName(?!</span>)\\b",
-      s"${openingHighlightSpan(color)}$techNameToHighlight</span>",
-      elementsToHighlight
-    )
+    val doesTechNameContainNonAlphanumChar = escapedTechName.matches(".*\\W.*")
+
+    if (doesTechNameContainNonAlphanumChar) {
+      SearchAndReplace.replace(
+        s"(?<!$OpeningHighlightSpanMatcher)$escapedTechName(?!</span>)",
+        s"${openingHighlightSpan(color)}$techNameToHighlight</span>",
+        elementsToHighlight
+      )
+    } else {
+      SearchAndReplace.replace(
+        s"\\b(?<!$OpeningHighlightSpanMatcher)$escapedTechName(?!</span>)\\b",
+        s"${openingHighlightSpan(color)}$techNameToHighlight</span>",
+        elementsToHighlight
+      )
+    }
   }
 
   private def openingHighlightSpan(backgroundColor: String) = s"<span class='highlighted' style='background-color: $backgroundColor'>".replace("'", "\"")
