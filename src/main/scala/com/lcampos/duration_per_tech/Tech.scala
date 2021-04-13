@@ -846,6 +846,8 @@ object Tech {
     Tech("SonarQube", Set("SonarQube"), TestAndQA),
     Tech("Protractor", Set("Protractor"), TestAndQA),
     Tech("Jasmine", Set("Jasmine"), TestAndQA),
+    Tech("TestNG", Set("TestNG"), TestAndQA),
+    Tech("Robot Framework", Set("Robot Framework"), TestAndQA),
     // ################# CI/CD #################
     Tech("Abstruse CI", Set("Abstruse CI"), CICD),
     Tech("Agola", Set("Agola"), CICD),
