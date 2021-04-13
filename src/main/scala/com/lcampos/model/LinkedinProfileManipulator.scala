@@ -40,11 +40,11 @@ trait LinkedinProfileManipulator {
   protected def showAllExperiences(): Unit
 
   protected def expandEachExperience(): Unit
-  protected def removeSeeLessFromEachExperienceSection(): Unit
+  protected def cleanUpAfterExpandingEachExperience(): Unit
 
-  def expandEachExperienceAndRemoveSeeLessButton(): Unit = {
+  def expandEachExperienceAndCleanUp(): Unit = {
     expandEachExperience()
-    removeSeeLessFromEachExperienceSection()
+    cleanUpAfterExpandingEachExperience()
   }
 
   def getAllExperienceItemsTitlesSections: List[Element]

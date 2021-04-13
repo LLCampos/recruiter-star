@@ -127,9 +127,9 @@ case class LinkedinProfileManipulatorBasic(document: Document) extends LinkedinP
       _.click()
     )
 
-  def removeSeeLessFromEachExperienceSection(): Unit = {
+  def cleanUpAfterExpandingEachExperience(): Unit = {
     // Note: This remove from whole page. If this is problematic, fix it.
-    ElementUtil.getElementsByClassName[HTMLElement](document.documentElement, "inline-show-more-text__link-container-expanded").foreach(elem =>
+    ElementUtil.getElementsByClassName[HTMLElement](document.documentElement, "inline-show-more-text__link-container-collapsed").foreach(elem =>
       elem.parentElement.removeChild(elem)
     )
   }

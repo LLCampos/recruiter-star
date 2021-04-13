@@ -104,7 +104,7 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
   protected def showAllExperiences(): Unit = ()
 
   def expandEachExperience(): Unit = ()
-  def removeSeeLessFromEachExperienceSection(): Unit = ()
+  def cleanUpAfterExpandingEachExperience(): Unit = ()
 
   def getAllExperienceItemsTitlesSections: List[Element] =
     ElementUtil.getElementsByClassName[Element](document.documentElement, "position").flatMap(elem => {
