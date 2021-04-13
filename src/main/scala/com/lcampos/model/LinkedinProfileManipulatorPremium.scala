@@ -108,7 +108,7 @@ case class LinkedinProfileManipulatorPremium(document: Document) extends Linkedi
 
   def getAllExperienceItemsTitlesSections: List[Element] =
     ElementUtil.getElementsByClassName[Element](document.documentElement, "position").flatMap(elem => {
-      ElementUtil.getFirstElementByTagNameSafe(elem, "h4").toOption
+      ElementUtil.getFirstElementByTagNameSafe(elem, "a").toOption
     })
 
   protected def getProfileSpecificElementsToHighlight: List[Element] = ElementUtil.getElementsForIds(document, List(
