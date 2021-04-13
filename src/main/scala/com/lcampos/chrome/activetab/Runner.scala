@@ -48,8 +48,8 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     val techToShow = if (userConfig.selectedTechnologies.isEmpty) Tech.all else selectedTech
     for {
       _ <- FutureUtil.delay(waitTime)
-      _ <- Future(profileManipulator.expandEachExperienceAndCleanUp())
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
+      _ <- Future(profileManipulator.expandEachExperienceAndCleanUp())
       _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
     } yield ()
   }
