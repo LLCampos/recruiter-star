@@ -55,7 +55,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   }
 
   private def addTechExperienceSummaryBoxWithRetries(linkedinProfileManipulator: LinkedinProfileManipulator, baseTechs: List[Tech]): Future[Unit] =
-    retry.Pause(100, 100.milli)(timer) { () =>
+    retry.Pause(200, 100.milli)(timer) { () =>
       Future {
         linkedinProfileManipulator.addDurationPerTech(baseTechs)
       }
