@@ -15,8 +15,10 @@
 * Remove minor technologies
 
 ### Fixed
-* Fix Elasticsearch name
+* Fix tech names
 * Don't use previous profile information when navigating using the browser history ("go back", "go forward")
+
+(and other misc fixes)
 
 ## [1.0.0]
 
