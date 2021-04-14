@@ -298,7 +298,7 @@ object Tech {
     Tech("Janus", Set("Janus"), ProgrammingLanguage),
     Tech("JASS", Set("JASS"), ProgrammingLanguage),
     Tech("Java", Set("JAVA", "Java", "Java8", "Java11", "JavaEE"), ProgrammingLanguage),
-    Tech("JavaScript", Set("JavaScript", "Javascript", "Java Script"), ProgrammingLanguage),
+    Tech("JavaScript", Set("JavaScript", "Javascript"), ProgrammingLanguage),
     Tech("JCL", Set("JCL"), ProgrammingLanguage),
     Tech("Join Java", Set("Join Java"), ProgrammingLanguage),
     Tech("JOSS", Set("JOSS"), ProgrammingLanguage),
