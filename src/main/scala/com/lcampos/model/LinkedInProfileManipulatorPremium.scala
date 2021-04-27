@@ -3,7 +3,7 @@ package com.lcampos.model
 import cats.syntax.all._
 import com.lcampos.duration_per_tech.DurationPerTechGenerator.DurationPerTechPerCategory
 import com.lcampos.duration_per_tech.ExperienceItem
-import com.lcampos.model.LinkedinProfileManipulator.{TechExperienceSummaryContentId, TechExperienceSummaryId}
+import com.lcampos.model.LinkedInProfileManipulator.{TechExperienceSummaryContentId, TechExperienceSummaryId}
 import com.lcampos.util.ElementUtil
 import com.lcampos.util.time.{InstantRange, toInstantRange}
 import org.scalajs.dom.raw.HTMLElement
@@ -12,11 +12,11 @@ import org.scalajs.dom.{Document, Element}
 import java.time.format.DateTimeFormatter
 import scala.scalajs.js.Object.entries
 
-object LinkedinProfileManipulatorPremium {
+object LinkedInProfileManipulatorPremium {
   val UrlSignature: String = "www.linkedin.com/recruiter/profile/"
 }
 
-case class LinkedinProfileManipulatorPremium(document: Document) extends LinkedinProfileManipulator {
+case class LinkedInProfileManipulatorPremium(document: Document) extends LinkedInProfileManipulator {
 
   val ExperienceDescriptionClass = "description"
   val ProfileSummarySectionId = "profile-summary"

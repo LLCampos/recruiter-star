@@ -9,7 +9,7 @@ class DurationPerTechGeneratorTest extends Specification {
 
 
   "DurationPerTechGeneratorTest" should {
-    "getFromLinkedinExperienceSection" should {
+    "getFromLinkedInExperienceSection" should {
       "correctly parse example 1" in {
         val experienceItems = List(
           ExperienceItem(
@@ -30,7 +30,7 @@ class DurationPerTechGeneratorTest extends Specification {
           ),
         )
 
-        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
+        DurationPerTechGenerator.getFromLinkedInExperienceItems(experienceItems) must be equalTo ListMap(
           "Programming Languages" -> ListMap(
             "JavaScript" -> "11 years and 3 months",
             "CSS" -> "11 years and 3 months",
@@ -54,7 +54,7 @@ class DurationPerTechGeneratorTest extends Specification {
           ),
         )
 
-        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
+        DurationPerTechGenerator.getFromLinkedInExperienceItems(experienceItems) must be equalTo ListMap(
           "Programming Languages" -> ListMap(
             "Python" -> "2 months",
           )
@@ -80,7 +80,7 @@ class DurationPerTechGeneratorTest extends Specification {
             )),
         )
 
-        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
+        DurationPerTechGenerator.getFromLinkedInExperienceItems(experienceItems) must be equalTo ListMap(
           "Programming Languages" -> ListMap(
             "Java" -> "4 years",
           )
@@ -106,7 +106,7 @@ class DurationPerTechGeneratorTest extends Specification {
             )),
         )
 
-        DurationPerTechGenerator.getFromLinkedinExperienceItems(experienceItems) must be equalTo ListMap(
+        DurationPerTechGenerator.getFromLinkedInExperienceItems(experienceItems) must be equalTo ListMap(
           "Programming Languages" -> ListMap(
             "Java" -> "5 years",
           )

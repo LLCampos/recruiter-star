@@ -6,7 +6,7 @@ import org.scalajs.dom.Element
 
 import scala.util.matching.Regex
 
-object LinkedinProfileHighlighter {
+object LinkedInProfileHighlighter {
 
   private val HighlightingColors = List(
     "#FFF380", // Corn Yellow
