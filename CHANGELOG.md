@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.0]
+
+### Fixed
+* Fix bug in which experience section can be cut
+
 ## [1.1.0]
 
 ### Added
