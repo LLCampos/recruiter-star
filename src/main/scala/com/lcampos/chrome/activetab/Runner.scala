@@ -27,7 +27,9 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
         case Some(v: String) if v.contains("page was reloaded") || v == InternalMessages.RefreshApp =>
           UserConfig.load.flatMap { userConf =>
             if (userConf.isExtensionActive) {
-              if (userConf.selectedTechnologies.isEmpty) manipulator.removePreviousHighlights()
+              if (userConf.selectedTechnologies.isEmpty & v == InternalMessages.RefreshApp) {
+                manipulator.removePreviousHighlights()
+              }
               val waitTime = if (v == InternalMessages.RefreshApp) 0.millis else 500.millis
               onExtensionActive(userConf, manipulator, waitTime)
             } else {
@@ -49,7 +51,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     for {
       _ <- FutureUtil.delay(waitTime)
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
-      _ <- Future(profileManipulator.expandEachExperienceAndCleanUp())
       _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
     } yield ()
   }
@@ -57,6 +58,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   private def addTechExperienceSummaryBoxWithRetries(linkedInProfileManipulator: LinkedInProfileManipulator, baseTechs: List[Tech]): Future[Unit] =
     retry.Pause(200, 100.milli)(timer) { () =>
       Future {
+        linkedInProfileManipulator.expandEachExperienceAndCleanUp() // TODO: This should be moved to its own retry function
         linkedInProfileManipulator.addDurationPerTech(baseTechs)
       }
     }.map {

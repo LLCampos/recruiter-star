@@ -132,6 +132,9 @@ case class LinkedInProfileManipulatorBasic(document: Document) extends LinkedInP
     ElementUtil.getElementsByClassName[HTMLElement](document.documentElement, "inline-show-more-text__link-container-collapsed").foreach(elem =>
       elem.parentElement.removeChild(elem)
     )
+    ElementUtil.getElementsByClassName[HTMLElement](document.documentElement, "inline-show-more-text__link-container-expanded").foreach(elem =>
+      elem.parentElement.removeChild(elem)
+    )
   }
 
   def getAllExperienceItemsTitlesSections: List[Element] =

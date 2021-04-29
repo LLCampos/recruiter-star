@@ -6,6 +6,7 @@ import com.lcampos.linkedin.LinkedInProfileHighlighter
 import com.lcampos.model.LinkedInProfileManipulator.TechExperienceSummaryId
 import com.lcampos.util.ElementUtil
 import org.scalajs.dom.{Document, Element}
+import scalajs.js.timers.setTimeout
 
 trait LinkedInProfileManipulator {
   val document: Document
@@ -44,7 +45,9 @@ trait LinkedInProfileManipulator {
 
   def expandEachExperienceAndCleanUp(): Unit = {
     expandEachExperience()
-    cleanUpAfterExpandingEachExperience()
+    setTimeout(1000) {
+      cleanUpAfterExpandingEachExperience()
+    }
   }
 
   def getAllExperienceItemsTitlesSections: List[Element]
