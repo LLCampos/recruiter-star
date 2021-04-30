@@ -3,7 +3,7 @@
 ## [1.2.0]
 
 ### Fixed
-* Fix bug in which experience section can be cut
+* Fix bugs in which experience sections can be cut
 
 ## [1.1.0]
 
