@@ -51,6 +51,7 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
     for {
       _ <- FutureUtil.delay(waitTime)
       _ <- addTechExperienceSummaryBoxWithRetries(profileManipulator, techToShow)
+      _ <- FutureUtil.delay(if (waitTime.length == 0) 0.second else 1.second)
       _ <- highlightSelectedTechnologies(profileManipulator, selectedTech)
     } yield ()
   }
@@ -58,7 +59,6 @@ class Runner(config: ActiveTabConfig, backgroundAPI: BackgroundAPI, messages: I1
   private def addTechExperienceSummaryBoxWithRetries(linkedInProfileManipulator: LinkedInProfileManipulator, baseTechs: List[Tech]): Future[Unit] =
     retry.Pause(200, 100.milli)(timer) { () =>
       Future {
-        linkedInProfileManipulator.expandEachExperienceAndCleanUp() // TODO: This should be moved to its own retry function
         linkedInProfileManipulator.addDurationPerTech(baseTechs)
       }
     }.map {

@@ -22,6 +22,9 @@ trait LinkedInProfileManipulator {
   def addDurationPerTech(baseTechs: List[Tech] = Tech.all): Either[String, Unit] = {
     removeTechExperienceSummaryElem()
     showAllExperiences()
+    setTimeout(1000) {
+      expandEachExperienceAndCleanUp()
+    }
     for {
       experienceSectionElem <- getExperienceSection
       experienceItems <- getExperienceItems(experienceSectionElem)
