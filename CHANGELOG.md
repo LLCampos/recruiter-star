@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0]
+## [1.1.1]
 
 ### Fixed
 * Fix bugs in which experience sections can be cut
